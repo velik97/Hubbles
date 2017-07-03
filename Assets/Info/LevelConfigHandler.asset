@@ -1,0 +1,265 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f585799e56434e389d2291d56d45326, type: 3}
+  m_Name: LevelConfigHandler
+  m_EditorClassIdentifier: 
+  configs:
+  - width: 4
+    height: 5
+    typeMap: ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000
+    colorMap: 4101000041010000410100000000000041010000410100004101000041010000410100004101000041010000000000004101000041010000410100004101000041010000410100004101000000000000
+    startLives: 30
+    aims:
+    - color: 1
+      type: 0
+      count: 50
+    - color: 2
+      type: 0
+      count: 50
+    - color: 3
+      type: 0
+      count: 50
+    oneStarScore: 150
+    twoStarsScore: 300
+    threeStarsScore: 500
+    heartChance: 0
+    multiplayerChance: 0
+    colors:
+    - {r: 0.9025687, g: 0.8220665, b: 0.30136144, a: 1}
+    - {r: 0.6178856, g: 0.9025687, b: 0.24109617, a: 1}
+    - {r: 0.2158464, g: 0.77808505, b: 0.9025687, a: 1}
+  - width: 5
+    height: 7
+    typeMap: ffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000
+    colorMap: 4101000041010000410100004101000000000000410100004101000041010000410100004101000041010000410100004101000041010000000000004101000041010000410100004101000041010000410100004101000041010000410100000000000041010000410100004101000041010000410100004101000041010000410100004101000000000000
+    startLives: 30
+    aims:
+    - color: 1
+      type: 0
+      count: 100
+    - color: 2
+      type: 0
+      count: 100
+    - color: 3
+      type: 0
+      count: 100
+    oneStarScore: 300
+    twoStarsScore: 500
+    threeStarsScore: 750
+    heartChance: 0
+    multiplayerChance: 0
+    colors:
+    - {r: 0.9025687, g: 0.8220665, b: 0.30136144, a: 1}
+    - {r: 0.6178856, g: 0.9025687, b: 0.24109617, a: 1}
+    - {r: 0.2158464, g: 0.77808505, b: 0.9025687, a: 1}
+  - width: 6
+    height: 5
+    typeMap: 00000000ffffffffffffffffffffffff000000000000000000000000ffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffff0000000000000000
+    colorMap: e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000
+    startLives: 30
+    aims:
+    - color: 1
+      type: 0
+      count: 80
+    - color: 2
+      type: 0
+      count: 80
+    - color: 3
+      type: 0
+      count: 80
+    - color: 4
+      type: 0
+      count: 80
+    oneStarScore: 320
+    twoStarsScore: 400
+    threeStarsScore: 500
+    heartChance: 0
+    multiplayerChance: 0
+    colors:
+    - {r: 0.9025687, g: 0.8220665, b: 0.30136144, a: 1}
+    - {r: 0.6178856, g: 0.9025687, b: 0.24109617, a: 1}
+    - {r: 0.9252291, g: 0.296537, b: 0.33155215, a: 1}
+    - {r: 0.2158464, g: 0.77808505, b: 0.9025687, a: 1}
+  - width: 3
+    height: 5
+    typeMap: ffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000
+    colorMap: 410100004101000000000000410100004101000041010000410100004101000000000000410100004101000041010000410100004101000000000000
+    startLives: 15
+    aims:
+    - color: 1
+      type: 0
+      count: 50
+    - color: 2
+      type: 0
+      count: 50
+    - color: 3
+      type: 0
+      count: 50
+    oneStarScore: 150
+    twoStarsScore: 200
+    threeStarsScore: 300
+    heartChance: 0
+    multiplayerChance: 0
+    colors:
+    - {r: 0.9025687, g: 0.8220665, b: 0.30136144, a: 1}
+    - {r: 0.6178856, g: 0.9025687, b: 0.24109617, a: 1}
+    - {r: 0.2158464, g: 0.77808505, b: 0.9025687, a: 1}
+  - width: 6
+    height: 7
+    typeMap: 0000000000000000000000000000000000000000000000000000000000000000ffffffffffffffff000000000000000000000000ffffffffffffffffffffffff000000000000000000000000ffffffffffffffffffffffffffffffff00000000ffffffffffffffff01000000ffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffff00000000
+    colorMap: e1100000e1100000e1100000e1100000e110000000000000e1100000e11000000300000003000000e1100000e1100000e1100000030000000100000003000000e1100000000000001f00000003000000020000000200000003000000e110000003000000020000000100000002000000030000000000000003000000010000000200000002000000010000000300000003000000030000001f000000030000000300000000000000
+    startLives: 20
+    aims:
+    - color: 1
+      type: 0
+      count: 200
+    - color: 2
+      type: 0
+      count: 200
+    - color: 3
+      type: 0
+      count: 200
+    oneStarScore: 600
+    twoStarsScore: 800
+    threeStarsScore: 1000
+    heartChance: 0
+    multiplayerChance: 0
+    colors:
+    - {r: 0.9025687, g: 0.5638061, b: 0.6360482, a: 1}
+    - {r: 0.6638719, g: 0.93819535, b: 0.66044575, a: 1}
+    - {r: 0.8791893, g: 0.9252291, b: 0.4757053, a: 1}
+  - width: 7
+    height: 11
+    typeMap: ffffffffffffffff0000000000000000ffffffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffff00000000000000000000000000000000ffffffffffffffffffffffff000000000000000000000000feffffffffffffffffffffffffffffff000000000000000000000000fefffffffeffffffffffffffffffffffffffffff00000000fefffffffefffffffeffffffffffffffffffffffffffffff00000000fefffffffefffffffeffffff00000000fffffffffffffffffffffffffefffffffeffffff0000000000000000ffffffffffffffff00000000
+    colorMap: 0400000004000000040000000400000003000000030000000000000004000000040000000400000004000000030000000300000003000000040000000400000004000000030000000300000003000000000000001f0000000400000004000000e11000000300000003000000040000001f00000004000000e1100000e11000000300000004000000000000001f0000001f000000e1100000e1100000e110000004000000040000001f00000001000000e1100000e11000000200000004000000000000001f0000000100000001000000e1100000020000000200000004000000010000000100000001000000020000000200000002000000000000000100000001000000010000001f00000002000000020000000200000001000000010000001f0000001f000000020000000200000000000000
+    startLives: 50
+    aims:
+    - color: 1
+      type: 0
+      count: 250
+    - color: 2
+      type: 0
+      count: 250
+    - color: 3
+      type: 0
+      count: 250
+    - color: 4
+      type: 0
+      count: 250
+    oneStarScore: 1000
+    twoStarsScore: 2500
+    threeStarsScore: 3000
+    heartChance: 10
+    multiplayerChance: 10
+    colors:
+    - {r: 0.9025687, g: 0.5638061, b: 0.6360482, a: 1}
+    - {r: 0.55342495, g: 0.869821, b: 0.9252291, a: 1}
+    - {r: 0.6638719, g: 0.93819535, b: 0.66044575, a: 1}
+    - {r: 0.8791893, g: 0.9252291, b: 0.4757053, a: 1}
+  - width: 7
+    height: 7
+    typeMap: 00000000ffffffffffffffffffffffffffffffff000000000000000000000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffff0000000000000000
+    colorMap: e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000
+    startLives: 40
+    aims:
+    - color: 1
+      type: 0
+      count: 80
+    - color: 2
+      type: 0
+      count: 80
+    - color: 3
+      type: 0
+      count: 80
+    - color: 4
+      type: 0
+      count: 80
+    oneStarScore: 320
+    twoStarsScore: 400
+    threeStarsScore: 500
+    heartChance: 10
+    multiplayerChance: 10
+    colors:
+    - {r: 0.9025687, g: 0.5638061, b: 0.6360482, a: 1}
+    - {r: 0.55342495, g: 0.869821, b: 0.9252291, a: 1}
+    - {r: 0.6638719, g: 0.93819535, b: 0.66044575, a: 1}
+    - {r: 0.8791893, g: 0.9252291, b: 0.4757053, a: 1}
+  - width: 5
+    height: 7
+    typeMap: ffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000
+    colorMap: 0100000001000000010000000100000000000000020000000200000002000000020000000200000003000000030000000300000003000000000000000100000001000000010000000100000001000000020000000200000002000000020000000000000003000000030000000300000003000000030000000100000001000000010000000100000000000000
+    startLives: 30
+    aims:
+    - color: 4
+      type: 0
+      count: 150
+    oneStarScore: 150
+    twoStarsScore: 300
+    threeStarsScore: 500
+    heartChance: 5
+    multiplayerChance: 5
+    colors:
+    - {r: 0.9025687, g: 0.5638061, b: 0.6360482, a: 1}
+    - {r: 0.55342495, g: 0.869821, b: 0.9252291, a: 1}
+    - {r: 0.6638719, g: 0.93819535, b: 0.66044575, a: 1}
+    - {r: 0.8791893, g: 0.9252291, b: 0.4757053, a: 1}
+  - width: 7
+    height: 11
+    typeMap: 00000000ffffffffffffffffffffffffffffffff000000000000000000000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffffffffffff0000000000000000ffffffffffffffffffffffffffffffff0000000000000000
+    colorMap: e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e1100000e110000000000000
+    startLives: 30
+    aims:
+    - color: 1
+      type: 0
+      count: 100
+    - color: 2
+      type: 0
+      count: 100
+    - color: 3
+      type: 0
+      count: 100
+    - color: 4
+      type: 0
+      count: 100
+    oneStarScore: 400
+    twoStarsScore: 600
+    threeStarsScore: 800
+    heartChance: 5
+    multiplayerChance: 5
+    colors:
+    - {r: 0.22053373, g: 0.9025687, b: 0.8222145, a: 1}
+    - {r: 0.76082814, g: 0.6098623, b: 0.9252291, a: 1}
+    - {r: 0.93819535, g: 0.7774027, b: 0.36102468, a: 1}
+    - {r: 0.9025687, g: 0.49411806, b: 0.6389348, a: 1}
+  - width: 3
+    height: 3
+    typeMap: ffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000
+    colorMap: 410100004101000000000000410100004101000041010000410100004101000000000000
+    startLives: 20
+    aims:
+    - color: 1
+      type: 0
+      count: 50
+    - color: 2
+      type: 0
+      count: 50
+    - color: 3
+      type: 0
+      count: 50
+    oneStarScore: 150
+    twoStarsScore: 300
+    threeStarsScore: 500
+    heartChance: 0
+    multiplayerChance: 0
+    colors:
+    - {r: 0.22053373, g: 0.9025687, b: 0.8222145, a: 1}
+    - {r: 0.76082814, g: 0.6098623, b: 0.9252291, a: 1}
+    - {r: 0.93819535, g: 0.7774027, b: 0.36102468, a: 1}
