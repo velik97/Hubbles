@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
+/// <summary>
+/// Animates scene loading
+/// </summary>
 public class SceneLoader : AnimatedMenuPanel {
 
 	public UnityEvent OnLoaded;
@@ -37,7 +40,7 @@ public class SceneLoader : AnimatedMenuPanel {
 	public void StartLoadingScene (int sceneIndex) {
 		startProgressPoint = 0f;
 		endProgressPoint = middleProgressPoint;
-		loadProgressBar.SetPersentage (startProgressPoint);
+		loadProgressBar.SetPercentage (startProgressPoint);
 
 		OnOpened.AddListener (delegate {
 			StartCoroutine (ILoad ());	
@@ -52,7 +55,7 @@ public class SceneLoader : AnimatedMenuPanel {
 	public void EndLoadingScene () {
 		startProgressPoint = middleProgressPoint;
 		endProgressPoint = 1f;
-		loadProgressBar.SetPersentage (startProgressPoint);
+		loadProgressBar.SetPercentage (startProgressPoint);
 		gameObject.SetActive (true);
 
 		OnLoaded.AddListener (delegate {
@@ -64,7 +67,7 @@ public class SceneLoader : AnimatedMenuPanel {
 
 	IEnumerator ILoad () {
 		for (float timeOfsset = 0f; timeOfsset < timeToProccess; timeOfsset += Time.deltaTime) {
-			loadProgressBar.SetPersentage (startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOfsset / timeToProccess));
+			loadProgressBar.SetPercentage (startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOfsset / timeToProccess));
 			yield return null;
 		}
 

@@ -32,10 +32,10 @@ public class LivesDisplay : MonoSingleton <LivesDisplay> {
 
 		if (!LivesManager.Instance.LivesAreFull) {
 			timeToNextLiveAddText.text = LivesManager.Instance.TimeToNextLiveAdd.MinutesToString ();
-			statusBar.SetPersentage (LivesManager.Instance.TimeScinceLastLiveAdd.ToInt (), LivesManager.Instance.minutesBetweenLivesAdding * 60);
+			statusBar.SetPercentage (LivesManager.Instance.TimeScinceLastLiveAdd.ToInt (), LivesManager.Instance.minutesBetweenLivesAdding * 60);
 		} else {
 			timeToNextLiveAddText.text = "";
-			statusBar.SetPersentage (1);
+			statusBar.SetPercentage (1);
 		}
 	}
 }

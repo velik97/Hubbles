@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Bonus, that paints surrounding nodes
+/// </summary>
 public class PaintBonus : Bonus <PaintBonus> {
 
 	public int color;

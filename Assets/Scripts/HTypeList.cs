@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Deprecated
+/// </summary>
 public class HTypeList : ScriptableSingleton <HTypeList> {
 
 	public List <HType> list = new List<HType> ();

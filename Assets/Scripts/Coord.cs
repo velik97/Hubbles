@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Coords for hexagonal field
+/// </summary>
 [System.Serializable]
 public class Coord {
 

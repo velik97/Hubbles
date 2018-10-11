@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Level Configuration. Need change
+/// </summary>
 [System.Serializable]
 public class LevelConfig {
 
@@ -9,12 +12,28 @@ public class LevelConfig {
 	public int[] colorMap;
 
 	public int startLives;
+	
+	/// <summary>
+	/// Deprecated
+	/// </summary>
 	public Aim[] aims;
 
+	/// <summary>
+	/// Deprecated
+	/// </summary>
 	public int oneStarScore;
+	/// <summary>
+	/// Deprecated
+	/// </summary>
 	public int twoStarsScore;
+	/// <summary>
+	/// Deprecated
+	/// </summary>
 	public int threeStarsScore;
 
+	/// <summary>
+	/// Need Change
+	/// </summary>
 	public float heartChance;
 	public float multiplayerChance;
 

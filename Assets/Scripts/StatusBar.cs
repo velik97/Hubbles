@@ -5,14 +5,14 @@ public class StatusBar : MonoBehaviour {
 
 	public RectTransform bar;
 
-	public void SetPersentage (int count, int max) {
-		SetPersentage (((float)count) / ((float)max));
+	public void SetPercentage (int count, int max) {
+		SetPercentage (((float)count) / ((float)max));
 	}
 
-	public void SetPersentage (float persantage) {
-		if (persantage > 1f)
-			persantage = 1f;
-		bar.anchorMax = new Vector2 (persantage, 1f);
+	public void SetPercentage (float percentage) {
+		if (percentage > 1f)
+			percentage = 1f;
+		bar.anchorMax = new Vector2 (percentage, 1f);
 		bar.offsetMin = Vector2.zero;
 		bar.offsetMax = Vector2.zero;
 	}

@@ -3,9 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 using AnimationF;
 
+/// <summary>
+/// Panel, that highlights, when all hubbles of certain color are highlighted
+/// </summary>
 public class HighlightPanel : MonoBehaviour {
 
-	public Canvas parenTcanvas;
+	public Canvas parentCanvas;
 	public Image image;
 	public Color defaultColor;
 
@@ -14,7 +17,7 @@ public class HighlightPanel : MonoBehaviour {
 	private IEnumerator currentCoroutine;
 
 	public void SetColor (Color color, bool betweenHubbles) {
-		parenTcanvas.sortingOrder = betweenHubbles ? 2 : -2;
+		parentCanvas.sortingOrder = betweenHubbles ? 2 : -2;
 		if (currentCoroutine != null)
 			StopCoroutine (currentCoroutine);
 		currentCoroutine = ISetColor (color);

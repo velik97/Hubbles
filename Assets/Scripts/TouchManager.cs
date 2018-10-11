@@ -2,30 +2,77 @@
 using System.Collections;
 using UnityEngine.Events;
 
+/// <summary>
+/// Manages all user touch input
+/// </summary>
 public class TouchManager : MonoSingleton <TouchManager> {
 
-
-
+	/// <summary>
+	/// Is touching field (doesn't matter game field, or BG)
+	/// </summary>
 	private bool isTouching;
+	/// <summary>
+	/// Started touching in this frame
+	/// </summary>
 	private bool justTouched;
+	/// <summary>
+	/// Stopped touching in this frame 
+	/// </summary>
 	private bool justLifted;
+	
+	/// <summary>
+	/// Is in process of rotating
+	/// </summary>
 	private bool isRotating;
+	/// <summary>
+	/// Started rotating in this frame
+	/// </summary>
 	private bool justStartedRotating;
+	/// <summary>
+	/// Stopped rotating in this frame
+	/// </summary>
 	private bool justEndedRotating;
+	/// <summary>
+	/// I touch on the game field, where the hubbles are?
+	/// </summary>
 	private bool touchIsOnField;
+	/// <summary>
+	/// Was rotating on previous step
+	/// </summary>
 	[HideInInspector] public bool wasRotating;
 
-	public UnityEvent OnTouchStart;
-	public UnityEvent OnTouchEnd;
+	/// <summary>
+	/// Event on start of touch
+	/// </summary>
+	public UnityEvent onTouchStart;
+	/// <summary>
+	/// Event on end of touch
+	/// </summary>
+	public UnityEvent onTouchEnd;
 
-	public UnityEvent OnRotatingStart;
-	public UnityEvent OnRotatingEnd;
+	/// <summary>
+	/// Event on rotating start
+	/// </summary>
+	public UnityEvent onRotatingStart;
+	/// <summary>
+	/// Event on rotating end
+	/// </summary>
+	public UnityEvent onRotatingEnd;
 
-	public UnityEvent OnTouchSurrounding;
+	/// <summary>
+	/// Event on start of touching surrounding
+	/// </summary>
+	public UnityEvent onTouchSurrounding;
 
+	/// <summary>
+	/// If started touching while animation or menu or beyond game field, but haven't lifted yet
+	/// </summary>
 	public bool liftedAfterWrongTouch;
 
-	public float minRotateRadious;
+	/// <summary>
+	/// Min distance from point of touch start enough to start rotation
+	/// </summary>
+	public float minRotateRadius;
 
 	private Vector2 previousRotateVector;
 	private Vector2 currentRotateVector;
@@ -64,7 +111,7 @@ public class TouchManager : MonoSingleton <TouchManager> {
 			liftedAfterWrongTouch = false;
 			justTouched = false;
 			if (!touchIsOnField) {
-				OnTouchSurrounding.Invoke ();
+				onTouchSurrounding.Invoke ();
 			}
 		}
 
@@ -78,23 +125,26 @@ public class TouchManager : MonoSingleton <TouchManager> {
 			DetermineRotating ();
 
 		if (justTouched && touchIsOnField) {
-			OnTouchStart.Invoke ();
+			onTouchStart.Invoke ();
 		}
 
 		if (justLifted) {
-			OnTouchEnd.Invoke ();
+			onTouchEnd.Invoke ();
 		}
 
 		if (justStartedRotating)
-			OnRotatingStart.Invoke ();
+			onRotatingStart.Invoke ();
 
 		if (justEndedRotating)
-			OnRotatingEnd.Invoke ();
+			onRotatingEnd.Invoke ();
 
-//		CheckReferneces ();
+//		CheckReferences ();
 //		print (angle);
 	}
 
+	/// <summary>
+	/// Determine touch conditions
+	/// </summary>
 	void DetermineTouches () {
 		if (Input.touches.Length > 0 || Input.GetMouseButton(0)) {
 			Vector3 inputPosition;
@@ -151,11 +201,14 @@ public class TouchManager : MonoSingleton <TouchManager> {
 
 	}
 
+	/// <summary>
+	/// Determine rotation conditions
+	/// </summary>
 	void DetermineRotating () {
 		justStartedRotating = false;
 		if (isTouching) {
 			if (!isRotating) {
-				if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadious * minRotateRadious) {
+				if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadius * minRotateRadius) {
 					justStartedRotating = true;
 					wasRotating = true;
 					isRotating = true;
@@ -170,8 +223,8 @@ public class TouchManager : MonoSingleton <TouchManager> {
 			if (Vector3.Cross (previousRotateVector, currentRotateVector).z > 0) {
 				deltaAngle *= -1;
 			}
-			if ((startTouchPos - currentTouchPos).sqrMagnitude < minRotateRadious * minRotateRadious) {
-				deltaAngle *= ((startTouchPos - currentTouchPos).magnitude) / minRotateRadious;
+			if ((startTouchPos - currentTouchPos).sqrMagnitude < minRotateRadius * minRotateRadius) {
+				deltaAngle *= ((startTouchPos - currentTouchPos).magnitude) / minRotateRadius;
 			}
 			previousRotateVector = currentRotateVector;
 			angle += deltaAngle;
@@ -193,11 +246,14 @@ public class TouchManager : MonoSingleton <TouchManager> {
 
 	}
 
+	/// <summary>
+	/// Find and initialize everything in start of the game
+	/// </summary>
 	void FindObjectsAndNullReferences () {
 		field = GameObject.FindWithTag ("MainField");
-		minRotateRadious *= Camera.main.orthographicSize;
+		minRotateRadius *= Camera.main.orthographicSize;
 		if (field == null) {
-			Debug.LogError ("There is no objext with 'MainField' tag!");
+			Debug.LogError ("There is no object with 'MainField' tag!");
 		}
 		mainCamera = Camera.main;
 		touchFieldsLayer = LayerMask.GetMask ("TouchFields");
@@ -232,14 +288,20 @@ public class TouchManager : MonoSingleton <TouchManager> {
 //		});
 	}
 
+	/// <summary>
+	/// Remove every listeners from every event
+	/// </summary>
 	public void FreeListeners () {
-		OnTouchStart.RemoveAllListeners ();
-		OnTouchEnd.RemoveAllListeners ();
-		OnRotatingStart.RemoveAllListeners ();
-		OnRotatingEnd.RemoveAllListeners ();
+		onTouchStart.RemoveAllListeners ();
+		onTouchEnd.RemoveAllListeners ();
+		onRotatingStart.RemoveAllListeners ();
+		onRotatingEnd.RemoveAllListeners ();
 	}
 
-	void CheckReferneces () {
+	/// <summary>
+	/// Log state of each boolean
+	/// </summary>
+	void CheckReferences () {
 		if (justTouched) {
 			print ("just touched");
 		}
@@ -271,7 +333,6 @@ public class TouchManager : MonoSingleton <TouchManager> {
 	void OnDrawGizmos () {
 		Gizmos.color = Color.blue;
 		Gizmos.DrawWireSphere (startTouchPos, 0.1f);
-
 	}
 
 }

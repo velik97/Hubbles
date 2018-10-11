@@ -2,6 +2,9 @@
 using System.Collections;
 using System;
 
+/// <summary>
+/// Deprecated
+/// </summary>
 [System.Serializable]
 public class HType : IComparable {
 

@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// Handles logic for level configs. Deprecated
+/// </summary>
 [CreateAssetMenu]
 public class LevelConfigHandler : ScriptableSingleton <LevelConfigHandler> {
 
@@ -52,7 +55,7 @@ public class LevelConfigHandler : ScriptableSingleton <LevelConfigHandler> {
 
 	public static LevelConfig GetConfig (int i) {
 		if (ConfigsCount < i) {
-			Debug.LogError ("[Level Config Hahdler] Config wasn't loaded\n There is only " + ConfigsCount +
+			Debug.LogError ("[Level Config Handler] Config wasn't loaded\n There is only " + ConfigsCount +
 				" level(s), but want to take the " + (i + 1).ToString () + " one (index is " + i.ToString () + ")");
 		}
 		return Instance.configs[i - 1];
@@ -60,11 +63,11 @@ public class LevelConfigHandler : ScriptableSingleton <LevelConfigHandler> {
 
 	public static LevelConfig CreateConfig (int i) {
 		if (i < ConfigsCount) {
-			Debug.LogError ("[Level Config Hahdler exeption] Config wasn't created\n" +
+			Debug.LogError ("[Level Config Handler exception] Config wasn't created\n" +
 			" Level " + i.ToString () + " already exists, but you are trying to create it");
 			return null;
 		} else if (i > ConfigsCount) {
-			Debug.LogError ("[Level Config Hahdler exeption] Config wasn't created\n" +
+			Debug.LogError ("[Level Config Handler exception] Config wasn't created\n" +
 			"There is only " + ConfigsCount + "levels, but you are trying to create " + i.ToString ());
 			return null;
 		}

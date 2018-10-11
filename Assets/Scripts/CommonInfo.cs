@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Contains color and sizes for hubbles and colors for theirs highlight and content
+/// </summary>
 public class CommonInfo : MonoSingleton <CommonInfo> {
-
+ 
 	[Range(0f,1f)]
 	public float highlightLightness;
 	[Range(0f,1f)]

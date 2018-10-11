@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Paid stuff, that can be counted
+/// </summary>
 public class CountablePaidStuff : PaidStuff {
 
 	[Space(10)]

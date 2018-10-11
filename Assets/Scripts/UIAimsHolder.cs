@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+/// <summary>
+/// Holds UI for aims. Deprecated
+/// </summary>
 public class UIAimsHolder : MonoBehaviour {
 
 	public UIAim UIAimPrefab;

@@ -1,4 +1,8 @@
-﻿[System.Serializable]
+﻿
+/// <summary>
+/// Aim for level. Deprecated
+/// </summary>
+[System.Serializable]
 public class Aim {
 
 	public int color;

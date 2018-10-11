@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Resizes camera for game field size
+/// </summary>
 public static class CameraResizer {
 
 	private static float screenWidth = 0;

@@ -3,24 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+/// <summary>
+/// Randomly generates map
+/// </summary>
 public class MapGenerator : MonoSingleton <MapGenerator> {
 
+	/// <summary>
+	/// Map width
+	/// </summary>
 	[HideInInspector] public int width;
+	/// <summary>
+	/// Map height
+	/// </summary>
 	[HideInInspector] public int height;
 
-	private float multiplayerChance;
+	/// <summary>
+	/// Probability of falling multiplier node
+	/// </summary>
+	private float multiplierChance;
+	/// <summary>
+	/// Probability of falling heart node. Need change
+	/// </summary>
 	private float heartChance;
 
 	public FieldResizer fRes;
 
+	/// <summary>
+	/// How many colors will be on the map
+	/// </summary>
 	private int colorsCount;
 
-//	[HideInInspector] public int[] thisColorNodesCount;
+	/// <summary>
+	/// Array of lists of nodes for certain colors
+	/// </summary>
 	[HideInInspector] public List <Node>[] thisColorNodes;
-
-	[HideInInspector] public float offsetX;
-	[HideInInspector] public float offsetY;
-
+	
 	public void StartGame () {
 		AssembleConfig (LevelConfigHandler.CurrentConfig);
 		GenerateMap ();
@@ -31,6 +48,10 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 		Coord.MapSize = new Coord (width, height);
 	}
 		
+	/// <summary>
+	/// Apply config params to map
+	/// </summary>
+	/// <param name="config">Config to apply</param>
 	void AssembleConfig (LevelConfig config) {
 		CommonInfo.Instance.UpdateColors ();
 		Coord.MapSize = new Coord (config.Width, config.Height);
@@ -49,7 +70,9 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 //		}
 //	}
 
-
+	/// <summary>
+	/// Generates new map with some duration 
+	/// </summary>
 	IEnumerator GenerateMap () {
 		Map.nodeMap = new Node[Coord.MapSize.x, Coord.MapSize.y];
 		thisColorNodes = new List<Node>[colorsCount];
@@ -78,6 +101,10 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 		HubblesManager.Instance.oneColorGroup.Clear ();
 	}
 
+	/// <summary>
+	/// Reestablish deleted nodes
+	/// </summary>
+	/// <param name="nodesToReestablish">Nodes deleted on previous step, that are needed to be reestablished</param>
 	public IEnumerator ReestablishMap (List<Node> nodesToReestablish) {
 		int color = nodesToReestablish[0].color;
 

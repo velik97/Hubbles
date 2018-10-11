@@ -2,39 +2,73 @@
 using System.Collections;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>
+/// Invokes most important game events. Need change
+/// </summary>
 public class GameManager : MonoSingleton <GameManager> {
 
-	public UnityEvent OnStartScene;
-	public UnityEvent OnStartGameSuccess;
-	public UnityEvent OnStartGameNotSuccess;
-	public UnityEvent OnWin;
-	public UnityEvent OnLose;
+	/// <summary>
+	/// Invokes on scene start. Deprecated
+	/// </summary>
+	public UnityEvent onStartScene;
+	/// <summary>
+	/// Invokes on start of game, if you have enough lives. Need cahnge
+	/// </summary>
+	public UnityEvent onStartGameSuccess;
+	/// <summary>
+	/// Invokes on start of game, if don't you have enough lives. Deprecated
+	/// </summary>
+	public UnityEvent onStartGameNotSuccess;
+	/// <summary>
+	/// Invokes on victory. Deprecated
+	/// </summary>
+	public UnityEvent onWin;
+	/// <summary>
+	/// Invokes on loss
+	/// </summary>
+	public UnityEvent onLose;
 
+	/// <summary>
+	/// Progress animation for scene load
+	/// </summary>
 	public SceneLoader sceneLoader;
 
+	/// <summary>
+	/// Is game successfully started? Deprecated
+	/// </summary>
 	public bool gameIsStarted;
 
+	/// <summary>
+	/// Button to next level. Deprecated
+	/// </summary>
 	public Button nextButton;
 
 	void Start () {
 		gameIsStarted = false;
 		if (LevelConfigHandler.CurrentIndex == LevelConfigHandler.ConfigsCount)
 			nextButton.interactable = false;
-		OnStartScene.Invoke ();
+		onStartScene.Invoke ();
 	}
 
+	/// <summary>
+	/// Checks if you have lives to star game. Need change
+	/// </summary>
 	public void StartGame () {
 		if (LivesManager.Instance.LivesAreEmpty) {
-			OnStartGameNotSuccess.Invoke ();
+			onStartGameNotSuccess.Invoke ();
 		} else {
 			LivesManager.Instance.TakeLive ();
 			gameIsStarted = true;
-			OnStartGameSuccess.Invoke ();
+			onStartGameSuccess.Invoke ();
 		}
 	}
 
+	/// <summary>
+	/// Counts collected stars. Deprecated
+	/// </summary>
 	public void Win () {
 		LevelConfigHandler.WinLevel ();
 
@@ -50,11 +84,11 @@ public class GameManager : MonoSingleton <GameManager> {
 		if (stars > prevStars) {
 			LevelConfigHandler.SetStarsCount (LevelConfigHandler.CurrentIndex, stars);
 		}
-		OnWin.Invoke ();
+		onWin.Invoke ();
 	}
 
 	public void Lose () {
-		OnLose.Invoke ();
+		onLose.Invoke ();
 	}
 
 	public void Restart () {
@@ -65,6 +99,9 @@ public class GameManager : MonoSingleton <GameManager> {
 		sceneLoader.StartLoadingScene (0);
 	}
 
+	/// <summary>
+	/// Deprecated
+	/// </summary>
 	public void GoToNextLevel () {
 		LevelConfigHandler.CurrentIndex++;
 		sceneLoader.StartLoadingScene (1);

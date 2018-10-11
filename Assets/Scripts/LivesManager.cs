@@ -2,6 +2,9 @@
 using System.Collections;
 using System;
 
+/// <summary>
+/// Deprecated
+/// </summary>
 public class LivesManager : MonoSingleton <LivesManager> {
 
 	public int maxLivesCount = 5;

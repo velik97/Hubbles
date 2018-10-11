@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Manages bonus use
+/// </summary>
 public class BonusManager : MonoBehaviour {
 
 	public MenuPanel cancelPanel;
@@ -18,7 +21,7 @@ public class BonusManager : MonoBehaviour {
 		cancelPanel.OpenPanel ();
 
 		TouchManager.Instance.FreeListeners ();
-		TouchManager.Instance.OnTouchEnd.AddListener (delegate {
+		TouchManager.Instance.onTouchEnd.AddListener (delegate {
 			switch (currentType) {
 				case BonusType.Paint:
 					PaintBonus.Instance.Apply (TouchManager.Instance.startTouchCoord);

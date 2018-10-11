@@ -3,6 +3,9 @@ using System.Collections;
 
 namespace AnimationF {
 
+	/// <summary>
+	/// Contains functions of polynomials for basic animations  
+	/// </summary>
 	public class Animf {
 
 		public static float EasyIn (float par, int pow) {

@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Base class for bonus
+/// </summary>
+/// <typeparam name="T">Type of bonus to follow singleton pattern</typeparam>
 public abstract class Bonus <T> : MonoSingleton <T> where T : MonoBehaviour
 {
 

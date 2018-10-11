@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Menu panel that closes or opens with animations
+/// </summary>
 [RequireComponent(typeof(Animator))]
 public class AnimatedMenuPanel  : MenuPanel {
 

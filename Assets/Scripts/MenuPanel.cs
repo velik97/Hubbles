@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.Events;
 
+/// <summary>
+/// Menu panel, that can be opened or closed
+/// </summary>
 public abstract class MenuPanel : MonoBehaviour {
 
 	public UnityEvent OnClosed;
