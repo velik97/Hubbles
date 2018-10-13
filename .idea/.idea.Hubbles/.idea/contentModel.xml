@@ -2,69 +2,49 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
-      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Editor" t="Include">
-          <e p="LevelEditorWindow.cs" t="Include" />
-        </e>
         <e p="Scripts" t="Include">
-          <e p="Aim.cs" t="Include" />
-          <e p="AnimatedMenuPanel.cs" t="Include" />
-          <e p="AnimationManager.cs" t="Include" />
-          <e p="AnimationNameSpace.cs" t="Include" />
-          <e p="Bonus.cs" t="Include" />
-          <e p="BonusManager.cs" t="Include" />
-          <e p="CameraResizer.cs" t="Include" />
-          <e p="CommonInfo.cs" t="Include" />
-          <e p="Coord.cs" t="Include" />
-          <e p="CountablePaidStuff.cs" t="Include" />
-          <e p="FieldResizer.cs" t="Include" />
-          <e p="GameManager.cs" t="Include" />
-          <e p="HighlightPanel.cs" t="Include" />
-          <e p="HTime.cs" t="Include" />
-          <e p="HTypeList.cs" t="Include" />
-          <e p="Hubble.cs" t="Include" />
-          <e p="HubblesManager.cs" t="Include" />
-          <e p="InfoMenuPanel.cs" t="Include" />
-          <e p="InGameHealthPack.cs" t="Include" />
-          <e p="InGameSOHahdler.cs" t="Include" />
-          <e p="InMenuInfoPanel.cs" t="Include" />
-          <e p="Level Editor" t="Include">
-            <e p="HType.cs" t="Include" />
-            <e p="LE_UIGenerator.cs" t="Include" />
-            <e p="LEHubble.cs" t="Include" />
-            <e p="LEMapManager.cs" t="Include" />
-            <e p="LETouchManager.cs" t="Include" />
+          <e p="Bonuses" t="Include">
+            <e p="Bonus.cs" t="Include" />
+            <e p="PaintBonus.cs" t="Include" />
           </e>
-          <e p="LevelConfig.cs" t="Include" />
-          <e p="LevelConfigHandler.cs" t="Include" />
-          <e p="LivesDisplay.cs" t="Include" />
-          <e p="LivesManager.cs" t="Include" />
-          <e p="Map.cs" t="Include" />
-          <e p="MapGenerator.cs" t="Include" />
-          <e p="MenuButton.cs" t="Include" />
-          <e p="MenuManager.cs" t="Include" />
-          <e p="MenuPanel.cs" t="Include" />
-          <e p="MenuUIGenerator.cs" t="Include" />
-          <e p="MonoSingleton.cs" t="Include" />
-          <e p="PaidStuff.cs" t="Include" />
-          <e p="PaintBonus.cs" t="Include" />
-          <e p="SceneLoader.cs" t="Include" />
-          <e p="ScriptableSingleton.cs" t="Include" />
-          <e p="SetableHeaderAndText.cs" t="Include" />
-          <e p="SimpleMenuPanel.cs" t="Include" />
-          <e p="SimpleStarsHolder.cs" t="Include" />
-          <e p="SoundManager.cs" t="Include" />
-          <e p="StarsHolder.cs" t="Include" />
-          <e p="StatusBar.cs" t="Include" />
-          <e p="TouchManager.cs" t="Include" />
-          <e p="UIAim.cs" t="Include" />
-          <e p="UIAimsHolder.cs" t="Include" />
-          <e p="UIGenerator.cs" t="Include" />
-          <e p="ValutaDiaplay.cs" t="Include" />
-          <e p="ValutaManager.cs" t="Include" />
-          <e p="WinMenuPanel.cs" t="Include" />
+          <e p="GameElements" t="Include">
+            <e p="Hubble.cs" t="Include" />
+            <e p="Map.cs" t="Include" />
+          </e>
+          <e p="LevelConfiguration" t="Include">
+            <e p="LevelConfig.cs" t="Include" />
+          </e>
+          <e p="MainManagers" t="Include">
+            <e p="AnimationManager.cs" t="Include" />
+            <e p="BonusManager.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="HubblesManager.cs" t="Include" />
+            <e p="MapGenerator.cs" t="Include" />
+            <e p="MenuManager.cs" t="Include" />
+            <e p="SceneLoader.cs" t="Include" />
+            <e p="SoundManager.cs" t="Include" />
+            <e p="TouchManager.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="AnimatedMenuPanel.cs" t="Include" />
+            <e p="CameraResizer.cs" t="Include" />
+            <e p="FieldResizer.cs" t="Include" />
+            <e p="HighlightPanel.cs" t="Include" />
+            <e p="MenuPanel.cs" t="Include" />
+            <e p="SetableHeaderAndText.cs" t="Include" />
+            <e p="SimpleMenuPanel.cs" t="Include" />
+            <e p="StatusBar.cs" t="Include" />
+          </e>
+          <e p="Util" t="Include">
+            <e p="AnimationFunctions.cs" t="Include" />
+            <e p="Coord.cs" t="Include" />
+            <e p="Enums.cs" t="Include" />
+            <e p="HubblesAppearanceInfo.cs" t="Include" />
+            <e p="MonoSingleton.cs" t="Include" />
+            <e p="RandomGenerator.cs" t="Include" />
+          </e>
         </e>
       </e>
       <e p="Hubbles.sln" t="IncludeFlat" />
