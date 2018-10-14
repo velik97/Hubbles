@@ -31,6 +31,11 @@ public class GameManager : MonoSingleton <GameManager>
 	private void Awake()
 	{
 		LevelConfig.instance = levelConfig;
+		
+		onStartGame.AddListener(sceneLoader.EndLoadingScene);
+		onStartGame.AddListener(MapGenerator.Instance.StartGame);
+		onStartGame.AddListener(AnimationManager.Instance.StartGame);
+		onStartGame.AddListener(HubblesManager.Instance.StartGame);
 	}
 
 	void Start () {
@@ -42,7 +47,8 @@ public class GameManager : MonoSingleton <GameManager>
 	}
 
 	public void Restart () {
-		sceneLoader.StartLoadingScene (1);
+		// TODO Change to scene index 1
+		sceneLoader.StartLoadingScene (0);
 	}
 
 	public void GoToMenu () {

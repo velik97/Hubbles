@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -24,6 +25,14 @@ public class Hubble : MonoBehaviour{
 	/// </summary>
 	public SpriteRenderer sr;
 	/// <summary>
+	/// Text in circle
+	/// </summary>
+	public GameObject textObject;
+	/// <summary>
+	/// Sprite Renderer in circle
+	/// </summary>
+	public GameObject srObject;
+	/// <summary>
 	/// Content in circle whether it's a text or a sprite
 	/// </summary>
 	public GameObject content;
@@ -36,6 +45,11 @@ public class Hubble : MonoBehaviour{
 	/// </summary>
 	public AudioClip popSound;
 
+	private void Awake()
+	{
+		transform.SetParent (MapGenerator.Instance.transform);
+	}
+
 	/// <summary>
 	/// Set hubble visual according to params
 	/// </summary>
@@ -43,44 +57,44 @@ public class Hubble : MonoBehaviour{
 	/// <param name="type">type of hubble</param>
 	/// <param name="prevType">prev type of hubble</param>
 	/// <param name="points">points of hubble</param>
-	public void Set (int color, HubbleType type, HubbleType prevType, int points) {
-
-		bool deleteContent;
-		bool instantiateContent;
-
-		if ((type == HubbleType.Usual && prevType == HubbleType.Usual) ||
-		    (type != HubbleType.Usual && prevType != HubbleType.Usual)) {
-			deleteContent = false;
-			instantiateContent = false;
-		} else {
-			deleteContent = true;
-			instantiateContent = true;
+	public void Set (int color, HubbleType type, HubbleType prevType, int points)
+	{
+		if (type == HubbleType.Usual ^ prevType == HubbleType.Usual)
+		{
+			if (content != null)
+				content.SetActive(false);
+			content = type == HubbleType.Usual ? textObject : srObject;
+			if (content != null)
+				content.SetActive(true);
+		}
+			
+		bool contentWasInstantiated = false;
+		if (type == HubbleType.Usual && text == null)
+		{
+			textObject = Instantiate
+				(HubblesAppearanceInfo.Instance.textPrefab, transform.position, Quaternion.identity);
+			content = textObject;
+			text = content.GetComponentInChildren <Text> ();
+			contentWasInstantiated = true;
+		}
+		else if (type != HubbleType.Usual && sr == null)
+		{
+			srObject = Instantiate
+				(HubblesAppearanceInfo.Instance.imagePrefab, transform.position, Quaternion.identity);
+			content = srObject;
+			sr = content.GetComponentInChildren <SpriteRenderer> ();
+			contentWasInstantiated = true;
 		}
 
-		if (deleteContent)
-			Destroy (content);
-
-		if (instantiateContent) {
-			if (type == HubbleType.Usual) {
-				GameObject textPrefab = Instantiate (HubblesAppearanceInfo.Instance.textPrefab, transform.position, Quaternion.identity) as GameObject;
-				textPrefab.transform.SetParent (mainCircle.transform, true);
-				content = textPrefab;
-				content.transform.localPosition = Vector3.zero;
-				text = textPrefab.GetComponentInChildren <Text> ();
-			} else {
-				GameObject imagePrefab = Instantiate (HubblesAppearanceInfo.Instance.imagePrefab, transform.position, Quaternion.identity) as GameObject;
-				imagePrefab.transform.SetParent (mainCircle.transform, true);
-				content = imagePrefab;
-				content.transform.localPosition = Vector3.zero;
-				imagePrefab.transform.localScale = Vector3.one;
-				sr = content.GetComponent <SpriteRenderer> ();
-			}
+		if (contentWasInstantiated)
+		{
+			content.transform.SetParent (mainCircle.transform, true);
+			content.transform.localPosition = Vector3.zero;
+			content.transform.localScale = Vector3.one;
 		}
 
-		mainCircle.GetComponent <SpriteRenderer> ().color = HubblesAppearanceInfo.Instance.usualColors [color];
-		highLight.GetComponent <SpriteRenderer> ().color = HubblesAppearanceInfo.Instance.lightColors [color];
-
-		transform.SetParent (MapGenerator.Instance.transform);
+		mainCircle.GetComponent <SpriteRenderer> ().color = HubblesAppearanceInfo.Instance.UsualColors [color];
+		highLight.GetComponent <SpriteRenderer> ().color = HubblesAppearanceInfo.Instance.LightColors [color];
 
 		StartCoroutine (AdjustColorAndTypeWithDelay (color, type, points));
 	}
@@ -99,10 +113,22 @@ public class Hubble : MonoBehaviour{
 	IEnumerator AdjustColorAndTypeWithDelay (int color, HubbleType type, int points) {
 		yield return new WaitForSeconds (points == 1 ? .01f : .2f);
 		if (type == HubbleType.Usual) {
-			text.color = HubblesAppearanceInfo.Instance.darkColors [color];
-				text.text = points.ToString ();
+			text.text = points.ToString ();
+			text.color = HubblesAppearanceInfo.Instance.DarkColors [color];
 		} else {
-			sr.color = HubblesAppearanceInfo.Instance.darkColors [color];
+			switch (type)
+			{
+				case HubbleType.PopLive:
+					sr.sprite = HubblesAppearanceInfo.Instance.popLiveSprite;
+					break;
+				case HubbleType.RotationLive:
+					sr.sprite = HubblesAppearanceInfo.Instance.rotationLiveSprite;
+					break;
+				case HubbleType.Multiplier:
+					sr.sprite = HubblesAppearanceInfo.Instance.multiplierSprite;
+					break;
+			}
+			sr.color = HubblesAppearanceInfo.Instance.DarkColors [color];
 		}
 	}
 

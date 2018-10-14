@@ -16,16 +16,19 @@ public class LevelConfig : ScriptableObject {
 	private int startRotations;
 
 	
-	[SerializeField] [Range(0,1)]
+	[SerializeField] [Range(0,.33f)]
 	private float popLiveChance;
-	[SerializeField] [Range(0,1)]
+	[SerializeField] [Range(0,.33f)]
 	private float rotationLiveChance;
 
-	[SerializeField] [Range(0,1)]
+	[SerializeField] [Range(0,.33f)]
 	private float multiplierChance;
 	
 	[SerializeField]
 	private Color[] colors;
+
+	[SerializeField]
+	private int[] levelScores;
 
 	public static LevelConfig instance;
 
@@ -52,43 +55,24 @@ public class LevelConfig : ScriptableObject {
 		get { return instance.popLiveChance; }
 	}
 	
-	public float RotationLiveChance
+	public static float RotationLiveChance
 	{
-		get { return rotationLiveChance; }
+		get { return instance.rotationLiveChance; }
 	}
 
 	public static float MultiplierChance
 	{
 		get { return instance.multiplierChance; }
 	}
-	
-	/// <summary>
-	/// Also considers map size
-	/// </summary>
-	public static float WeightedPopLiveChance
-	{
-		get { return instance.popLiveChance / (instance.width * instance.height); }
-	}
-	
-	/// <summary>
-	/// Also considers map size
-	/// </summary>
-	public static float WeightedRotationLiveChance
-	{
-		get { return instance.rotationLiveChance / (instance.width * instance.height); }
-	}
-
-	/// <summary>
-	/// Also considers map size
-	/// </summary>
-	public static float WeightedMultiplierChance
-	{
-		get { return instance.multiplierChance / (instance.width * instance.height); }
-	}
 
 	public static Color[] Colors
 	{
 		get { return instance.colors; }
+	}
+	
+	public static int[] LevelScores
+	{
+		get { return instance.levelScores; }
 	}
 
 	// ========================

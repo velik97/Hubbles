@@ -22,20 +22,28 @@ public static class RandomGenerator
         return Prng.Next(0, LevelConfig.Colors.Length);
     }
     
+    public static int RandomColor(int prevColor)
+    {
+        int newColor = Prng.Next(0, LevelConfig.Colors.Length-1);
+        if (newColor == prevColor)
+            newColor = LevelConfig.Colors.Length - 1;
+        return newColor;
+    }
+    
     public static HubbleType RandomType()
     {
         int randomNumber = Prng.Next(0, 1000);
         float comparer = 0f;
 
-        comparer += LevelConfig.WeightedPopLiveChance;
+        comparer += LevelConfig.PopLiveChance * 1000f;
         if (randomNumber < comparer)
             return HubbleType.PopLive;
 
-        comparer += LevelConfig.WeightedRotationLiveChance;
+        comparer += LevelConfig.RotationLiveChance * 1000f;
         if (randomNumber < comparer)
             return HubbleType.RotationLive;
 
-        comparer += LevelConfig.WeightedMultiplierChance;
+        comparer += LevelConfig.MultiplierChance * 1000f;
         if (randomNumber < comparer)
             return HubbleType.Multiplier;
 

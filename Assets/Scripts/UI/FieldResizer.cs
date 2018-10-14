@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// Resizes game field for given map parameters
 /// </summary>
-public class FieldResizer : MonoBehaviour {
+public class FieldResizer : MonoSingleton<FieldResizer> {
 	
 	/// <summary>
 	/// Resize game field for given params

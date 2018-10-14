@@ -25,9 +25,6 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 	/// Probability of falling heart node. Need change
 	/// </summary>
 	private float heartChance;
-
-	public FieldResizer fRes;
-
 	/// <summary>
 	/// How many colors will be on the map
 	/// </summary>
@@ -43,7 +40,7 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 
 		Camera.main.ResizeInGame ();
 		StartCoroutine(GenerateMap ());
-		fRes.Resize (width, height);
+		FieldResizer.Instance.Resize (width, height);
 		Coord.MapSize = new Coord (width, height);
 	}
 		
@@ -76,10 +73,8 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 				Coord newCoord = new Coord (i, j);
 				if (Coord.MapContains (newCoord)) {
 					Node newNode = Map.SetNode (RandomGenerator.RandomColor(), RandomGenerator.RandomType(), newCoord);
-					if (newNode.type != 0) {
-						thisColorNodes [newNode.color].Add (newNode);
-						yield return new WaitForSeconds (.01f);
-					}
+					thisColorNodes [newNode.color].Add (newNode);
+					yield return new WaitForSeconds (.01f);
 				}
 			}
 		}

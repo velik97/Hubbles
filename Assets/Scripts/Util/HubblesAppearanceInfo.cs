@@ -20,19 +20,45 @@ public class HubblesAppearanceInfo : MonoSingleton <HubblesAppearanceInfo> {
 		}
 	}
 
-	public Color[] usualColors;
-	public Color[] darkColors;
-	public Color[] lightColors;
+	private Color[] usualColors;
+	private Color[] darkColors;
+	private Color[] lightColors;
 
 	public Hubble hubblePrefab;
 	public GameObject imagePrefab;
-	public Image popLiveImage;
-	public Image rotationLiveImage;
-	public Image multiplierImage;
+	public Sprite popLiveSprite;
+	public Sprite rotationLiveSprite;
+	public Sprite multiplierSprite;
 	public GameObject textPrefab;
 
-	void Awake () {
-		DontDestroyOnLoad (this);
+	public Color[] UsualColors
+	{
+		get
+		{
+			if (usualColors == null)
+				UpdateColors();
+			return usualColors;
+		}
+	}
+
+	public Color[] DarkColors
+	{
+		get
+		{
+			if (darkColors == null)
+				UpdateColors();
+			return darkColors;
+		}
+	}
+
+	public Color[] LightColors
+	{
+		get
+		{
+			if (lightColors == null)
+				UpdateColors();
+			return lightColors;
+		}
 	}
 
 	public void UpdateColors () {

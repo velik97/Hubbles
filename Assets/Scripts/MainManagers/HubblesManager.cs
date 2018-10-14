@@ -42,15 +42,21 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// <summary>
 	/// Remained popLives
 	/// </summary>
-	public int popLives;
+	[HideInInspector] public int popLives;
 	/// <summary>
 	/// Remained rotateLives
 	/// </summary>
-	public int rotateLives;
+	[HideInInspector] public int rotateLives;
 	/// <summary>
 	/// Total achieved score in this session
 	/// </summary>
-	public int totalScore;
+	[HideInInspector] public int totalScore;
+	/// <summary>
+	/// Total achieved score in this session
+	/// <summary>
+	/// Level in the game
+	/// </summary>
+	[HideInInspector] public int level;
 
 	/// <summary>
 	/// Is game ended
@@ -111,28 +117,27 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			}
 		});
 
-		// There will be two types of popLives. Need change
 		TouchManager.Instance.onRotatingEnd.AddListener (delegate {
 			if (canRotate) {
 				int turns = (Mathf.RoundToInt (TouchManager.Instance.angle / 60f) % 360 + 360) % 6;
 				AnimationManager.Instance.StopRotating ();
 				AnimationManager.Instance.PullToMap (currentNode, surroundingNodes, turns, TouchManager.Instance.angle);
+				AnimationManager.Instance.rotationLivesText.text = rotateLives.ToString();
 				if (turns != 0) {
 					if (previousNode!=null) {
 						if (currentNode != previousNode || !turnedPreviously) {
-							popLives -= 1;
+							rotateLives -= 1;
 						}
 					} else {
-						popLives -= 1;
-						if (popLives < 0)
-							popLives = 0;
+						rotateLives -= 1;
+						if (rotateLives < 0)
+							rotateLives = 0;
 					}
 					turnedPreviously = true;
 					previousNode = currentNode;
 				} else {
 					turnedPreviously = false;
 				}
-				AnimationManager.Instance.livesText.text = popLives.ToString();
 
 				CheckLivesAndAims ();
 			}
@@ -143,14 +148,12 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 				AnimationManager.Instance.UnHighLightEveryThing(false);
 				if (oneColorGroup.Count > 0) {
 					DeleteGroup (currentNode.color);
+					popLives -= 1;
+					if (popLives < 0)
+						popLives = 0;
 					AnimationManager.Instance.DeleteGroup (oneColorGroup);
 					previousNode = null;
 					turnedPreviously = false;
-					popLives -= 2;
-					if (popLives < 0)
-						popLives = 0;
-					AnimationManager.Instance.livesText.text = popLives.ToString();
-
 					CheckLivesAndAims ();
 				} else {
 					FindGroup ();
@@ -161,7 +164,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	}
 
 	/// <summary>
-	/// Check if aims are done or popLives are out. Need Cahnge
+	/// Check if popLives are out
 	/// </summary>
 	void CheckLivesAndAims () {
 		if (popLives == 0) {
@@ -177,7 +180,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	public void ContinueWithNewSteps (int steps) {
 		popLives += steps;
 		gameEnded = false;
-		AnimationManager.Instance.livesText.text = popLives.ToString();
+		AnimationManager.Instance.popLivesText.text = popLives.ToString();		
 		AnimationManager.Instance.isAnimating = false;
 	}
 
@@ -224,6 +227,8 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		totalScore += points * multiplier;
 		popLives += popHeal * multiplier;
 		rotateLives += rotationHeal * multiplier;
+		while (totalScore > LevelConfig.LevelScores[level])
+			level++;
 	}
 
 	/// <summary>
@@ -302,7 +307,8 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		gameEnded = false;
 
 		totalScore = 0;
-		AnimationManager.Instance.livesText.text = popLives.ToString();
+		level = 1;
+//		AnimationManager.Instance.popLivesText.text = popLives.ToString();
 	}
 
 //	void OnDrawGizmos () {

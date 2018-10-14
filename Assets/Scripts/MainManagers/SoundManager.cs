@@ -5,7 +5,6 @@ using System.Collections.Generic;
 /// <summary>
 /// Need change
 /// </summary>
-[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoSingleton <SoundManager> {
 
 	public AudioSource audioSourcePrefab;

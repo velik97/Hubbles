@@ -38,7 +38,7 @@ public class Node {
 	/// </summary>
 	public void Reestablish () {
 		points++;
-		color = RandomGenerator.RandomColor();
+		color = RandomGenerator.RandomColor(color);
 		HubbleType newType = RandomGenerator.RandomType();
 		
 		hubble.Set (color, newType, type, points);
@@ -95,11 +95,9 @@ public class Map : ScriptableObject {
 	/// <param name="coord">coord for new node</param>
 	/// <returns>created node</returns>
 	public static Node SetNode (int color, HubbleType type, Coord coord) {
-		Hubble hubble = null;
-		if (type != 0) {
-			hubble = Instantiate (HubblesAppearanceInfo.Instance.hubblePrefab, Coord.Vector2FromCoord (coord), Quaternion.identity) as Hubble;
-			hubble.transform.localScale *= HubblesAppearanceInfo.Instance.FitHubbleSize;
-		}
+		Hubble hubble = Instantiate (HubblesAppearanceInfo.Instance.hubblePrefab,
+			 Coord.Vector2FromCoord (coord), Quaternion.identity);
+		hubble.transform.localScale *= HubblesAppearanceInfo.Instance.FitHubbleSize;
 		
 		return SetNode (color, type, 1, hubble, coord);
 	}
@@ -113,8 +111,8 @@ public class Map : ScriptableObject {
 	/// <param name="hubble">hubble for new nodw</param>
 	/// <param name="coord">coord for new node</param>
 	/// <returns>created node</returns>
-	public static Node SetNode (int color, HubbleType type, int points, Hubble hubble, Coord coord) {
-
+	public static Node SetNode (int color, HubbleType type, int points, Hubble hubble, Coord coord)
+	{
 		hubble.Set (color, type, points);
 		Node resault = new Node (color, type, points, hubble);
 		nodeMap [coord.x, coord.y] = resault;

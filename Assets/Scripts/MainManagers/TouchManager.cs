@@ -67,7 +67,7 @@ public class TouchManager : MonoSingleton <TouchManager> {
 	/// <summary>
 	/// If started touching while animation or menu or beyond game field, but haven't lifted yet
 	/// </summary>
-	public bool liftedAfterWrongTouch;
+	public bool liftedAfterFalseTouch;
 
 	/// <summary>
 	/// Min distance from point of touch start enough to start rotation
@@ -86,34 +86,35 @@ public class TouchManager : MonoSingleton <TouchManager> {
 
 	private Camera mainCamera;
 
-	public void StartGame () {
+	private void Awake()
+	{
 		FindObjectsAndNullReferences ();
 	}
 
-	void Update () { 
+	private void Update () { 
 
 		DetermineTouches ();
 
 		if (justTouched && (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened || !touchIsOnField)) {
-			liftedAfterWrongTouch = false;
+			liftedAfterFalseTouch = false;
 			justTouched = false;
 			if (!touchIsOnField) {
 				onTouchSurrounding.Invoke ();
 			}
 		}
+		
+		if (justTouched && touchIsOnField) {
+			onTouchStart.Invoke ();
+		}
 
-		if ((justLifted || justEndedRotating) && !liftedAfterWrongTouch) {
-			liftedAfterWrongTouch = true;
+		if ((justLifted || justEndedRotating) && !liftedAfterFalseTouch) {
+			liftedAfterFalseTouch = true;
 			justLifted = false;
 			justEndedRotating = false;
 		}
 
-		if (liftedAfterWrongTouch)
+		if (liftedAfterFalseTouch)
 			DetermineRotating ();
-
-		if (justTouched && touchIsOnField) {
-			onTouchStart.Invoke ();
-		}
 
 		if (justLifted) {
 			onTouchEnd.Invoke ();
@@ -252,27 +253,7 @@ public class TouchManager : MonoSingleton <TouchManager> {
 		isRotating = false;
 		touchIsOnField = false;
 		wasRotating = false;
-		liftedAfterWrongTouch = true;
-
-//		OnTouchStart.AddListener (delegate {
-//			print ("justTouched"); 
-//		});
-//
-//		OnTouchEnd.AddListener (delegate {
-//			print ("justLifted"); 
-//		});
-//
-//		OnRotatingStart.AddListener (delegate {
-//			print ("justStartedRotating"); 
-//		});
-//
-//		OnRotatingEnd.AddListener (delegate {
-//			print ("justEndedRotating"); 
-//		});
-//
-//		OnTouchSurrounding.AddListener (delegate {
-//			print ("touchSurrounding"); 
-//		});
+		liftedAfterFalseTouch = true;
 	}
 
 	/// <summary>
