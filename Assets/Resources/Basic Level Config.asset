@@ -15,9 +15,12 @@ MonoBehaviour:
   height: 11
   startPopLives: 10
   startRotations: 20
-  popLiveChance: 0
-  rotationLiveChance: 0
-  multiplierChance: 0
+  popLiveChance: 0.03
+  rotationLiveChance: 0.05
+  multiplierChance: 0.05
   colors:
   - {r: 0.9254902, g: 0.29803923, b: 0.33333334, a: 1}
+  - {r: 0.9490196, g: 0.8, b: 0.1254902, a: 1}
+  - {r: 0.61960787, g: 0.9019608, b: 0.23921569, a: 1}
+  - {r: 0.21568628, g: 0.7764706, b: 0.9019608, a: 1}
   levelScores: 000000003200000064000000c8000000f4010000e8030000d00700008813000010270000204e000050c3000040420f00

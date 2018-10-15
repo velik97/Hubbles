@@ -81,25 +81,31 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	}
 
 	/// <summary>
-	/// Subscribe bonus activation on touch event. Need change
-	/// </summary>
-	/// <typeparam name="T">Bonus type</typeparam>
-	public void ActivatePaintBonus <T> () where T : Bonus <T> {
-		TouchManager.Instance.onTouchEnd.AddListener (delegate {
-			PaintBonus.Instance.Apply (TouchManager.Instance.startTouchCoord);
-//			T.Instance.Apply (TouchManager.Instance.startTouchCoord);
-		});
-	}
-
-	/// <summary>
 	/// Subscribe on all touch events. Need change.
 	/// </summary>
 	public void SubscribeOnTouchEvents () {
-		TouchManager.Instance.onTouchStart.AddListener (StartTouch);
-		TouchManager.Instance.onTouchSurrounding.AddListener (TouchSurrounding);
-		TouchManager.Instance.onRotatingStart.AddListener (StartRotating);
-		TouchManager.Instance.onRotatingEnd.AddListener (EndRotating);
-		TouchManager.Instance.onTouchEnd.AddListener (EndTouch);
+		TouchManager.Instance.touchState.AddListener(delegate(TouchState touchState)
+		{
+			switch (touchState)
+			{
+				case TouchState.StartedTouching:
+					StartTouch();
+					break;
+				case TouchState.EndedTouching:
+					EndTouch();
+					break;
+				case TouchState.StartedRotating:
+					StartRotating();
+					break;
+				case TouchState.EndedRotating:
+					EndRotating();
+					break;
+				case TouchState.StartedTouchingSurrounding:
+					TouchSurrounding();
+					break;
+			}
+		});
+		
 	}
 
 	private void StartTouch()
@@ -169,21 +175,19 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	
 	private void EndTouch()
 	{
-		if (!TouchManager.Instance.wasRotating) {
-			AnimationManager.Instance.UnHighLightEveryThing(false);
-			if (oneColorGroup.Count > 0) {
-				DeleteGroup (currentNode.color);
-				popLives -= 1;
-				if (popLives < 0)
-					popLives = 0;
-				AnimationManager.Instance.DeleteGroup (oneColorGroup);
-				previousNode = null;
-				turnedPreviously = false;
-				CheckLivesAndAims ();
-			} else {
-				FindGroup ();
-				AnimationManager.Instance.HighLightHubbles (oneColorGroup);
-			}
+		AnimationManager.Instance.UnHighLightEveryThing(false);
+		if (oneColorGroup.Count > 0) {
+			DeleteGroup (currentNode.color);
+			popLives -= 1;
+			if (popLives < 0)
+				popLives = 0;
+			AnimationManager.Instance.DeleteGroup (oneColorGroup);
+			previousNode = null;
+			turnedPreviously = false;
+			CheckLivesAndAims ();
+		} else {
+			FindGroup ();
+			AnimationManager.Instance.HighLightHubbles (oneColorGroup);
 		}
 	}
 

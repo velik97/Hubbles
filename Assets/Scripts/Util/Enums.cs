@@ -8,11 +8,13 @@
 
 public enum TouchState
 {
-    NotTouching = 0,
+    Empty = 0,
     StartedTouching = 1,
-    IsTouching = 2,
-    EndedTouching = 3,
-    StartedRotating = 4,
-    IsRotating = 5,
-    EndedRotating = 6
+    EndedTouching = 2,
+    StartedRotating = 3,
+    EndedRotating = 4,
+    StartedTouchingSurrounding = 5,
+    EndedTouchingSurrounding = 6,
+    StartedFalseTouch = 7,
+    EndedFalseTouch = 8
 }

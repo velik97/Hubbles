@@ -5,69 +5,9 @@ using UnityEngine.Events;
 /// <summary>
 /// Manages all user touch input
 /// </summary>
-public class TouchManager : MonoSingleton <TouchManager> {
-
-	/// <summary>
-	/// Is touching field (doesn't matter game field, or BG)
-	/// </summary>
-	private bool isTouching;
-	/// <summary>
-	/// Started touching in this frame
-	/// </summary>
-	private bool justTouched;
-	/// <summary>
-	/// Stopped touching in this frame 
-	/// </summary>
-	private bool justLifted;
-	
-	/// <summary>
-	/// Is in process of rotating
-	/// </summary>
-	private bool isRotating;
-	/// <summary>
-	/// Started rotating in this frame
-	/// </summary>
-	private bool justStartedRotating;
-	/// <summary>
-	/// Stopped rotating in this frame
-	/// </summary>
-	private bool justEndedRotating;
-	/// <summary>
-	/// I touch on the game field, where the hubbles are?
-	/// </summary>
-	private bool touchIsOnField;
-	/// <summary>
-	/// Was rotating on previous step
-	/// </summary>
-	[HideInInspector] public bool wasRotating;
-
-	/// <summary>
-	/// Event on start of touch
-	/// </summary>
-	public UnityEvent onTouchStart;
-	/// <summary>
-	/// Event on end of touch
-	/// </summary>
-	public UnityEvent onTouchEnd;
-
-	/// <summary>
-	/// Event on rotating start
-	/// </summary>
-	public UnityEvent onRotatingStart;
-	/// <summary>
-	/// Event on rotating end
-	/// </summary>
-	public UnityEvent onRotatingEnd;
-
-	/// <summary>
-	/// Event on start of touching surrounding
-	/// </summary>
-	public UnityEvent onTouchSurrounding;
-
-	/// <summary>
-	/// If started touching while animation or menu or beyond game field, but haven't lifted yet
-	/// </summary>
-	public bool liftedAfterFalseTouch;
+public class TouchManager : MonoSingleton <TouchManager>
+{
+	public ReactiveProperty<TouchState> touchState;
 
 	/// <summary>
 	/// Min distance from point of touch start enough to start rotation
@@ -91,53 +31,81 @@ public class TouchManager : MonoSingleton <TouchManager> {
 		FindObjectsAndNullReferences ();
 	}
 
-	private void Update () { 
-		
-		if (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened)
-			return;
+	private void Update ()
+	{
+		TouchState initialState = touchState.Value;
+		TouchState resultState = initialState;
+		bool isTouching = false;
+		bool touchIsOnField = false;
+		DetermineTouches(out isTouching, out touchIsOnField);
 
-		DetermineTouches ();
+		bool possibleFalseTouch = AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened;
 
-		if (justTouched && !touchIsOnField) {
-			liftedAfterFalseTouch = false;
-			justTouched = false;
-			if (!touchIsOnField) {
-				onTouchSurrounding.Invoke ();
+		if (isTouching)
+		{
+			if (initialState == TouchState.Empty)
+			{
+				if (possibleFalseTouch)
+					resultState = TouchState.StartedFalseTouch;
+				else if (touchIsOnField)
+				{
+					resultState = TouchState.StartedTouching;
+					startTouchPos = currentTouchPos;
+					startTouchCoord = Coord.CoordFromVector2(startTouchPos);
+				}
+				else
+					resultState = TouchState.StartedTouchingSurrounding;
+			}
+		}
+		else
+		{
+			switch (initialState)
+			{
+				case TouchState.StartedFalseTouch:
+					resultState = TouchState.EndedFalseTouch;
+					break;
+				case TouchState.StartedTouching:
+					resultState = TouchState.EndedTouching;
+					break;
+				case TouchState.StartedRotating:
+					resultState = TouchState.EndedRotating;
+					break;
+				case TouchState.StartedTouchingSurrounding:
+					resultState = TouchState.EndedTouchingSurrounding;
+					break;
 			}
 		}
 
-		if ((justLifted || justEndedRotating) && !liftedAfterFalseTouch) {
-			liftedAfterFalseTouch = true;
-			justLifted = false;
-			justEndedRotating = false;
+		if (initialState == TouchState.StartedTouching)
+		{
+			bool isRotating = false;
+			DetermineRotating(out isRotating);
+			if (isRotating)
+				resultState = TouchState.StartedRotating;
+		}
+		else if (initialState == TouchState.StartedRotating)
+		{
+			FindRotatingAngle();
 		}
 
-		if (liftedAfterFalseTouch)
-			DetermineRotating ();
-		
-		if (justTouched) {
-			onTouchStart.Invoke ();
-		}
-
-		if (justLifted) {
-			onTouchEnd.Invoke ();
-		}
-
-		if (justStartedRotating)
-			onRotatingStart.Invoke ();
-
-		if (justEndedRotating)
-			onRotatingEnd.Invoke ();
-
-		CheckReferences ();
-//		print (angle);
+		if (resultState != initialState)
+			touchState.Value = resultState;
+		if (resultState == TouchState.EndedRotating ||
+		    resultState == TouchState.EndedTouching ||
+		    resultState == TouchState.EndedTouchingSurrounding || 
+		    resultState == TouchState.EndedFalseTouch)
+			touchState.Value = TouchState.Empty;
 	}
 
 	/// <summary>
 	/// Determine touch conditions
 	/// </summary>
-	void DetermineTouches () {
-		if (Input.touches.Length > 0 || Input.GetMouseButton(0)) {
+	void DetermineTouches (out bool isTouching, out bool touchIsOnField)
+	{
+		isTouching = false;
+		touchIsOnField = false;
+		if (Input.touches.Length > 0 || Input.GetMouseButton(0))
+		{
 			Vector3 inputPosition;
 
 #if UNITY_EDITOR
@@ -146,50 +114,18 @@ public class TouchManager : MonoSingleton <TouchManager> {
 			inputPosition = (Vector3)Input.touches[0].position;
 #endif
 
-			Ray camRay = mainCamera.ScreenPointToRay (inputPosition);
+			Ray camRay = mainCamera.ScreenPointToRay(inputPosition);
 			RaycastHit hit;
-
-			justTouched = false;
-			justLifted = false;
-			if (Physics.Raycast (camRay, out hit, 2f, touchFieldsLayer)) {
-				if (!isTouching) {
-					isTouching = true;
-					if (Input.touches.Length > 0) {
-						if (Input.touches [0].phase == TouchPhase.Began) {
-							justTouched = true;
-						}
-						if (Input.touches.Length > 1)
-							print(Input.touches.Length);
-					} else if (Input.GetMouseButtonDown (0)) {
-						justTouched = true;
-					}
-					startTouchPos = (Vector2)hit.point;
-					if (hit.transform.gameObject == field) {
-						touchIsOnField = true;
-					} else {
-						touchIsOnField = false; 
-					}
-					startTouchCoord = Coord.CoordFromVector2 (startTouchPos);
-					if (!Coord.MapContains (startTouchCoord))
-						touchIsOnField = false;
-				}
-				currentTouchPos = (Vector2)hit.point;
-			} else {
-				justTouched = false;
-				justLifted = false;
-				if (isTouching) {
-					justLifted = true;
-				}
-				isTouching = false;
-			}
 			
-		} else {
-			justTouched = false;
-			justLifted = false;
-			if (isTouching) {
-				justLifted = true;
+			if (Physics.Raycast(camRay, out hit, 2f, touchFieldsLayer))
+			{
+				isTouching = true;
+				currentTouchPos = (Vector2)hit.point;
+				if (hit.transform.gameObject == field && Coord.MapContains(Coord.CoordFromVector2(currentTouchPos)))
+				{
+					touchIsOnField = true;
+				}
 			}
-			isTouching = false;
 		}
 
 	}
@@ -197,46 +133,28 @@ public class TouchManager : MonoSingleton <TouchManager> {
 	/// <summary>
 	/// Determine rotation conditions
 	/// </summary>
-	void DetermineRotating () {
-		justStartedRotating = false;
-		if (isTouching) {
-			if (!isRotating) {
-				if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadius * minRotateRadius) {
-					justStartedRotating = true;
-					wasRotating = true;
-					isRotating = true;
-					previousRotateVector = currentTouchPos - startTouchPos;
-				}
-			}
+	void DetermineRotating (out bool isRotating)
+	{
+		isRotating = false;
+		if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadius * minRotateRadius) {
+			previousRotateVector = currentTouchPos - startTouchPos;
+			isRotating = true;
+			angle = 0f;
 		}
-		
-		if (isRotating) {
-			currentRotateVector = currentTouchPos - startTouchPos;
-			deltaAngle = Vector2.Angle (previousRotateVector, currentRotateVector);
-			if (Vector3.Cross (previousRotateVector, currentRotateVector).z > 0) {
-				deltaAngle *= -1;
-			}
-			if ((startTouchPos - currentTouchPos).sqrMagnitude < minRotateRadius * minRotateRadius) {
-				deltaAngle *= ((startTouchPos - currentTouchPos).magnitude) / minRotateRadius;
-			}
-			previousRotateVector = currentRotateVector;
-			angle += deltaAngle;
-		}
+	}
 
-		justEndedRotating = false;
-		if (!isTouching) {
-			justEndedRotating = isRotating;
-			isRotating = false;
+	void FindRotatingAngle()
+	{
+		currentRotateVector = currentTouchPos - startTouchPos;
+		deltaAngle = Vector2.Angle (previousRotateVector, currentRotateVector);
+		if (Vector3.Cross (previousRotateVector, currentRotateVector).z > 0) {
+			deltaAngle *= -1;
 		}
-
-		if (justStartedRotating) {
-			angle = 0;
+		if ((startTouchPos - currentTouchPos).sqrMagnitude < minRotateRadius * minRotateRadius) {
+			deltaAngle *= ((startTouchPos - currentTouchPos).magnitude) / minRotateRadius;
 		}
-
-		if (justTouched) {
-			wasRotating = false;
-		}
-
+		previousRotateVector = currentRotateVector;
+		angle += deltaAngle;
 	}
 
 	/// <summary>
@@ -250,58 +168,17 @@ public class TouchManager : MonoSingleton <TouchManager> {
 		}
 		mainCamera = Camera.main;
 		touchFieldsLayer = LayerMask.GetMask ("TouchFields");
-		isTouching = false;
-		justTouched = false;
-		justLifted = false;
-		justStartedRotating = false;
-		justEndedRotating = false;
-		isRotating = false;
-		touchIsOnField = false;
-		wasRotating = false;
-		liftedAfterFalseTouch = true;
+		touchState = new ReactiveProperty<TouchState>();
+		touchState.Value = TouchState.Empty;
 	}
 
 	/// <summary>
 	/// Remove every listeners from every event
 	/// </summary>
-	public void FreeListeners () {
-		onTouchStart.RemoveAllListeners ();
-		onTouchEnd.RemoveAllListeners ();
-		onRotatingStart.RemoveAllListeners ();
-		onRotatingEnd.RemoveAllListeners ();
+	public void RemoveAllListeners () {
+		touchState.RemoveAllListeners();
 	}
 
-	/// <summary>
-	/// Log state of each boolean
-	/// </summary>
-	void CheckReferences () {
-		if (justTouched) {
-			print ("just touched");
-		}
-		
-		if (isTouching) {
-//			print ("is Touching");
-		}
-		
-		if (justLifted) {
-			print ("just lifted");
-		}
-		if (justStartedRotating) {
-			print ("just Started Rotating");
-		}
-		
-		if (isRotating) {
-//			print ("is Rotating");
-		}
-		
-		if (justEndedRotating) {
-			print ("just Ended Rotating");
-		}
-		
-		if (wasRotating) {
-//			print ("was Rotating");
-		}
-	}
 
 	void OnDrawGizmos () {
 		Gizmos.color = Color.blue;
@@ -309,5 +186,3 @@ public class TouchManager : MonoSingleton <TouchManager> {
 	}
 
 }
-
-public class TouchEvent : UnityEvent<TouchState>

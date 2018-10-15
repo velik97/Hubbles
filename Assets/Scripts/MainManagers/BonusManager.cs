@@ -20,18 +20,26 @@ public class BonusManager : MonoBehaviour {
 
 		cancelPanel.OpenPanel ();
 
-		TouchManager.Instance.FreeListeners ();
-		TouchManager.Instance.onTouchEnd.AddListener (delegate {
-			switch (currentType) {
-				case BonusType.Paint:
-					PaintBonus.Instance.Apply (TouchManager.Instance.startTouchCoord);
-					break;
-				case BonusType.Connect:
-					Debug.Log ("Connect Bonus isn't ready yet");
-					break;
-			}
-			EndBonusActivity ();
-		});
+		TouchManager.Instance.RemoveAllListeners ();
+		TouchManager.Instance.touchState.AddListener(SubscribeOnTouch);
+
+	}
+	
+	private void SubscribeOnTouch (TouchState touchState)
+	{
+		if (touchState != TouchState.EndedTouching && touchState != TouchState.EndedRotating)
+			return;
+		switch (currentType)
+		{
+			case BonusType.Paint:
+				PaintBonus.Instance.Apply(TouchManager.Instance.startTouchCoord);
+				break;
+			case BonusType.Connect:
+				Debug.Log("Connect Bonus isn't ready yet");
+				break;
+		}
+
+		EndBonusActivity();
 	}
 
 	public void EndBonusActivity () {

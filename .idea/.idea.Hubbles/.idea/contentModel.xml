@@ -44,6 +44,7 @@
             <e p="HubblesAppearanceInfo.cs" t="Include" />
             <e p="MonoSingleton.cs" t="Include" />
             <e p="RandomGenerator.cs" t="Include" />
+            <e p="ReactiveProperty.cs" t="Include" />
           </e>
         </e>
       </e>

@@ -4,10 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - GameManager
-  - MainField
   - MapHolder
-  - MenuManager
+  - MainField
   layers:
   - Default
   - TransparentFX
@@ -45,12 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: BG
-    uniqueID: 1214251257
+  - name: Back UI
+    uniqueID: 1286678129
     locked: 0
   - name: Hubbles
-    uniqueID: 3082430537
+    uniqueID: 2407205819
     locked: 0
-  - name: UI
-    uniqueID: 1611652141
+  - name: Front UI
+    uniqueID: 3456289323
     locked: 0

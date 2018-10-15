@@ -404,7 +404,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		yield return new WaitUntil(() => !isAnimating);
 		foreach (Node node in surroundingNodes) {
 			if (node != mainNode && node.hubble.transform != null) {
-				node.hubble.transform.SetParent(this.transform);
+				node.hubble.transform.SetParent(MapGenerator.Instance.transform);
 				node.hubble.transform.rotation = Quaternion.identity;
 				node.hubble.content.transform.rotation = Quaternion.identity;
 				node.hubble.transform.localScale = Vector3.one * HubblesAppearanceInfo.Instance.FitHubbleSize;
