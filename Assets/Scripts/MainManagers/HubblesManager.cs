@@ -102,7 +102,11 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 
 		TouchManager.Instance.onRotatingStart.AddListener (delegate {
 			AnimationManager.Instance.UnHighLightEveryThing(true);																									
-			surroundingNodes = Map.NodesFromCoords (Map.NearCoords (TouchManager.Instance.startTouchCoord, out canRotate, Map.AreRotable));														
+			surroundingNodes = Map.NodesFromCoords
+				(Map.NearCoords (TouchManager.Instance.startTouchCoord, out canRotate, Map.AreRotable));
+			bool haveLives = rotateLives > 0 ||
+			                 (turnedPreviously && previousNode != null && previousNode == currentNode);
+			canRotate &= haveLives;
 			if (!canRotate) {
 				//animManager.RotatingIsUnabled ();																														// Don't Forget This!
 			} else {
@@ -138,8 +142,6 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 				} else {
 					turnedPreviously = false;
 				}
-
-				CheckLivesAndAims ();
 			}
 		});
 
