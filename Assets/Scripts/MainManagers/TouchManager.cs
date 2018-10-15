@@ -92,19 +92,18 @@ public class TouchManager : MonoSingleton <TouchManager> {
 	}
 
 	private void Update () { 
+		
+		if (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened)
+			return;
 
 		DetermineTouches ();
 
-		if (justTouched && (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened || !touchIsOnField)) {
+		if (justTouched && !touchIsOnField) {
 			liftedAfterFalseTouch = false;
 			justTouched = false;
 			if (!touchIsOnField) {
 				onTouchSurrounding.Invoke ();
 			}
-		}
-		
-		if (justTouched && touchIsOnField) {
-			onTouchStart.Invoke ();
 		}
 
 		if ((justLifted || justEndedRotating) && !liftedAfterFalseTouch) {
@@ -115,6 +114,10 @@ public class TouchManager : MonoSingleton <TouchManager> {
 
 		if (liftedAfterFalseTouch)
 			DetermineRotating ();
+		
+		if (justTouched) {
+			onTouchStart.Invoke ();
+		}
 
 		if (justLifted) {
 			onTouchEnd.Invoke ();
@@ -126,7 +129,7 @@ public class TouchManager : MonoSingleton <TouchManager> {
 		if (justEndedRotating)
 			onRotatingEnd.Invoke ();
 
-//		CheckReferences ();
+		CheckReferences ();
 //		print (angle);
 	}
 
@@ -155,6 +158,8 @@ public class TouchManager : MonoSingleton <TouchManager> {
 						if (Input.touches [0].phase == TouchPhase.Began) {
 							justTouched = true;
 						}
+						if (Input.touches.Length > 1)
+							print(Input.touches.Length);
 					} else if (Input.GetMouseButtonDown (0)) {
 						justTouched = true;
 					}
@@ -275,7 +280,7 @@ public class TouchManager : MonoSingleton <TouchManager> {
 		}
 		
 		if (isTouching) {
-			print ("is Touching");
+//			print ("is Touching");
 		}
 		
 		if (justLifted) {
@@ -286,7 +291,7 @@ public class TouchManager : MonoSingleton <TouchManager> {
 		}
 		
 		if (isRotating) {
-			print ("is Rotating");
+//			print ("is Rotating");
 		}
 		
 		if (justEndedRotating) {
@@ -294,7 +299,7 @@ public class TouchManager : MonoSingleton <TouchManager> {
 		}
 		
 		if (wasRotating) {
-			print ("was Rotating");
+//			print ("was Rotating");
 		}
 	}
 
@@ -304,3 +309,5 @@ public class TouchManager : MonoSingleton <TouchManager> {
 	}
 
 }
+
+public class TouchEvent : UnityEvent<TouchState>

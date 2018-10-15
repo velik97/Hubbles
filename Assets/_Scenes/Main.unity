@@ -1593,8 +1593,7 @@ MonoBehaviour:
   pitchStep: 0.0725
   panelHighLightTime: 0.1
   highLightPanel: {fileID: 1307997880}
-  pullTime: 0.2
-  rescaleTime: 0.2
+  pullTime: 1
   rescalingPercent: 0.8
   easyRotationPow: 2
   easyRescalingPow: 2
@@ -3830,6 +3829,7 @@ MonoBehaviour:
   totalScore: 0
   level: 0
   gameEnded: 0
+  debugCoords: 1
 --- !u!1 &1921428757
 GameObject:
   m_ObjectHideFlags: 0

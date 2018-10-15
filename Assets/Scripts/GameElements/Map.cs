@@ -75,7 +75,7 @@ public class Node {
 /// <summary>
 /// Handles random map generation 
 /// </summary>
-public class Map : ScriptableObject {
+public class Map {
 
 	/// <summary>
 	/// Array of all nodes
@@ -95,7 +95,7 @@ public class Map : ScriptableObject {
 	/// <param name="coord">coord for new node</param>
 	/// <returns>created node</returns>
 	public static Node SetNode (int color, HubbleType type, Coord coord) {
-		Hubble hubble = Instantiate (HubblesAppearanceInfo.Instance.hubblePrefab,
+		Hubble hubble = Object.Instantiate (HubblesAppearanceInfo.Instance.hubblePrefab,
 			 Coord.Vector2FromCoord (coord), Quaternion.identity);
 		hubble.transform.localScale *= HubblesAppearanceInfo.Instance.FitHubbleSize;
 		

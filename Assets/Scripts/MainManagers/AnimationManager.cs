@@ -41,10 +41,6 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	[Header("Rotation")]
 	public float pullTime;
 	/// <summary>
-	/// Time of rescaling of group of hubbles before and after rotaion
-	/// </summary>
-	public float rescaleTime;
-	/// <summary>
 	/// percent of rescaling when rotating
 	/// </summary>
 	[Range(0,1)] public float rescalingPercent;
@@ -137,11 +133,11 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	private float offsetAngle;
 	private float currentAngle;
 	[Space(10)]
-
+	
 	/*[HideInInspector] */public bool isAnimating;
 
-	private List<IEnumerator> highLightingCoroutines;
-	private IEnumerator rotateIEnumerator;
+	private List<Coroutine> highLightingCoroutines;
+	private List<Coroutine> rotateCoroutines;
 
 	public void StartGame () {
 		FindObjectsAndNullReferences();
@@ -152,7 +148,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	public void UnHighLightEveryThing (bool unhighlightHubbles) {
 		if (highLightingCoroutines.Count > 0) {
-			foreach (IEnumerator coroutine in highLightingCoroutines) {
+			foreach (Coroutine coroutine in highLightingCoroutines) {
 				StopCoroutine (coroutine);
 			}
 		}
@@ -186,9 +182,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	/// <param name="nodes">nodes to be highlighted</param>
 	public void HighLightHubbles (List<Node> nodes) {
-		IEnumerator coroutine = IHighLightHubbles(nodes);
-		highLightingCoroutines.Add(coroutine);
-		StartCoroutine(coroutine);
+		highLightingCoroutines.Add(StartCoroutine(IHighLightHubbles(nodes)));
 	}
 	
 	IEnumerator IHighLightHubbles (List<Node> nodes) {
@@ -277,30 +271,32 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="node">central node</param>
 	/// <param name="makeSmaller">make smaller or bigger</param>
 	public void Rescale (Node node, bool makeSmaller) {
-		StartCoroutine (IRescale(node, makeSmaller));
+		rotateCoroutines.Add( StartCoroutine (IRescale(node, makeSmaller)));
 	}
 
 	IEnumerator IRescale (Node node, bool makeSmaller) {
-		isAnimating = true;
+		if (!makeSmaller)
+			isAnimating = true;
 		float t = 0f;
 		if (makeSmaller) {
-			while (t < rescaleTime) {
-				float scale = (1 + (rescalingPercent - 1) * AnimationFunctions.EasyOut(t/rescaleTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
+			while (t < pullTime) {
+				float scale = (1 + (rescalingPercent - 1) * AnimationFunctions.EasyOut(t/pullTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
 				node.hubble.transform.localScale = Vector3.one * scale;
 				yield return null;
 				t += Time.deltaTime;
 			}
 			node.hubble.transform.localScale = Vector3.one * HubblesAppearanceInfo.Instance.FitHubbleSize * rescalingPercent;
 		} else {
-			while (t < rescaleTime) {
-				float scale = (rescalingPercent + (1 - rescalingPercent) * AnimationFunctions.EasyOut(t/rescaleTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
+			while (t < pullTime) {
+				float scale = (rescalingPercent + (1 - rescalingPercent) * AnimationFunctions.EasyOut(t/pullTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
 				node.hubble.transform.localScale = Vector3.one * scale;
 				yield return null;
 				t += Time.deltaTime;
 			}
 			node.hubble.transform.localScale = Vector3.one * HubblesAppearanceInfo.Instance.FitHubbleSize;
 		}
-		isAnimating = false;
+		if (!makeSmaller)
+			isAnimating = false;
 	}
 
 	/// <summary>
@@ -309,16 +305,20 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="mainNode">central node</param>
 	/// <param name="surroundingNodes">surrounding neighbours</param>
 	public void StartRotating (Node mainNode, List<Node> surroundingNodes) {
-		rotateIEnumerator = IRotate (mainNode, surroundingNodes);
-		StartCoroutine (rotateIEnumerator);
+		rotateCoroutines.Add(StartCoroutine (IRotate (mainNode, surroundingNodes)));
 	}
 
 	/// <summary>
 	/// Stop rotating
 	/// </summary>
 	public void StopRotating () {
-		if (rotateIEnumerator != null) {
-			StopCoroutine (rotateIEnumerator);
+		if (rotateCoroutines != null)
+		{
+			foreach (var coroutine in rotateCoroutines)
+			{
+				StopCoroutine(coroutine);
+			}
+			rotateCoroutines.Clear();
 		}
 	}
 
@@ -366,10 +366,10 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="originAngle">made number of turns (not whole)</param>
 	public void PullToMap (Node mainNode, List<Node> surroundingNodes, int turns, float originAngle) {
 		StartCoroutine (IPullToMap(mainNode, surroundingNodes, turns, originAngle));
+		StartCoroutine (IRescale(mainNode, false));
 	}
 
 	IEnumerator IPullToMap (Node mainNode, List<Node> surroundingNodes, int turns ,float originAngle) {
-		isAnimating = true;
 		originAngle = originAngle % 360;
 		float aimAngle;
 		if (originAngle < 0)
@@ -381,7 +381,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 			aimAngle = 0;
 		}
 		
-		if (originAngle > 330 && originAngle <=360 && aimAngle == 0)
+		if (originAngle > 330 && originAngle <= 360 && aimAngle == 0)
 			aimAngle = 360;
 		
 		if (originAngle < -330 && originAngle >= -360 && aimAngle == 0)
@@ -389,7 +389,6 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		
 		float t = 0f;
 		float maxTime = pullTime * (Mathf.Abs(originAngle - aimAngle) / 30f);
-		StartCoroutine (IRescale(mainNode, false));
 		offsetAngle = originAngle;
 		while (t < maxTime) {
 			Rotate (mainNode, surroundingNodes, Mathf.Lerp (originAngle, aimAngle, t / maxTime));
@@ -402,6 +401,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 
 		mainNode.hubble.transform.localScale = Vector3.one * HubblesAppearanceInfo.Instance.FitHubbleSize;
 
+		yield return new WaitUntil(() => !isAnimating);
 		foreach (Node node in surroundingNodes) {
 			if (node != mainNode && node.hubble.transform != null) {
 				node.hubble.transform.SetParent(this.transform);
@@ -417,8 +417,8 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 			HubblesManager.Instance.Turn (turns);
 		}
 		offsetAngle = 0f;
-		isAnimating = false;
 		rotationLivesText.text = HubblesManager.Instance.rotateLives.ToString();
+//		isAnimating = false;
 	}
 
 
@@ -427,7 +427,6 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	/// <param name="nodes">nodes to be deleted</param>
 	public void DeleteGroup (List<Node> nodes) {
-		//scoreStatus.SetPercentage (HubblesManager.Instance.totalScore, LevelConfigHandler.CurrentConfig.threeStarsScore);
 		scoreText.text = HubblesManager.Instance.totalScore.ToString ();
 		nextLevelScoreText.text = LevelConfig.LevelScores[HubblesManager.Instance.level].ToString();
 		levelText.text = HubblesManager.Instance.level.ToString ();
@@ -472,7 +471,8 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 			pointsTextsObj [i].GetComponentInChildren <Text> ().color = HubblesAppearanceInfo.Instance.DarkColors [i];
 		}
 
-		highLightingCoroutines = new List<IEnumerator>();
+		highLightingCoroutines = new List<Coroutine>();
+		rotateCoroutines = new List<Coroutine>(); 
 
 		offsetAngle = 0f;
  

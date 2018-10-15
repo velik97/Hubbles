@@ -63,11 +63,21 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// </summary>
 	public bool gameEnded;
 
+	public bool debugCoords;
+
+	/// <summary>
+	/// Coord on start of rotating
+	/// </summary>
+	private Coord startRotatingCoord;
+
 	public void StartGame () {
 		popLives = LevelConfig.StartPopLives;
 		rotateLives = LevelConfig.StartRotationLives;
 		FindObjectsAndNullReferences ();
 		SubscribeOnTouchEvents ();
+
+		if (debugCoords)
+			StartCoroutine(DebugCoords());
 	}
 
 	/// <summary>
@@ -85,84 +95,96 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// Subscribe on all touch events. Need change.
 	/// </summary>
 	public void SubscribeOnTouchEvents () {
-		TouchManager.Instance.onTouchStart.AddListener (delegate {
-			FindCurrentNode ();			
-			if (!oneColorGroup.Contains (currentNode) && oneColorGroup.Count > 0) {
-				AnimationManager.Instance.UnHighLightEveryThing (true);
-				oneColorGroup.Clear ();
-			}
-		});
+		TouchManager.Instance.onTouchStart.AddListener (StartTouch);
+		TouchManager.Instance.onTouchSurrounding.AddListener (TouchSurrounding);
+		TouchManager.Instance.onRotatingStart.AddListener (StartRotating);
+		TouchManager.Instance.onRotatingEnd.AddListener (EndRotating);
+		TouchManager.Instance.onTouchEnd.AddListener (EndTouch);
+	}
 
-		TouchManager.Instance.onTouchSurrounding.AddListener (delegate {
-			if (oneColorGroup.Count > 0) {
-				AnimationManager.Instance.UnHighLightEveryThing(true);
-				oneColorGroup.Clear();
+	private void StartTouch()
+	{
+		FindCurrentNode ();			
+		if (!oneColorGroup.Contains (currentNode) && oneColorGroup.Count > 0) {
+			AnimationManager.Instance.UnHighLightEveryThing (true);
+			oneColorGroup.Clear ();
+		}
+	}
+	
+	private void TouchSurrounding()
+	{
+		if (oneColorGroup.Count > 0) {
+			AnimationManager.Instance.UnHighLightEveryThing(true);
+			oneColorGroup.Clear();
+		}
+	}
+	
+	private void StartRotating()
+	{
+		AnimationManager.Instance.UnHighLightEveryThing(true);
+		startRotatingCoord = TouchManager.Instance.startTouchCoord;
+		surroundingNodes = Map.NodesFromCoords
+			(Map.NearCoords (TouchManager.Instance.startTouchCoord, out canRotate, Map.AreRotable));
+		bool haveLives = rotateLives > 0 ||
+		                 (turnedPreviously && previousNode != null && previousNode == currentNode);
+		canRotate &= haveLives;
+		if (!canRotate) {
+			//animManager.RotatingIsUnabled ();		// Don't Forget This!
+		} else {
+			foreach (Node node in surroundingNodes) {
+				node.hubble.transform.SetParent (currentNode.hubble.transform);
 			}
-		});
-
-		TouchManager.Instance.onRotatingStart.AddListener (delegate {
-			AnimationManager.Instance.UnHighLightEveryThing(true);																									
-			surroundingNodes = Map.NodesFromCoords
-				(Map.NearCoords (TouchManager.Instance.startTouchCoord, out canRotate, Map.AreRotable));
-			bool haveLives = rotateLives > 0 ||
-			                 (turnedPreviously && previousNode != null && previousNode == currentNode);
-			canRotate &= haveLives;
-			if (!canRotate) {
-				//animManager.RotatingIsUnabled ();																														// Don't Forget This!
-			} else {
-				foreach (Node node in surroundingNodes) {
-					node.hubble.transform.SetParent (currentNode.hubble.transform);
-				}
-				AnimationManager.Instance.Rescale (currentNode, true);
-				AnimationManager.Instance.StartRotating (currentNode, surroundingNodes);
-			}
-			if (oneColorGroup.Count > 0) {
-				oneColorGroup.Clear();
-			}
-		});
-
-		TouchManager.Instance.onRotatingEnd.AddListener (delegate {
-			if (canRotate) {
-				int turns = (Mathf.RoundToInt (TouchManager.Instance.angle / 60f) % 360 + 360) % 6;
-				AnimationManager.Instance.StopRotating ();
-				AnimationManager.Instance.PullToMap (currentNode, surroundingNodes, turns, TouchManager.Instance.angle);
-				AnimationManager.Instance.rotationLivesText.text = rotateLives.ToString();
-				if (turns != 0) {
-					if (previousNode!=null) {
-						if (currentNode != previousNode || !turnedPreviously) {
-							rotateLives -= 1;
-						}
-					} else {
+			AnimationManager.Instance.Rescale (currentNode, true);
+			AnimationManager.Instance.StartRotating (currentNode, surroundingNodes);
+		}
+		if (oneColorGroup.Count > 0) {
+			oneColorGroup.Clear();
+		}
+	}
+	
+	private void EndRotating()
+	{
+		if (canRotate) {
+			int turns = (Mathf.RoundToInt (TouchManager.Instance.angle / 60f) % 360 + 360) % 6;
+			AnimationManager.Instance.StopRotating ();
+			AnimationManager.Instance.PullToMap (currentNode, surroundingNodes, turns, TouchManager.Instance.angle);
+			AnimationManager.Instance.rotationLivesText.text = rotateLives.ToString();
+			if (turns != 0) {
+				if (previousNode!=null) {
+					if (currentNode != previousNode || !turnedPreviously) {
 						rotateLives -= 1;
-						if (rotateLives < 0)
-							rotateLives = 0;
 					}
-					turnedPreviously = true;
-					previousNode = currentNode;
 				} else {
-					turnedPreviously = false;
+					rotateLives -= 1;
+					if (rotateLives < 0)
+						rotateLives = 0;
 				}
+				turnedPreviously = true;
+				previousNode = currentNode;
+			} else {
+				turnedPreviously = false;
 			}
-		});
-
-		TouchManager.Instance.onTouchEnd.AddListener (delegate {
-			if (!TouchManager.Instance.wasRotating) {
-				AnimationManager.Instance.UnHighLightEveryThing(false);
-				if (oneColorGroup.Count > 0) {
-					DeleteGroup (currentNode.color);
-					popLives -= 1;
-					if (popLives < 0)
-						popLives = 0;
-					AnimationManager.Instance.DeleteGroup (oneColorGroup);
-					previousNode = null;
-					turnedPreviously = false;
-					CheckLivesAndAims ();
-				} else {
-					FindGroup ();
-					AnimationManager.Instance.HighLightHubbles (oneColorGroup);
-				}
+		}
+	}
+	
+	private void EndTouch()
+	{
+		if (!TouchManager.Instance.wasRotating) {
+			AnimationManager.Instance.UnHighLightEveryThing(false);
+			if (oneColorGroup.Count > 0) {
+				DeleteGroup (currentNode.color);
+				popLives -= 1;
+				if (popLives < 0)
+					popLives = 0;
+				AnimationManager.Instance.DeleteGroup (oneColorGroup);
+				previousNode = null;
+				turnedPreviously = false;
+				CheckLivesAndAims ();
+			} else {
+				FindGroup ();
+				AnimationManager.Instance.HighLightHubbles (oneColorGroup);
 			}
-		});
+		}
 	}
 
 	/// <summary>
@@ -268,8 +290,8 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 
 		Node temporaryNode;
 
-		int x = TouchManager.Instance.startTouchCoord.x;
-		int y = TouchManager.Instance.startTouchCoord.y;
+		int x = startRotatingCoord.x;
+		int y = startRotatingCoord.y;
 
 		for (int i = 0; i < turns; i ++) {
 			if (y % 2 == 1) {
@@ -310,9 +332,25 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 
 		totalScore = 0;
 		level = 1;
-//		AnimationManager.Instance.popLivesText.text = popLives.ToString();
 	}
 
+	private IEnumerator DebugCoords()
+	{
+		while (true)
+		{
+			for (var i = 0; i < Map.nodeMap.GetLength(0); i++)
+			{
+				for (var j = 0; j < Map.nodeMap.GetLength(1); j++)
+				{
+					if (Map.nodeMap[i, j] != null && Map.nodeMap[i, j].hubble != null && Map.nodeMap[i, j].hubble.text != null)
+					{
+						Map.nodeMap[i, j].hubble.text.text = i + ", " + j;
+					}
+				}	
+			}
+			yield return null;
+		}
+	}
 //	void OnDrawGizmos () {
 //		if (currentNode != null) {
 //			if (currentNode.hubble != null) {
