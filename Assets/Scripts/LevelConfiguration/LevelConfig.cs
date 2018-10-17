@@ -17,12 +17,11 @@ public class LevelConfig : ScriptableObject {
 
 	
 	[SerializeField] [Range(0,.33f)]
-	private float popLiveChance;
+	public float popLiveChance;
 	[SerializeField] [Range(0,.33f)]
-	private float rotationLiveChance;
-
+	public float rotationLiveChance;
 	[SerializeField] [Range(0,.33f)]
-	private float multiplierChance;
+	public float multiplierChance;
 	
 	[SerializeField]
 	private Color[] colors;

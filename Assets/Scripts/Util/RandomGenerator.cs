@@ -32,18 +32,18 @@ public static class RandomGenerator
     
     public static HubbleType RandomType()
     {
-        int randomNumber = Prng.Next(0, 1000);
+        int randomNumber = Prng.Next(0, 100000);
         float comparer = 0f;
 
-        comparer += LevelConfig.PopLiveChance * 1000f;
+        comparer += LevelConfig.PopLiveChance * 100000f;
         if (randomNumber < comparer)
             return HubbleType.PopLive;
 
-        comparer += LevelConfig.RotationLiveChance * 1000f;
+        comparer += LevelConfig.RotationLiveChance * 100000f;
         if (randomNumber < comparer)
             return HubbleType.RotationLive;
 
-        comparer += LevelConfig.MultiplierChance * 1000f;
+        comparer += LevelConfig.MultiplierChance * 100000f;
         if (randomNumber < comparer)
             return HubbleType.Multiplier;
 

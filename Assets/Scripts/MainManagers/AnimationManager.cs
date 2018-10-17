@@ -418,7 +418,6 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		}
 		offsetAngle = 0f;
 		rotationLivesText.text = HubblesManager.Instance.rotateLives.ToString();
-//		isAnimating = false;
 	}
 
 

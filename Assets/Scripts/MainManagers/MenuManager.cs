@@ -10,7 +10,6 @@ public class MenuManager : MonoSingleton <MenuManager> {
 	public Stack <MenuPanel> menuPanelStack;
 	
 	private float delayAfterClosingMenu = 0.1f;
-	private bool waitedForDelayAfterMenuClose = true;
 
 	/// <summary>
 	/// Button for taping out of menu
@@ -18,9 +17,7 @@ public class MenuManager : MonoSingleton <MenuManager> {
 	public AnimatedMenuPanel shadowPanel;
 
 	public bool MenuIsOpened {
-		get {
-			return (menuPanelStack != null && menuPanelStack.Count > 0) || !waitedForDelayAfterMenuClose;
-		}
+		get { return menuPanelStack != null && menuPanelStack.Count > 0; }
 	}
 
 	void Awake () {
@@ -58,17 +55,6 @@ public class MenuManager : MonoSingleton <MenuManager> {
 				shadowPanel.ClosePanel ();
 			}
 			top.ClosePanel ();
-			if (menuPanelStack.Count == 0)
-			{
-				waitedForDelayAfterMenuClose = false;
-				StartCoroutine(WaitForLastMenuClosing());
-			}
 		}
-	}
-
-	private IEnumerator WaitForLastMenuClosing()
-	{
-		yield return new WaitForSeconds(delayAfterClosingMenu);
-		waitedForDelayAfterMenuClose = true;
 	}
 }

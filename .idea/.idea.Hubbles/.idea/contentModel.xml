@@ -27,6 +27,9 @@
             <e p="SoundManager.cs" t="Include" />
             <e p="TouchManager.cs" t="Include" />
           </e>
+          <e p="Simulation" t="Include">
+            <e p="Simulation.cs" t="Include" />
+          </e>
           <e p="UI" t="Include">
             <e p="AnimatedMenuPanel.cs" t="Include" />
             <e p="CameraResizer.cs" t="Include" />

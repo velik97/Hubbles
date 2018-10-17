@@ -26,6 +26,9 @@ public class TouchManager : MonoSingleton <TouchManager>
 
 	private Camera mainCamera;
 
+	private float delayAfterAnimationOrMenuForFalseTouch = 0.05f;
+	private float lastTimeOfAnimationOrMenu;
+
 	private void Awake()
 	{
 		FindObjectsAndNullReferences ();
@@ -39,7 +42,8 @@ public class TouchManager : MonoSingleton <TouchManager>
 		bool touchIsOnField = false;
 		DetermineTouches(out isTouching, out touchIsOnField);
 
-		bool possibleFalseTouch = AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened;
+		bool possibleFalseTouch = false;
+		DetermineFalseTouch(out possibleFalseTouch);
 
 		if (isTouching)
 		{
@@ -96,11 +100,13 @@ public class TouchManager : MonoSingleton <TouchManager>
 		    resultState == TouchState.EndedFalseTouch)
 			touchState.Value = TouchState.Empty;
 	}
+	
+	
 
 	/// <summary>
 	/// Determine touch conditions
 	/// </summary>
-	void DetermineTouches (out bool isTouching, out bool touchIsOnField)
+	private void DetermineTouches (out bool isTouching, out bool touchIsOnField)
 	{
 		isTouching = false;
 		touchIsOnField = false;
@@ -127,13 +133,21 @@ public class TouchManager : MonoSingleton <TouchManager>
 				}
 			}
 		}
+	}
 
+	private void DetermineFalseTouch(out bool possibleFalseTouch)
+	{
+		if (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened)
+			lastTimeOfAnimationOrMenu = 0f;
+		else
+			lastTimeOfAnimationOrMenu += Time.deltaTime;
+		possibleFalseTouch = lastTimeOfAnimationOrMenu < delayAfterAnimationOrMenuForFalseTouch;
 	}
 
 	/// <summary>
 	/// Determine rotation conditions
 	/// </summary>
-	void DetermineRotating (out bool isRotating)
+	private void DetermineRotating (out bool isRotating)
 	{
 		isRotating = false;
 		if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadius * minRotateRadius) {
@@ -143,7 +157,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 		}
 	}
 
-	void FindRotatingAngle()
+	private void FindRotatingAngle()
 	{
 		currentRotateVector = currentTouchPos - startTouchPos;
 		deltaAngle = Vector2.Angle (previousRotateVector, currentRotateVector);
