@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Need change
+/// Plays given sounds with specific clip pitch and delay
 /// </summary>
 public class SoundManager : MonoSingleton <SoundManager> {
 

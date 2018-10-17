@@ -3223,6 +3223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelConfig: {fileID: 11400000, guid: bdf6efa0f222842eda26d997c28efa1d, type: 2}
+  generationConfig: {fileID: 11400000, guid: d103f87f69c2441db9d4981ceb0210f1, type: 2}
   onStartGame:
     m_PersistentCalls:
       m_Calls: []

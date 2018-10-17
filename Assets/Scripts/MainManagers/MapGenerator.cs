@@ -18,14 +18,6 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 	[HideInInspector] public int height;
 
 	/// <summary>
-	/// Probability of falling multiplier node
-	/// </summary>
-	private float multiplierChance;
-	/// <summary>
-	/// Probability of falling heart node. Need change
-	/// </summary>
-	private float heartChance;
-	/// <summary>
 	/// How many colors will be on the map
 	/// </summary>
 	private int colorsCount;
@@ -72,7 +64,7 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 			for (int j = 0; j < height; j ++) {
 				Coord newCoord = new Coord (i, j);
 				if (Coord.MapContains (newCoord)) {
-					Node newNode = Map.SetNode (RandomGenerator.RandomColor(), RandomGenerator.RandomType(), newCoord);
+					Node newNode = Map.SetNode (RandomHubbleGenerator.RandomColor(), RandomHubbleGenerator.RandomType(), newCoord);
 					thisColorNodes [newNode.color].Add (newNode);
 					yield return new WaitForSeconds (.01f);
 				}

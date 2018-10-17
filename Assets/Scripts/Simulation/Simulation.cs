@@ -5,6 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Simulating perfect gameplay to find parameters. Doesn't work!!! Deprecated
+/// </summary>
 public class Simulation : MonoBehaviour
 {
 	[SerializeField]
@@ -51,8 +54,8 @@ public class Simulation : MonoBehaviour
 			for (int j = 0; j < 11; j++)
 			{
 				progressText.text = (i+1).ToString() + "/11, " + (j+1).ToString() + "/11";
-				levelConfig.multiplierChance = minMultChance + multChanceStep * i;
-				levelConfig.popLiveChance = minLiveChance + liveChanceStep * j;
+				//levelConfig.multiplierChance = minMultChance + multChanceStep * i;
+				//levelConfig.popLiveChance = minLiveChance + liveChanceStep * j;
 
 				yield return HandleSingleSimulation();
 				line.Append(avg + (j < 11 ? ", " : ""));
@@ -74,11 +77,11 @@ public class Simulation : MonoBehaviour
 		
 		for (var i = 0; i < nodes.Length; i++)
 		{
-			nodes[i].color = RandomGenerator.RandomColor();
-			nodes[i].hubbleType = RandomGenerator.RandomType();
+			nodes[i].color = RandomHubbleGenerator.RandomColor();
+			nodes[i].hubbleType = RandomHubbleGenerator.RandomType();
 		}
 		
-		int randColor = RandomGenerator.RandomColor();
+		int randColor = RandomHubbleGenerator.RandomColor();
 		for (int i = 0; i < simulationSteps; i++)
 		{
 			int lives = 0;
@@ -91,13 +94,13 @@ public class Simulation : MonoBehaviour
 						lives++;
 					else if (nodes[j].hubbleType == HubbleType.Multiplier)
 						mult *= 2;
-					nodes[j].color = RandomGenerator.RandomColor(randColor);
-					nodes[j].hubbleType = RandomGenerator.RandomType();
+					nodes[j].color = RandomHubbleGenerator.RandomColor(randColor);
+					nodes[j].hubbleType = RandomHubbleGenerator.RandomType();
 				}
 			}
 
 			gainedLives[i] = lives * mult;
-			randColor = RandomGenerator.RandomColor(randColor);
+			randColor = RandomHubbleGenerator.RandomColor(randColor);
 			if (statusBar != null)
 			    statusBar.SetPercentage(i, simulationSteps);
 

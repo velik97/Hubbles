@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 
 /// <summary>
-/// Handles animation for hubbles and UI. Need change (separate game field animation and UI)
+/// Handles animation for hubbles and UI.
 /// </summary>
 public class AnimationManager : MonoSingleton <AnimationManager> {
 
@@ -422,7 +422,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 
 
 	/// <summary>
-	/// Delete group of nodes. Need Change
+	/// Delete group of nodes.
 	/// </summary>
 	/// <param name="nodes">nodes to be deleted</param>
 	public void DeleteGroup (List<Node> nodes) {

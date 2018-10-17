@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 /// <summary>
-/// Invokes most important game events. Need change
+/// Invokes most important game events.
 /// </summary>
 public class GameManager : MonoSingleton <GameManager>
 {
@@ -15,7 +15,11 @@ public class GameManager : MonoSingleton <GameManager>
 	/// </summary>
 	public LevelConfig levelConfig;
 	/// <summary>
-	/// Invokes on start of game, if you have enough popLives. Need change
+	/// Generation configuration for the game
+	/// </summary>
+	public GenerationConfig generationConfig;
+	/// <summary>
+	/// Invokes on start of game, if you have enough popLives.
 	/// </summary>
 	public UnityEvent onStartGame;
 	/// <summary>
@@ -31,6 +35,8 @@ public class GameManager : MonoSingleton <GameManager>
 	private void Awake()
 	{
 		LevelConfig.instance = levelConfig;
+		RandomHubbleGenerator.GenerationConfig = generationConfig;
+		RandomHubbleGenerator.LoadStepData(0, LevelConfig.StartPopLives, LevelConfig.StartRotationLives);
 		
 		onStartGame.AddListener(sceneLoader.EndLoadingScene);
 		onStartGame.AddListener(MapGenerator.Instance.StartGame);

@@ -38,8 +38,8 @@ public class Node {
 	/// </summary>
 	public void Reestablish () {
 		points++;
-		color = RandomGenerator.RandomColor(color);
-		HubbleType newType = RandomGenerator.RandomType();
+		color = RandomHubbleGenerator.RandomColor(color);
+		HubbleType newType = RandomHubbleGenerator.RandomType();
 		
 		hubble.Set (color, newType, type, points);
 		type = newType;

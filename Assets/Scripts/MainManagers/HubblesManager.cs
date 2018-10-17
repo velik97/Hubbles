@@ -81,7 +81,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	}
 
 	/// <summary>
-	/// Subscribe on all touch events. Need change.
+	/// Subscribe on all touch events.
 	/// </summary>
 	public void SubscribeOnTouchEvents () {
 		TouchManager.Instance.touchState.AddListener(delegate(TouchState touchState)
@@ -181,6 +181,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			popLives -= 1;
 			if (popLives < 0)
 				popLives = 0;
+			RandomHubbleGenerator.LoadStepData(totalScore, popLives, rotateLives);
 			AnimationManager.Instance.DeleteGroup (oneColorGroup);
 			previousNode = null;
 			turnedPreviously = false;
