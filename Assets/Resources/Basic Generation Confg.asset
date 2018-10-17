@@ -11,19 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409376d85d2974b0e8591a92cf18c766, type: 3}
   m_Name: Basic Generation Confg
   m_EditorClassIdentifier: 
-  startMinPopAvg: 0.5
-  endMinPopAvg: 0.5
+  minPopAvg: 0.5
   startMaxPopAvg: 5
   endMaxPopAvg: 1.5
   startPopLim: 20
   endPopLim: 10
-  popStepShift: 0
-  startMinRotAvg: 8
-  endMinRotAvg: 2
+  minRotAvg: 2
   startMaxRotAvg: 8
   endMaxRotAvg: 6
   startRotLim: 30
   endRotLim: 20
-  rotStepShift: 0
-  expDecrCoef: 0.1
+  expDecrCoef: 0.012
   multiplierChance: 0.03

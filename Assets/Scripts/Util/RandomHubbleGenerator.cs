@@ -24,6 +24,7 @@ public static class RandomHubbleGenerator
         set
         {
             multiplierChance = value.multiplierChance;
+            avgToProbCoef = 47.6f * Mathf.Exp(43f * multiplierChance);
             c = value;
         }
     }
@@ -32,30 +33,17 @@ public static class RandomHubbleGenerator
     private static float popLivesChance;
     private static float rotLivesChance;
 
-    private static Queue<float> popLivesChanceQueue;
-    private static Queue<float> rotLivesChanceQueue;
+    private static float avgToProbCoef;
 
     public static void LoadStepData(int score, int pops, int rots) 
     {
-        if (popLivesChanceQueue == null)
-            popLivesChanceQueue = new Queue<float>();
-        if (rotLivesChanceQueue == null)
-            rotLivesChanceQueue = new Queue<float>();
-
-        popLivesChanceQueue.Enqueue(GetProbabilityFromParamsNotShifted(score, pops, c.startMinPopAvg, c.endMinPopAvg,
-            c.startMaxPopAvg, c.endMaxPopAvg, c.startPopLim, c.endPopLim, c.expDecrCoef));
-        rotLivesChanceQueue.Enqueue(GetProbabilityFromParamsNotShifted(score, rots, c.startMinRotAvg, c.endMinRotAvg,
-            c.startMaxRotAvg, c.endMaxRotAvg, c.startRotLim, c.endRotLim, c.expDecrCoef));
-
-        popLivesChance = popLivesChanceQueue.Count > c.popStepShift
-            ? popLivesChanceQueue.Dequeue()
-            : popLivesChanceQueue.Peek();
-        rotLivesChance = rotLivesChanceQueue.Count > c.rotStepShift
-            ? rotLivesChanceQueue.Dequeue()
-            : rotLivesChanceQueue.Peek();
+        popLivesChance = GetProbabilityFromParamsNotShifted(score, pops, c.minPopAvg,
+            c.startMaxPopAvg, c.endMaxPopAvg, c.startPopLim, c.endPopLim, c.expDecrCoef);
+        rotLivesChance = GetProbabilityFromParamsNotShifted(score, rots, c.minRotAvg,
+            c.startMaxRotAvg, c.endMaxRotAvg, c.startRotLim, c.endRotLim, c.expDecrCoef);
         
-//        Debug.Log("Pop avg: " + (popLivesChance*173f) + " prob: " + popLivesChance + "\n" +
-//                  "Rot avg: " + (rotLivesChance*173f) + " prob: " + rotLivesChance);
+//        Debug.Log("Pop avg: " + (popLivesChance*avgToProbCoef) + " prob: " + popLivesChance + "\n" +
+//                  "Rot avg: " + (rotLivesChance*avgToProbCoef) + " prob: " + rotLivesChance);
     }
     
     public static int RandomColor()
@@ -91,14 +79,13 @@ public static class RandomHubbleGenerator
         return HubbleType.Usual;
     }
     
-    private static float GetProbabilityFromParamsNotShifted(float score, float lives, float startMin, float endMin,
+    private static float GetProbabilityFromParamsNotShifted(float score, float lives, float startMin,
         float startMax, float endMax, float startLivesLim, float endLivesLim, float expDecr)
     {
         // how difficult the game is in general according to the score; goes from 0 (easy) to 1 (hard) 
         float exp = Mathf.Exp(-expDecr * Mathf.Sqrt(score));
         
         // borders between witch avg value of gained lives is possible 
-        float minBorder = endMin + (startMin - endMin) * exp;
         float maxBorder = endMax + (startMax - endMax) * exp;
 
         // how many lives is enough to stop helping the player
@@ -108,11 +95,11 @@ public static class RandomHubbleGenerator
         float help = lives < livesLim ? (1 - lives / livesLim) : 0f;
 
         // avg lives predicted 
-        float avgLives = minBorder + (maxBorder - minBorder) * help;
+        float avgLives = startMin + (maxBorder - startMin) * help;
 
         // 173 is a magic number gained in simulation,
         // that connects probability of generating lives with average lives gained per step 
-        return avgLives / 173f;
+        return avgLives / avgToProbCoef;
     }
     
 }
