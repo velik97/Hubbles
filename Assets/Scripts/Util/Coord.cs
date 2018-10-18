@@ -4,7 +4,8 @@
 /// Coords for hexagonal field
 /// </summary>
 [System.Serializable]
-public class Coord {
+public class Coord
+{
 
 	private static Coord mapSize;
 
@@ -15,6 +16,8 @@ public class Coord {
 	private static float hexStepY;
 	private static float offsetX;
 	private static float offsetY;
+
+	public static float mapScale = 1f;
 
 	public static Coord MapSize {
 		get {
@@ -30,9 +33,9 @@ public class Coord {
 	public static Vector2 Step {
 		get {
 			if (hexStepX == 0f)
-				hexStepX = 1f;
+				hexStepX = mapScale;
 			if (hexStepY == 0f)
-				hexStepY = Mathf.Sqrt (3f) / 2f;
+				hexStepY = mapScale * Mathf.Sqrt (3f) / 2f;
 
 			return new Vector2 (hexStepX, hexStepY);
 

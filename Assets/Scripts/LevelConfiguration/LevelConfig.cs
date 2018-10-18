@@ -5,7 +5,10 @@ using System.Collections;
 /// Level Configuration.
 /// </summary>
 [CreateAssetMenu]
-public class LevelConfig : ScriptableObject {
+public class LevelConfig : ScriptableObject
+{
+	[SerializeField]
+	private float mapScale = 1f;
 
 	[SerializeField]
 	private int width, height;
@@ -22,6 +25,11 @@ public class LevelConfig : ScriptableObject {
 	private int[] levelScores;
 
 	public static LevelConfig instance;
+
+	public float MapScale
+	{
+		get { return mapScale; }
+	}
 
 	public static int Width {
 		get { return instance.width; }

@@ -417,7 +417,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 			HubblesManager.Instance.Turn (turns);
 		}
 		offsetAngle = 0f;
-		rotationLivesText.text = HubblesManager.Instance.rotateLives.ToString();
+		rotationLivesText.text = HubblesManager.Instance.rotLives.ToString();
 	}
 
 
@@ -447,7 +447,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		StartCoroutine (MapGenerator.Instance.ReestablishMap (nodes));
 		SoundManager.Instance.Play(bigPop);
 		popLivesText.text = HubblesManager.Instance.popLives.ToString();
-		rotationLivesText.text = HubblesManager.Instance.rotateLives.ToString();
+		rotationLivesText.text = HubblesManager.Instance.rotLives.ToString();
 	}
 
 	void FindObjectsAndNullReferences () {

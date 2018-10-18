@@ -44,9 +44,9 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// </summary>
 	[HideInInspector] public int popLives;
 	/// <summary>
-	/// Remained rotateLives
+	/// Remained rotLives
 	/// </summary>
-	[HideInInspector] public int rotateLives;
+	[HideInInspector] public int rotLives;
 	/// <summary>
 	/// Total achieved score in this session
 	/// </summary>
@@ -70,11 +70,19 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// </summary>
 	private Coord startRotatingCoord;
 
+	private int totalPopsPerLevel;
+	private int totalOneColorGroupPopPerLevel;
+	private int totalRotsPerLevel;
+
 	public void StartGame () {
 		popLives = LevelConfig.StartPopLives;
-		rotateLives = LevelConfig.StartRotationLives;
+		rotLives = LevelConfig.StartRotationLives;
 		FindObjectsAndNullReferences ();
 		SubscribeOnTouchEvents ();
+
+		totalPopsPerLevel = 0;
+		totalRotsPerLevel = 0;
+		totalOneColorGroupPopPerLevel = 0;
 
 		if (debugCoords)
 			StartCoroutine(DebugCoords());
@@ -131,7 +139,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		startRotatingCoord = TouchManager.Instance.startTouchCoord;
 		surroundingNodes = Map.NodesFromCoords
 			(Map.NearCoords (TouchManager.Instance.startTouchCoord, out canRotate, Map.AreRotable));
-		bool haveLives = rotateLives > 0 ||
+		bool haveLives = rotLives > 0 ||
 		                 (turnedPreviously && previousNode != null && previousNode == currentNode);
 		canRotate &= haveLives;
 		if (!canRotate) {
@@ -154,16 +162,21 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			int turns = (Mathf.RoundToInt (TouchManager.Instance.angle / 60f) % 360 + 360) % 6;
 			AnimationManager.Instance.StopRotating ();
 			AnimationManager.Instance.PullToMap (currentNode, surroundingNodes, turns, TouchManager.Instance.angle);
-			AnimationManager.Instance.rotationLivesText.text = rotateLives.ToString();
+			AnimationManager.Instance.rotationLivesText.text = rotLives.ToString();
 			if (turns != 0) {
 				if (previousNode!=null) {
 					if (currentNode != previousNode || !turnedPreviously) {
-						rotateLives -= 1;
+						rotLives -= 1;
+						if (rotLives < 0)
+							rotLives = 0;
+						totalRotsPerLevel++;
 					}
-				} else {
-					rotateLives -= 1;
-					if (rotateLives < 0)
-						rotateLives = 0;
+				} else
+				{
+					
+					rotLives -= 1;
+					if (rotLives < 0)
+						rotLives = 0;
 				}
 				turnedPreviously = true;
 				previousNode = currentNode;
@@ -179,9 +192,10 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		if (oneColorGroup.Count > 0) {
 			DeleteGroup (currentNode.color);
 			popLives -= 1;
+			totalPopsPerLevel++;
 			if (popLives < 0)
 				popLives = 0;
-			RandomHubbleGenerator.LoadStepData(totalScore, popLives, rotateLives);
+			RandomHubbleGenerator.LoadStepData(totalScore, popLives, rotLives);
 			AnimationManager.Instance.DeleteGroup (oneColorGroup);
 			previousNode = null;
 			turnedPreviously = false;
@@ -196,6 +210,16 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// Check if popLives are out
 	/// </summary>
 	void CheckLivesAndAims () {
+		while (totalScore > LevelConfig.LevelScores[level])
+		{
+			GameManager.Instance.LevelDone(level, popLives, rotLives, totalPopsPerLevel, totalRotsPerLevel,
+				totalOneColorGroupPopPerLevel);
+			level++;
+
+			totalPopsPerLevel = 0;
+			totalRotsPerLevel = 0;
+			totalOneColorGroupPopPerLevel = 0;
+		}
 		if (popLives == 0) {
 			gameEnded = true;
 			GameManager.Instance.Lose ();
@@ -228,7 +252,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		int points = 0;
 		int multiplier = 1;
 		int popHeal = 0; 
-		int rotationHeal = 0; 
+		int rotHeal = 0; 
 
 		foreach (Node node in oneColorGroup)
 		{
@@ -241,7 +265,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 					popHeal += 1;
 					break;
 				case HubbleType.RotationLive:
-					rotationHeal += 1;
+					rotHeal += 1;
 					break;
 				case HubbleType.Multiplier:
 					multiplier *= 2;
@@ -251,13 +275,12 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 
 		if (allAreOneColor) {
 			multiplier *= 2;
+			totalOneColorGroupPopPerLevel++;
 		}
 
 		totalScore += points * multiplier;
 		popLives += popHeal * multiplier;
-		rotateLives += rotationHeal * multiplier;
-		while (totalScore > LevelConfig.LevelScores[level])
-			level++;
+		rotLives += rotHeal * multiplier;
 	}
 
 	/// <summary>

@@ -18,6 +18,7 @@ public static class CameraResizer {
 			return screenWidth;
 		}
 	}
+	
 	private static float ScreenHeight {
 		get {
 			if (screenHeight == 0) {
@@ -27,18 +28,22 @@ public static class CameraResizer {
 		}
 	}
 
-	public static void ResizeInGame (this Camera cam) {
-		float maxX, maxY;
-		float maxSize;
+	private static float DefaultRation
+	{
+		get { return 1.7778f; } // 16:9
+	}
 
-//		maxY = 11 * Coord.Step.y * 0.5f;
-//		maxX = 7 * Coord.Step.x * ((float)Screen.height / (float)Screen.width) * 0.5f;
+	private static float DefaultCameraSize
+	{
+		get { return 9.6f; }
+	} 
 
-		maxY = MapGenerator.Instance.height * Coord.Step.y * 0.5f;
-		maxX = MapGenerator.Instance.width * Coord.Step.x * ((float)Screen.height / (float)Screen.width) * 0.5f;
-
-		maxSize = (maxX * 1.2f > maxY * 1.3f) ? (maxX * 1.2f) : (maxY * 1.4f);
-
-		cam.orthographicSize = maxSize;
+	public static void ResizeInGame (this Camera cam)
+	{
+		float ratio = ScreenHeight / ScreenWidth;
+		if (ratio < DefaultRation)
+			cam.orthographicSize = DefaultCameraSize;
+		else
+			cam.orthographicSize = DefaultCameraSize * ratio / DefaultRation;
 	}
 }

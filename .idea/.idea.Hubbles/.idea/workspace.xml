@@ -2,9 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e98df69-5324-4a2f-8194-f3fcb96e62e0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Hubbles/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hubbles/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Hubbles/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hubbles/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Basic Generation Confg.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Basic Generation Confg.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Basic Level Config.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Basic Level Config.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainManagers/AnimationManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainManagers/AnimationManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainManagers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainManagers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainManagers/HubblesManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainManagers/HubblesManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CameraResizer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/CameraResizer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/Coord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/Coord.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util/RandomHubbleGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util/RandomHubbleGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/hubbles_isoncs.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/hubbles_isoncs.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Sprites/hubbles_isoncs.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Sprites/hubbles_isoncs.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,34 +30,34 @@
     <session id="-1792276907">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="13" />
+          <entry key="project.closed" value="14" />
           <entry key="project.open.time.10" value="3" />
           <entry key="project.open.time.11" value="4" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="13" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cs" value="136" />
+          <entry key="cs" value="141" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="C#" value="136" />
+          <entry key="C#" value="141" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cs" value="18833" />
+          <entry key="cs" value="20268" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="C#" value="18833" />
+          <entry key="C#" value="20268" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -55,81 +69,60 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+            <state relative-caret-position="517">
+              <caret line="59" column="5" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
               <folding>
-                <marker date="1539812321414" expanded="true" signature="6:44" ph="..." />
-                <marker date="1539812321414" expanded="true" signature="46:99" ph="/// Level Configuration. ... " />
-                <marker date="1539812321414" expanded="true" signature="162:1012" ph="{...}" />
-                <marker date="1539812321414" expanded="true" signature="461:498" ph="{...}" />
-                <marker date="1539812321414" expanded="true" signature="526:564" ph="{...}" />
-                <marker date="1539812321414" expanded="true" signature="598:645" ph="{...}" />
-                <marker date="1539812321414" expanded="true" signature="685:733" ph="{...}" />
-                <marker date="1539812321414" expanded="true" signature="764:804" ph="{...}" />
-                <marker date="1539812321414" expanded="true" signature="839:884" ph="{...}" />
-                <marker date="1539812321414" expanded="true" signature="887:1010" ph="/* ======================== ... */" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-              <folding>
-                <marker date="1539817331048" expanded="false" signature="6:78" ph="..." />
-                <marker date="1539817331048" expanded="true" signature="146:744" ph="{...}" />
+                <marker date="1539900121351" expanded="false" signature="6:44" ph="..." />
+                <marker date="1539900121351" expanded="true" signature="46:99" ph="/// Level Configuration. ... " />
+                <marker date="1539900121351" expanded="true" signature="161:1117" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="506:539" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="566:603" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="631:669" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="703:750" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="790:838" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="869:909" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="944:989" ph="{...}" />
+                <marker date="1539900121351" expanded="true" signature="992:1115" ph="/* ======================== ... */" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Util/RandomHubbleGenerator.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="564">
-              <caret line="45" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+            <state relative-caret-position="928">
+              <caret line="60" column="60" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="60" />
               <folding>
-                <marker date="1539819037779" expanded="false" signature="6:108" ph="..." />
-                <marker date="1539819037779" expanded="true" signature="151:3593" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="231:425" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="249:419" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="518:711" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="536:705" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="947:1519" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="1315:1513" ph="/* Debug.Log(&quot;Pop avg: &quot; + (popLivesChance*avgToProbCoef) + &quot; prob: &quot; + popLivesChance + &quot;\n&quot; + ... */" />
-                <marker date="1539819037779" expanded="true" signature="1560:1628" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="1682:1874" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="1921:2424" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="2624:3586" ph="{...}" />
-                <marker date="1539819037779" expanded="true" signature="3087:3221" ph="/* how much do we help player in according to his current lives ... */" />
-                <marker date="1539819037779" expanded="true" signature="3400:3539" ph="/* 173 is a magic number gained in simulation, ... */" />
+                <marker date="1539904774079" expanded="false" signature="6:78" ph="..." />
+                <marker date="1539904774079" expanded="true" signature="146:2550" ph="{...}" />
+                <marker date="1539904774079" expanded="true" signature="879:1116" ph="{...}" />
+                <marker date="1539904774079" expanded="true" signature="897:1063" ph="{...}" />
+                <marker date="1539904774079" expanded="true" signature="1223:2548" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/GameManager.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Util/RandomHubbleGenerator.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="38" column="105" selection-start-line="38" selection-start-column="105" selection-end-line="38" selection-end-column="105" />
+            <state relative-caret-position="15">
+              <caret line="36" column="106" selection-start-line="36" selection-start-column="106" selection-end-line="36" selection-end-column="106" />
               <folding>
-                <marker date="1539813115360" expanded="false" signature="6:160" ph="..." />
-                <marker date="1539813115360" expanded="true" signature="162:230" ph="/// Invokes most important game events. ... " />
-                <marker date="1539813115360" expanded="true" signature="285:1545" ph="{...}" />
-                <marker date="1539813115360" expanded="true" signature="289:350" ph="/// Configuration for the game ... " />
-                <marker date="1539813115360" expanded="true" signature="385:457" ph="/// Generation configuration for the game ... " />
-                <marker date="1539813115360" expanded="true" signature="502:591" ph="/// Invokes on start of game, if you have enough popLives. ... " />
-                <marker date="1539813115360" expanded="true" signature="625:675" ph="/// Invokes on loss ... " />
-                <marker date="1539813115360" expanded="true" signature="705:773" ph="/// Progress animation for scene load ... " />
-                <marker date="1539813115360" expanded="true" signature="829:1279" ph="{...}" />
-                <marker date="1539813115360" expanded="true" signature="1296:1325" ph="{...}" />
-                <marker date="1539813115360" expanded="true" signature="1348:1372" ph="{...}" />
-                <marker date="1539813115360" expanded="true" signature="1398:1473" ph="{...}" />
-                <marker date="1539813115360" expanded="true" signature="1500:1541" ph="{...}" />
+                <marker date="1539904738424" expanded="false" signature="6:108" ph="..." />
+                <marker date="1539904738424" expanded="true" signature="151:3498" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="224:418" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="242:412" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="511:578" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="529:572" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="730:1344" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="1385:1453" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="1507:1699" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="1746:2251" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="2465:3491" ph="{...}" />
+                <marker date="1539904738424" expanded="true" signature="2990:3124" ph="/* how much do we help player in according to his current lives ... */" />
+                <marker date="1539904738424" expanded="true" signature="3303:3442" ph="/* 173 is a magic number gained in simulation, ... */" />
               </folding>
             </state>
           </provider>
@@ -139,10 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>livesText</find>
-      <find>popLives</find>
-      <find>touchFieldsLayer</find>
-      <find>multiplierObj</find>
       <find>onec</find>
       <find>additionalRotationsObj</find>
       <find>rotationHealText</find>
@@ -150,7 +139,6 @@
       <find>allAreOneColor</find>
       <find>liftedAfterFalseTouch</find>
       <find>totalScore</find>
-      <find>level</find>
       <find>scoreText</find>
       <find>popLivesText</find>
       <find>rotationLivesText</find>
@@ -169,6 +157,11 @@
       <find>[SerializeField] private</find>
       <find>pop</find>
       <find>Need change</find>
+      <find>TODO</find>
+      <find>level</find>
+      <find>rotation</find>
+      <find>CheckLivesAndAims</find>
+      <find>one</find>
     </findStrings>
     <replaceStrings>
       <replace>multiplierChance</replace>
@@ -183,37 +176,37 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/TouchManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/SceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/MenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/AnimationManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/AnimationFunctions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bonuses/PaintBonus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Editor/RemoteSettings/RemoteSettingsLinker.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/HubblesAppearanceInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Simulation/Simulation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameElements/Map.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/HighlightPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameElements/Hubble.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/FieldResizer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/MonoSingleton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/BonusManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/ReactiveProperty.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MenuPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/Enums.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/MapGenerator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/HubblesManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/RandomHubbleGenerator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/SoundManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/TouchManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/Coord.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/AnimationFunctions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bonuses/PaintBonus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/HighlightPanel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/FieldResizer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/MonoSingleton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/CameraResizer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Util/ReactiveProperty.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/MenuPanel.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/SceneLoader.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/LivesManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FieldResizer.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UIAimsHolder.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PaintBonus.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Aim.cs" />
@@ -254,14 +247,17 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/MainManagers/TouchManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Util/RandomGenerator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Simulation/Simulation.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/MainManagers/AnimationManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/MainManagers/MapGenerator.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/MainManagers/HubblesManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/MainManagers/SoundManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Util/Coord.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UI/CameraResizer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs" />
+        <option value="$PROJECT_DIR$/Assets/Editor/RemoteSettings/RemoteSettingsLinker.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/MainManagers/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/MainManagers/HubblesManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Util/RandomHubbleGenerator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs" />
       </list>
     </option>
   </component>
@@ -280,9 +276,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="SolutionExplorer">
-        <option name="show-all-files" value="false" />
-      </pane>
       <pane id="UnityExplorer">
         <subPane>
           <expand>
@@ -323,6 +316,9 @@
           <select />
         </subPane>
         <option name="show-hidden-items" value="false" />
+      </pane>
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
       </pane>
       <pane id="FileSystemExplorer" />
     </panes>
@@ -384,11 +380,12 @@
       <workItem from="1539705498449" duration="5777000" />
       <workItem from="1539806099381" duration="7015000" />
       <workItem from="1539816879371" duration="804000" />
+      <workItem from="1539867013557" duration="8516000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72368000" />
+    <option name="totallyTimeSpent" value="80884000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -403,7 +400,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18454936" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18669528" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -474,9 +471,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Level Editor/LETouchManager.cs" />
-    <entry file="file://$PROJECT_DIR$/Assets/Editor/LevelEditorWindow.cs" />
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Coord.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/HTime.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/MenuUIGenerator.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/InfoMenuPanel.cs" />
@@ -617,13 +611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/HubblesManager.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="205" column="40" selection-start-line="205" selection-start-column="40" selection-end-line="205" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/SoundManager.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
@@ -633,75 +620,257 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/LevelConfig.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
+        <state relative-caret-position="517">
+          <caret line="59" column="5" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
           <folding>
-            <marker date="1539812321414" expanded="true" signature="6:44" ph="..." />
-            <marker date="1539812321414" expanded="true" signature="46:99" ph="/// Level Configuration. ... " />
-            <marker date="1539812321414" expanded="true" signature="162:1012" ph="{...}" />
-            <marker date="1539812321414" expanded="true" signature="461:498" ph="{...}" />
-            <marker date="1539812321414" expanded="true" signature="526:564" ph="{...}" />
-            <marker date="1539812321414" expanded="true" signature="598:645" ph="{...}" />
-            <marker date="1539812321414" expanded="true" signature="685:733" ph="{...}" />
-            <marker date="1539812321414" expanded="true" signature="764:804" ph="{...}" />
-            <marker date="1539812321414" expanded="true" signature="839:884" ph="{...}" />
-            <marker date="1539812321414" expanded="true" signature="887:1010" ph="/* ======================== ... */" />
+            <marker date="1539900121351" expanded="false" signature="6:44" ph="..." />
+            <marker date="1539900121351" expanded="true" signature="46:99" ph="/// Level Configuration. ... " />
+            <marker date="1539900121351" expanded="true" signature="161:1117" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="506:539" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="566:603" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="631:669" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="703:750" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="790:838" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="869:909" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="944:989" ph="{...}" />
+            <marker date="1539900121351" expanded="true" signature="992:1115" ph="/* ======================== ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Editor/RemoteSettings/RemoteSettingsLinker.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="98" column="5" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="5" />
+          <folding>
+            <marker date="1539902973834" expanded="false" signature="29:383" ph="..." />
+            <marker date="1539902973834" expanded="true" signature="417:8774" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="424:617" ph="/* During a build, collect classes referenced by RemoteSettings components ... */" />
+            <marker date="1539902973834" expanded="true" signature="689:8772" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="864:990" ph="/* We need to know if OnProcessScene is being called from a player build, or ... */" />
+            <marker date="1539902973834" expanded="true" signature="1080:1328" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="1566:3236" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="1725:2119" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="1849:1930" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="1966:2105" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="2153:3226" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="2270:2443" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="2327:2425" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="2692:3212" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="2874:3194" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="2985:3172" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="3388:4705" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="3411:3741" ph="/* In addition to the build process, OnProcessScene is also called on the current scene ... */" />
+            <marker date="1539902973834" expanded="true" signature="3792:4695" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="3871:4165" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="3976:4147" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="4183:4375" ph="/* OnPostprocessBuild is called after assemblies are already stripped ... */" />
+            <marker date="1539902973834" expanded="true" signature="4426:4681" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="4851:6926" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="4911:6916" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="5111:5177" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="5330:6902" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="5668:6470" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="6022:6386" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="6194:6360" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="6514:6609" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="6668:6781" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="7011:8766" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="7544:8476" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="7870:8462" ph="{...}" />
+            <marker date="1539902973834" expanded="true" signature="7909:8203" ph="/* TODO: to optimize build size, we could preserve only the fields by and/or ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/HubblesManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="220" column="46" selection-start-line="220" selection-start-column="46" selection-end-line="220" selection-end-column="46" />
+          <folding>
+            <marker date="1539904059744" expanded="false" signature="6:92" ph="..." />
+            <marker date="1539904059744" expanded="true" signature="94:190" ph="/// Handles hubbles choose, rotation, deletion and reestablishing   ... " />
+            <marker date="1539904059744" expanded="true" signature="252:10425" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="256:319" ph="/// Node, chosen on current step ... " />
+            <marker date="1539904059744" expanded="true" signature="348:412" ph="/// Node, chosen on previous step ... " />
+            <marker date="1539904059744" expanded="true" signature="442:549" ph="/// List of nodes, chosen on previous step with one color (if it was chosen) ... " />
+            <marker date="1539904059744" expanded="true" signature="603:663" ph="/// List of surrounding nodes ... " />
+            <marker date="1539904059744" expanded="true" signature="704:793" ph="/// Is chosen for rotation node actually could be rotated  ... " />
+            <marker date="1539904059744" expanded="true" signature="822:915" ph="/// Does chosen color group contains all hubbles of such color ... " />
+            <marker date="1539904059744" expanded="true" signature="964:1019" ph="/// Was on previous step ... " />
+            <marker date="1539904059744" expanded="true" signature="1054:1106" ph="/// Remained popLives ... " />
+            <marker date="1539904059744" expanded="true" signature="1148:1200" ph="/// Remained rotLives ... " />
+            <marker date="1539904059744" expanded="true" signature="1242:1313" ph="/// Total achieved score in this session ... " />
+            <marker date="1539904059744" expanded="true" signature="1357:1466" ph="/// Total achieved score in this session ... " />
+            <marker date="1539904059744" expanded="true" signature="1506:1554" ph="/// Is game ended ... " />
+            <marker date="1539904059744" expanded="true" signature="1608:1669" ph="/// Coord on start of rotating ... " />
+            <marker date="1539904059744" expanded="true" signature="1841:2136" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="2139:2204" ph="/// Subscribe on all touch events. ... " />
+            <marker date="1539904059744" expanded="true" signature="2244:2728" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="2351:2716" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="2756:2951" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="2857:2948" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="2986:3113" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="3021:3110" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="3145:3970" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="3574:3641" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="3692:3766" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="3936:3967" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4000:4757" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4021:4754" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4358:4708" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4388:4556" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4449:4550" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4561:4642" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4784:5300" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="4877:5206" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="5303:5363" ph="/// Check if popLives are out ... " />
+            <marker date="1539904059744" expanded="true" signature="5391:5776" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="5446:5692" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="5714:5773" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="5779:5909" ph="/// Continue game with added steps. Need change ... " />
+            <marker date="1539904059744" expanded="true" signature="5956:6122" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="6125:6178" ph="/// Finds current node ... " />
+            <marker date="1539904059744" expanded="true" signature="6204:6319" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="6323:6433" ph="/// Deletes one color group ... " />
+            <marker date="1539904059744" expanded="true" signature="6464:7081" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="6585:6883" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="6611:6879" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="6907:6968" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="7084:7156" ph="/// Find one color group for current node ... " />
+            <marker date="1539904059744" expanded="true" signature="7176:7922" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="7484:7750" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="7605:7746" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="7847:7878" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="7925:8050" ph="/// Rotate current hubble and it's neighbours ... " />
+            <marker date="1539904059744" expanded="true" signature="8081:8993" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="8207:8989" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="8228:8602" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="8997:9082" ph="/// Finds all dependencies and initializes all fields  ... " />
+            <marker date="1539904059744" expanded="true" signature="9121:9328" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="9364:9731" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="9382:9728" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="9440:9702" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="9500:9696" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="9619:9690" ph="{...}" />
+            <marker date="1539904059744" expanded="true" signature="9732:10422" ph="/* void OnDrawGizmos () { ... */" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/MainManagers/GameManager.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="38" column="105" selection-start-line="38" selection-start-column="105" selection-end-line="38" selection-end-column="105" />
+        <state relative-caret-position="459">
+          <caret line="62" column="110" selection-start-line="62" selection-start-column="110" selection-end-line="62" selection-end-column="110" />
           <folding>
-            <marker date="1539813115360" expanded="false" signature="6:160" ph="..." />
-            <marker date="1539813115360" expanded="true" signature="162:230" ph="/// Invokes most important game events. ... " />
-            <marker date="1539813115360" expanded="true" signature="285:1545" ph="{...}" />
-            <marker date="1539813115360" expanded="true" signature="289:350" ph="/// Configuration for the game ... " />
-            <marker date="1539813115360" expanded="true" signature="385:457" ph="/// Generation configuration for the game ... " />
-            <marker date="1539813115360" expanded="true" signature="502:591" ph="/// Invokes on start of game, if you have enough popLives. ... " />
-            <marker date="1539813115360" expanded="true" signature="625:675" ph="/// Invokes on loss ... " />
-            <marker date="1539813115360" expanded="true" signature="705:773" ph="/// Progress animation for scene load ... " />
-            <marker date="1539813115360" expanded="true" signature="829:1279" ph="{...}" />
-            <marker date="1539813115360" expanded="true" signature="1296:1325" ph="{...}" />
-            <marker date="1539813115360" expanded="true" signature="1348:1372" ph="{...}" />
-            <marker date="1539813115360" expanded="true" signature="1398:1473" ph="{...}" />
-            <marker date="1539813115360" expanded="true" signature="1500:1541" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="6:274" ph="..." />
+            <marker date="1539904017695" expanded="true" signature="276:344" ph="/// Invokes most important game events. ... " />
+            <marker date="1539904017695" expanded="true" signature="399:2637" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="403:464" ph="/// Configuration for the game ... " />
+            <marker date="1539904017695" expanded="true" signature="499:571" ph="/// Generation configuration for the game ... " />
+            <marker date="1539904017695" expanded="true" signature="616:705" ph="/// Invokes on start of game, if you have enough popLives. ... " />
+            <marker date="1539904017695" expanded="true" signature="739:789" ph="/// Invokes on loss ... " />
+            <marker date="1539904017695" expanded="true" signature="819:887" ph="/// Progress animation for scene load ... " />
+            <marker date="1539904017695" expanded="true" signature="1030:1618" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="1635:1664" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="1687:1711" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="1857:2199" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="2225:2300" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="2327:2368" ph="{...}" />
+            <marker date="1539904017695" expanded="true" signature="2406:2635" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs">
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Util/Coord.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        <state relative-caret-position="219">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
           <folding>
-            <marker date="1539817331048" expanded="false" signature="6:78" ph="..." />
-            <marker date="1539817331048" expanded="true" signature="146:744" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="20:79" ph="/// Coords for hexagonal field ... " />
+            <marker date="1539895804353" expanded="true" signature="120:3016" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="380:549" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="388:412" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="419:546" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="579:760" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="587:757" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="779:801" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="832:864" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="891:937" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="899:934" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="965:1009" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="973:1006" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="1036:1231" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="1044:1228" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="1070:1171" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="1279:1448" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="1500:1866" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="1525:1623" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="1922:2108" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="2162:2508" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="2187:2285" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="2561:2809" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="2685:2707" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="2747:2768" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="2862:2886" ph="{...}" />
+            <marker date="1539895804353" expanded="true" signature="2924:3014" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/UI/CameraResizer.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="677">
+          <caret line="46" column="77" selection-start-line="46" selection-start-column="77" selection-end-line="46" selection-end-column="77" />
+          <folding>
+            <marker date="1539877305093" expanded="false" signature="6:66" ph="..." />
+            <marker date="1539877305093" expanded="true" signature="68:135" ph="/// Resizes camera for game field size ... " />
+            <marker date="1539877305093" expanded="true" signature="170:951" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="287:397" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="295:394" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="322:367" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="435:549" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="443:546" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="471:518" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="586:626" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="667:696" ph="{...}" />
+            <marker date="1539877305093" expanded="true" signature="749:949" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Util/RandomHubbleGenerator.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="45" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+        <state relative-caret-position="15">
+          <caret line="36" column="106" selection-start-line="36" selection-start-column="106" selection-end-line="36" selection-end-column="106" />
           <folding>
-            <marker date="1539819037779" expanded="false" signature="6:108" ph="..." />
-            <marker date="1539819037779" expanded="true" signature="151:3593" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="231:425" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="249:419" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="518:711" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="536:705" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="947:1519" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="1315:1513" ph="/* Debug.Log(&quot;Pop avg: &quot; + (popLivesChance*avgToProbCoef) + &quot; prob: &quot; + popLivesChance + &quot;\n&quot; + ... */" />
-            <marker date="1539819037779" expanded="true" signature="1560:1628" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="1682:1874" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="1921:2424" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="2624:3586" ph="{...}" />
-            <marker date="1539819037779" expanded="true" signature="3087:3221" ph="/* how much do we help player in according to his current lives ... */" />
-            <marker date="1539819037779" expanded="true" signature="3400:3539" ph="/* 173 is a magic number gained in simulation, ... */" />
+            <marker date="1539904738424" expanded="false" signature="6:108" ph="..." />
+            <marker date="1539904738424" expanded="true" signature="151:3498" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="224:418" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="242:412" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="511:578" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="529:572" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="730:1344" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="1385:1453" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="1507:1699" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="1746:2251" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="2465:3491" ph="{...}" />
+            <marker date="1539904738424" expanded="true" signature="2990:3124" ph="/* how much do we help player in according to his current lives ... */" />
+            <marker date="1539904738424" expanded="true" signature="3303:3442" ph="/* 173 is a magic number gained in simulation, ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/LevelConfiguration/GenerationConfig.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="928">
+          <caret line="60" column="60" selection-start-line="60" selection-start-column="48" selection-end-line="60" selection-end-column="60" />
+          <folding>
+            <marker date="1539904774079" expanded="false" signature="6:78" ph="..." />
+            <marker date="1539904774079" expanded="true" signature="146:2550" ph="{...}" />
+            <marker date="1539904774079" expanded="true" signature="879:1116" ph="{...}" />
+            <marker date="1539904774079" expanded="true" signature="897:1063" ph="{...}" />
+            <marker date="1539904774079" expanded="true" signature="1223:2548" ph="{...}" />
           </folding>
         </state>
       </provider>
