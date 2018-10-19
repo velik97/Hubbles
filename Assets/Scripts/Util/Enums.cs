@@ -18,3 +18,9 @@ public enum TouchState
     StartedFalseTouch = 7,
     EndedFalseTouch = 8
 }
+
+public enum PlayerActionType
+{
+    Tap = 0,
+    Rotate = 1
+}

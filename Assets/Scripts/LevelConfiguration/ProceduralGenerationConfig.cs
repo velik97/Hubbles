@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class GenerationConfig : ScriptableObject
-{   
+public class ProceduralGenerationConfig : ScriptableObject
+{
+    public bool syncWithServer = true;
     [Header("Pops")]
     public float startMinPopAvg = .5f;
     public float endMinPopAvg = 2f;
@@ -45,7 +46,7 @@ public class GenerationConfig : ScriptableObject
 
     public void SetRemoteLevelConfig(bool wasUpdatedFromServer, bool settingsChanged, int serverResponse)
     {
-        if (RemoteSettings.GetCount() == 0)
+        if (!syncWithServer || RemoteSettings.GetCount() == 0)
             return;
         
         startMinPopAvg = RemoteSettings.GetFloat("StartMinPopAvg", startMinPopAvg);

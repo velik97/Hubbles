@@ -80,7 +80,7 @@ public class Simulation : MonoBehaviour
 		for (var i = 0; i < nodes.Length; i++)
 		{
 			nodes[i].color = hubbleGenerator.GetColor();
-			nodes[i].hubbleType = hubbleGenerator.GetType();
+			nodes[i].hubbleType = hubbleGenerator.GetHubbleType();
 		}
 		
 		int randColor = hubbleGenerator.GetColor();
@@ -97,7 +97,7 @@ public class Simulation : MonoBehaviour
 					else if (nodes[j].hubbleType == HubbleType.Multiplier)
 						mult *= 2;
 					nodes[j].color = hubbleGenerator.GetColor(randColor);
-					nodes[j].hubbleType = hubbleGenerator.GetType();
+					nodes[j].hubbleType = hubbleGenerator.GetHubbleType();
 				}
 			}
 

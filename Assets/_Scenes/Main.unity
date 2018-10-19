@@ -588,8 +588,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 123, y: 1}
-  m_SizeDelta: {x: 102, y: 103}
+  m_AnchoredPosition: {x: 150, y: 1}
+  m_SizeDelta: {x: 150, y: 103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &235682863
 GameObject:
@@ -1869,7 +1869,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1221248270}
   - component: {fileID: 1221248271}
-  - component: {fileID: 1221248272}
   m_Layer: 5
   m_Name: Multiplayer
   m_TagString: Untagged
@@ -1894,8 +1893,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000045776367}
-  m_SizeDelta: {x: 0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1221248271
 Animator:
@@ -1915,19 +1914,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1221248272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1221248269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1254083943, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 1
-  m_AspectRatio: 1
 --- !u!1 &1252008877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2768,7 +2754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b0542b9f65845eeba1429f4bc5f234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generationConfig: {fileID: 11400000, guid: d103f87f69c2441db9d4981ceb0210f1, type: 2}
+  proceduralGenerationConfig: {fileID: 11400000, guid: d103f87f69c2441db9d4981ceb0210f1,
+    type: 2}
 --- !u!114 &1647990754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3098,7 +3085,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelConfig: {fileID: 11400000, guid: bdf6efa0f222842eda26d997c28efa1d, type: 2}
-  generationConfig: {fileID: 11400000, guid: d103f87f69c2441db9d4981ceb0210f1, type: 2}
   onStartGame:
     m_PersistentCalls:
       m_Calls: []
@@ -3121,6 +3107,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   sceneLoader: {fileID: 1175510472}
+  tutorialMode: 0
 --- !u!4 &1747265845
 Transform:
   m_ObjectHideFlags: 0
@@ -4362,8 +4349,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.799999, y: 0}
-  m_SizeDelta: {x: -2.4, y: -16}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -0.00000047683716, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2013946069
 MonoBehaviour:
@@ -4398,7 +4385,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x2
+  m_Text: x128
 --- !u!222 &2013946070
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -6,7 +6,6 @@
 [System.Serializable]
 public class Coord
 {
-
 	private static Coord mapSize;
 
 	public int x;
@@ -32,13 +31,10 @@ public class Coord
 
 	public static Vector2 Step {
 		get {
-			if (hexStepX == 0f)
-				hexStepX = mapScale;
-			if (hexStepY == 0f)
-				hexStepY = mapScale * Mathf.Sqrt (3f) / 2f;
+			hexStepX = mapScale;
+			hexStepY = mapScale * Mathf.Sqrt (3f) / 2f;
 
 			return new Vector2 (hexStepX, hexStepY);
-
 		}
 	}
 
@@ -136,6 +132,14 @@ public class Coord
 
 	public static bool operator != (Coord a, Coord b) {
 		return !(a == b);
+	}
+
+	public override bool Equals(object obj)
+	{
+		Coord other = (Coord) obj;
+		if (other == null)
+			return false;
+		return other == this;
 	}
 
 	public override string ToString () {

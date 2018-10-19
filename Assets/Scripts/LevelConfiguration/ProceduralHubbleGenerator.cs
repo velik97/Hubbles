@@ -18,29 +18,29 @@ public class ProceduralHubbleGenerator : MonoBehaviour, IHubbleGenerator
     }
 
     [SerializeField]
-    private GenerationConfig generationConfig;
+    private ProceduralGenerationConfig proceduralGenerationConfig;
 
     private float popLivesChance;
     private float rotLivesChance;
 
     private void Awake()
     {
-        RemoteSettings.Completed += generationConfig.SetRemoteLevelConfig;
+        RemoteSettings.Completed += proceduralGenerationConfig.SetRemoteLevelConfig;
     }
 
     public void LoadStepData(int score, int pops, int rots)
     {
-        popLivesChance = GetProbabilityFromParamsNotShifted(score, pops, generationConfig.startMinPopAvg,
-            generationConfig.endMinPopAvg,
-            generationConfig.startMaxPopAvg, generationConfig.endMaxPopAvg, generationConfig.startPopLim,
-            generationConfig.endPopLim, generationConfig.expDecrCoef);
-        rotLivesChance = GetProbabilityFromParamsNotShifted(score, rots, generationConfig.startMinRotAvg,
-            generationConfig.endMinRotAvg,
-            generationConfig.startMaxRotAvg, generationConfig.endMaxRotAvg, generationConfig.startRotLim,
-            generationConfig.endRotLim, generationConfig.expDecrCoef);
+        popLivesChance = GetProbabilityFromParamsNotShifted(score, pops, proceduralGenerationConfig.startMinPopAvg,
+            proceduralGenerationConfig.endMinPopAvg,
+            proceduralGenerationConfig.startMaxPopAvg, proceduralGenerationConfig.endMaxPopAvg, proceduralGenerationConfig.startPopLim,
+            proceduralGenerationConfig.endPopLim, proceduralGenerationConfig.expDecrCoef);
+        rotLivesChance = GetProbabilityFromParamsNotShifted(score, rots, proceduralGenerationConfig.startMinRotAvg,
+            proceduralGenerationConfig.endMinRotAvg,
+            proceduralGenerationConfig.startMaxRotAvg, proceduralGenerationConfig.endMaxRotAvg, proceduralGenerationConfig.startRotLim,
+            proceduralGenerationConfig.endRotLim, proceduralGenerationConfig.expDecrCoef);
         
-        Debug.Log("Pop avg: " + (popLivesChance*generationConfig.AvgToProbCoef) + " prob: " + popLivesChance + "\n" +
-                  "Rot avg: " + (rotLivesChance*generationConfig.AvgToProbCoef) + " prob: " + rotLivesChance);
+//        Debug.Log("Pop avg: " + (popLivesChance*proceduralGenerationConfig.AvgToProbCoef) + " prob: " + popLivesChance + "\n" +
+//                  "Rot avg: " + (rotLivesChance*proceduralGenerationConfig.AvgToProbCoef) + " prob: " + rotLivesChance);
     }
     
     public int GetColor()
@@ -56,7 +56,7 @@ public class ProceduralHubbleGenerator : MonoBehaviour, IHubbleGenerator
         return newColor;
     }
     
-    public HubbleType GetType()
+    public HubbleType GetHubbleType()
     {
         int randomNumber = Prng.Next(0, 100000);
         float comparer = 0f;
@@ -69,7 +69,7 @@ public class ProceduralHubbleGenerator : MonoBehaviour, IHubbleGenerator
         if (randomNumber < comparer)
             return HubbleType.RotationLive;
 
-        comparer += generationConfig.multiplierChance * 100000f;
+        comparer += proceduralGenerationConfig.multiplierChance * 100000f;
         if (randomNumber < comparer)
             return HubbleType.Multiplier;
 
@@ -93,11 +93,11 @@ public class ProceduralHubbleGenerator : MonoBehaviour, IHubbleGenerator
         float help = lives < livesLim ? (1 - lives / livesLim) : 0f;
 
         // avg lives predicted 
-        float avgLives = startMin + (maxBorder - startMin) * help;
+        float avgLives = minBorder + (maxBorder - minBorder) * help;
 
         // 173 is a magic number gained in simulation,
         // that connects probability of generating lives with average lives gained per step 
-        return avgLives / generationConfig.AvgToProbCoef;
+        return avgLives / proceduralGenerationConfig.AvgToProbCoef;
     }
     
 }

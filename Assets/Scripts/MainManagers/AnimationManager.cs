@@ -304,8 +304,9 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	/// <param name="mainNode">central node</param>
 	/// <param name="surroundingNodes">surrounding neighbours</param>
-	public void StartRotating (Node mainNode, List<Node> surroundingNodes) {
-		rotateCoroutines.Add(StartCoroutine (IRotate (mainNode, surroundingNodes)));
+	/// <param name="getAngle">function that returns current angle</param>
+	public void StartRotating (Node mainNode, List<Node> surroundingNodes, Func<float> getAngle) {
+		rotateCoroutines.Add(StartCoroutine (IRotate (mainNode, surroundingNodes, getAngle)));
 	}
 
 	/// <summary>
@@ -327,11 +328,12 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	/// <param name="mainNode">central node</param>
 	/// <param name="surroundingNodes">surrounding neighbours</param>
-	IEnumerator IRotate (Node mainNode, List<Node> surroundingNodes) {
+	/// <param name="getAngle">function that returns current angle</param>
+	IEnumerator IRotate (Node mainNode, List<Node> surroundingNodes, Func<float> getAngle) {
 		while (true) {
-			Rotate (mainNode, surroundingNodes, TouchManager.Instance.angle);
-			if (Mathf.Abs (offsetAngle - TouchManager.Instance.angle) > 30f) {
-				if (TouchManager.Instance.angle > offsetAngle)
+			Rotate (mainNode, surroundingNodes, getAngle());
+			if (Mathf.Abs (offsetAngle - getAngle()) > 30f) {
+				if (getAngle() > offsetAngle)
 					offsetAngle += 60;
 				else
 					offsetAngle -= 60;
@@ -347,7 +349,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="mainNode">central node</param>
 	/// <param name="surroundingNodes">surrounding neighbours</param>
 	/// <param name="angle">angle of rotation</param>
-	void Rotate (Node mainNode, List<Node> surroundingNodes, float angle) {
+	public void Rotate (Node mainNode, List<Node> surroundingNodes, float angle) {
 		currentAngle = (((int)angle) / 60) * 60f + AnimationFunctions.EasyInOut((angle % 60) / 60 , easyRotationPow) * 60;
 		mainNode.hubble.transform.rotation = Quaternion.Euler (new Vector3(0,0, - currentAngle));
 		foreach (Node node in surroundingNodes) {

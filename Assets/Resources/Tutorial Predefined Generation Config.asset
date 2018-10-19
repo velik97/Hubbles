@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08990ad2abb8d47f2812a881bd77b78f, type: 3}
+  m_Name: Tutorial Predefined Generation Config
+  m_EditorClassIdentifier: 
+  hubbles:
+  - color: 0
+    hubbleType: 0
+  - color: 1
+    hubbleType: 0
+  - color: 2
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 3
+    hubbleType: 0
+  - color: 1
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 1
+    hubbleType: 0
+  - color: 2
+    hubbleType: 0
+  - color: 1
+    hubbleType: 0
+  - color: 2
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 1
+    hubbleType: 0
+  - color: 2
+    hubbleType: 0
+  - color: 3
+    hubbleType: 0
+  - color: 1
+    hubbleType: 1
+  - color: 2
+    hubbleType: 0
+  - color: 3
+    hubbleType: 0
+  - color: 1
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 1
+    hubbleType: 3
+  - color: 2
+    hubbleType: 0
+  - color: 3
+    hubbleType: 0
+  - color: 0
+    hubbleType: 0
+  - color: 1
+    hubbleType: 0
+  - color: 2
+    hubbleType: 2
+  - color: 3
+    hubbleType: 0

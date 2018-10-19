@@ -258,7 +258,14 @@ PlayerSettings:
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   resolutionDialogBanner: {fileID: 0}
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 76ebd7e0987294b748dc474c5bf253a4, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetPlatformIcons:
   - m_BuildTarget: Android
     m_Icons:
@@ -810,7 +817,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: 0e7999a7-5ae6-45d9-aad1-79f2b32e0e6d
-  projectName: Hubbles (1)
+  projectName: Hubbles
   organizationId: velik-nikita
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

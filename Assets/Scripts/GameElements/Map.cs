@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// Contains all metadata and link to hubble for certain node on a map
 /// </summary>
 [System.Serializable]
-public class Node {
+public class Node: IComparable<Node> {
 
 	public int color;
 	public HubbleType type;
@@ -39,7 +41,7 @@ public class Node {
 	public void Reestablish (IHubbleGenerator hubbleGenerator) {
 		points++;
 		color = hubbleGenerator.GetColor(color);
-		HubbleType newType = hubbleGenerator.GetType();
+		HubbleType newType = hubbleGenerator.GetHubbleType();
 		
 		hubble.Set (color, newType, type, points);
 		type = newType;
@@ -69,6 +71,27 @@ public class Node {
 		hubble.Set (color, type, this.type, this.points);
 		this.type = type;
 		MapGenerator.Instance.thisColorNodes [this.color].Add (this as Node);
+	}
+
+	public int CompareTo(Node other)
+	{
+		if (other == null)
+			return 1;
+		if (other.hubble == null && hubble == null)
+			return 0;
+		if (other.hubble == null)
+			return 1;
+		if (hubble == null)
+			return -1;
+		if (other.hubble.transform.position.y == hubble.transform.position.y)
+		{
+			if (other.hubble.transform.position.x > hubble.transform.position.x)
+				return -1;
+			return 1;
+		}
+		if (other.hubble.transform.position.y > hubble.transform.position.y)
+			return -1;
+		return 1;
 	}
 }
 	
@@ -191,9 +214,17 @@ public class Map {
 	public static List <Node> NodesFromCoords (List <Coord> coords) {
 		List <Node> nodes = new List<Node> ();
 		foreach (Coord coord in coords) {
-			nodes.Add (nodeMap [coord.x, coord.y]);
+			nodes.Add (NodeFromCoord(coord));
 		}
 		return nodes;
+	}
+
+	/// <summary>
+	/// Node for given coord
+	/// </summary>
+	public static Node NodeFromCoord(Coord coord)
+	{
+		return nodeMap[coord.x, coord.y];
 	}
 
 	/// <summary>
@@ -209,7 +240,6 @@ public class Map {
 		if (currentNode == nodeMap [x, y])
 			return false;
 
-		HubbleType t = nodeMap [x, y].type;
 		return Coord.MapContains (new Coord (x, y));
 	}
 

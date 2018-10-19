@@ -8,5 +8,5 @@ public interface IHubbleGenerator
 
     int GetColor();
     int GetColor(int prevColor);
-    HubbleType GetType();
+    HubbleType GetHubbleType();
 }

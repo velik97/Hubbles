@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 /// <summary>
 /// Handles hubbles choose, rotation, deletion and reestablishing  
@@ -65,6 +66,10 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 
 	public bool debugCoords;
 
+	[HideInInspector] public UnityEvent onHighlighted;
+	[HideInInspector] public UnityEvent onPoped;
+	[HideInInspector] public IntEvent onRotated = new IntEvent();
+
 	/// <summary>
 	/// Coord on start of rotating
 	/// </summary>
@@ -103,10 +108,10 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 					EndTouch();
 					break;
 				case TouchState.StartedRotating:
-					StartRotating();
+					StartRotating(() => TouchManager.Instance.angle);
 					break;
 				case TouchState.EndedRotating:
-					EndRotating();
+					EndRotating(() => TouchManager.Instance.angle);
 					break;
 				case TouchState.StartedTouchingSurrounding:
 					TouchSurrounding();
@@ -133,7 +138,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		}
 	}
 	
-	private void StartRotating()
+	public void StartRotating(Func<float> getAngle)
 	{
 		AnimationManager.Instance.UnHighLightEveryThing(true);
 		startRotatingCoord = TouchManager.Instance.startTouchCoord;
@@ -149,19 +154,19 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 				node.hubble.transform.SetParent (currentNode.hubble.transform);
 			}
 			AnimationManager.Instance.Rescale (currentNode, true);
-			AnimationManager.Instance.StartRotating (currentNode, surroundingNodes);
+			AnimationManager.Instance.StartRotating (currentNode, surroundingNodes, getAngle);
 		}
 		if (oneColorGroup.Count > 0) {
 			oneColorGroup.Clear();
 		}
 	}
 	
-	private void EndRotating()
+	public void EndRotating(Func<float> getAngle)
 	{
 		if (canRotate) {
-			int turns = (Mathf.RoundToInt (TouchManager.Instance.angle / 60f) % 360 + 360) % 6;
+			int turns = (Mathf.RoundToInt (getAngle() / 60f) % 360 + 360) % 6;
 			AnimationManager.Instance.StopRotating ();
-			AnimationManager.Instance.PullToMap (currentNode, surroundingNodes, turns, TouchManager.Instance.angle);
+			AnimationManager.Instance.PullToMap (currentNode, surroundingNodes, turns, getAngle());
 			AnimationManager.Instance.rotationLivesText.text = rotLives.ToString();
 			if (turns != 0) {
 				if (previousNode!=null) {
@@ -183,6 +188,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			} else {
 				turnedPreviously = false;
 			}
+			onRotated.Invoke(turns);
 		}
 	}
 	
@@ -196,13 +202,15 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			if (popLives < 0)
 				popLives = 0;
 			MapGenerator.Instance.hubbleGenerator.LoadStepData(totalScore, popLives, rotLives);
+			CheckLivesAndAims ();
 			AnimationManager.Instance.DeleteGroup (oneColorGroup);
 			previousNode = null;
 			turnedPreviously = false;
-			CheckLivesAndAims ();
+			onPoped.Invoke();
 		} else {
 			FindGroup ();
 			AnimationManager.Instance.HighLightHubbles (oneColorGroup);
+			onHighlighted.Invoke();
 		}
 	}
 
@@ -241,7 +249,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// Finds current node
 	/// </summary>
 	void FindCurrentNode () {
-		currentNode = Map.nodeMap[TouchManager.Instance.startTouchCoord.x, TouchManager.Instance.startTouchCoord.y];
+		currentNode = Map.NodeFromCoord(TouchManager.Instance.startTouchCoord);
 	} 
 
 	/// <summary>
@@ -405,3 +413,5 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 //	}
 
 }
+
+public class IntEvent : UnityEvent<int> {}

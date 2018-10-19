@@ -73,12 +73,11 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 		}
 	
 		AnimationManager.Instance.isAnimating = true;
-		Hubble newHubble;
 		for (int i = 0; i < width; i ++) {
 			for (int j = 0; j < height; j ++) {
 				Coord newCoord = new Coord (i, j);
 				if (Coord.MapContains (newCoord)) {
-					Node newNode = Map.SetNode (hubbleGenerator.GetColor(), hubbleGenerator.GetType(), newCoord);
+					Node newNode = Map.SetNode (hubbleGenerator.GetColor(), hubbleGenerator.GetHubbleType(), newCoord);
 					thisColorNodes [newNode.color].Add (newNode);
 					yield return new WaitForSeconds (.01f);
 				}
@@ -95,6 +94,7 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 	/// </summary>
 	/// <param name="nodesToReestablish">Nodes deleted on previous step, that are needed to be reestablished</param>
 	public IEnumerator ReestablishMap (List<Node> nodesToReestablish) {
+		nodesToReestablish.Sort();
 		int color = nodesToReestablish[0].color;
 
 		foreach (Node node in nodesToReestablish) {
