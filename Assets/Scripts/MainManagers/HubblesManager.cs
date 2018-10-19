@@ -195,7 +195,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			totalPopsPerLevel++;
 			if (popLives < 0)
 				popLives = 0;
-			RandomHubbleGenerator.LoadStepData(totalScore, popLives, rotLives);
+			MapGenerator.Instance.hubbleGenerator.LoadStepData(totalScore, popLives, rotLives);
 			AnimationManager.Instance.DeleteGroup (oneColorGroup);
 			previousNode = null;
 			turnedPreviously = false;

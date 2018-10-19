@@ -36,10 +36,10 @@ public class Node {
 	/// <summary>
 	/// Finds new params for deleted hubble
 	/// </summary>
-	public void Reestablish () {
+	public void Reestablish (IHubbleGenerator hubbleGenerator) {
 		points++;
-		color = RandomHubbleGenerator.RandomColor(color);
-		HubbleType newType = RandomHubbleGenerator.RandomType();
+		color = hubbleGenerator.GetColor(color);
+		HubbleType newType = hubbleGenerator.GetType();
 		
 		hubble.Set (color, newType, type, points);
 		type = newType;
@@ -136,7 +136,7 @@ public class Map {
 	public static List <Coord> NearCoords (Coord coord, LookForNearNodes Suits) {
 		int x = coord.x;
 		int y = coord.y;
-		Node currentNode = nodeMap [x, y];
+ 		Node currentNode = nodeMap [x, y];
 		List <Coord> nearCoords = new List<Coord> ();
 
 		if (Suits (x, y, currentNode))

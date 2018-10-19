@@ -30,6 +30,8 @@ public class Simulation : MonoBehaviour
 
 	private float avg;
 
+	public IHubbleGenerator hubbleGenerator;
+
 	private void Awake()
 	{
 		StartCoroutine(HandleSimulation());
@@ -77,11 +79,11 @@ public class Simulation : MonoBehaviour
 		
 		for (var i = 0; i < nodes.Length; i++)
 		{
-			nodes[i].color = RandomHubbleGenerator.RandomColor();
-			nodes[i].hubbleType = RandomHubbleGenerator.RandomType();
+			nodes[i].color = hubbleGenerator.GetColor();
+			nodes[i].hubbleType = hubbleGenerator.GetType();
 		}
 		
-		int randColor = RandomHubbleGenerator.RandomColor();
+		int randColor = hubbleGenerator.GetColor();
 		for (int i = 0; i < simulationSteps; i++)
 		{
 			int lives = 0;
@@ -94,13 +96,13 @@ public class Simulation : MonoBehaviour
 						lives++;
 					else if (nodes[j].hubbleType == HubbleType.Multiplier)
 						mult *= 2;
-					nodes[j].color = RandomHubbleGenerator.RandomColor(randColor);
-					nodes[j].hubbleType = RandomHubbleGenerator.RandomType();
+					nodes[j].color = hubbleGenerator.GetColor(randColor);
+					nodes[j].hubbleType = hubbleGenerator.GetType();
 				}
 			}
 
 			gainedLives[i] = lives * mult;
-			randColor = RandomHubbleGenerator.RandomColor(randColor);
+			randColor = hubbleGenerator.GetColor(randColor);
 			if (statusBar != null)
 			    statusBar.SetPercentage(i, simulationSteps);
 

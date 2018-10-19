@@ -32,7 +32,9 @@
           </e>
           <e p="LevelConfiguration" t="Include">
             <e p="GenerationConfig.cs" t="Include" />
+            <e p="IHubbleGenerator.cs" t="Include" />
             <e p="LevelConfig.cs" t="Include" />
+            <e p="ProceduralHubbleGenerator.cs" t="Include" />
           </e>
           <e p="MainManagers" t="Include">
             <e p="AnimationManager.cs" t="Include" />
@@ -64,7 +66,6 @@
             <e p="Enums.cs" t="Include" />
             <e p="HubblesAppearanceInfo.cs" t="Include" />
             <e p="MonoSingleton.cs" t="Include" />
-            <e p="RandomHubbleGenerator.cs" t="Include" />
             <e p="ReactiveProperty.cs" t="Include" />
           </e>
         </e>

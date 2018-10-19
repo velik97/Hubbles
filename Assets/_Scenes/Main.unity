@@ -2749,13 +2749,26 @@ GameObject:
   m_Component:
   - component: {fileID: 1647990755}
   - component: {fileID: 1647990754}
+  - component: {fileID: 1647990751}
   m_Layer: 0
-  m_Name: MapHolder
+  m_Name: MapGenerator
   m_TagString: MapHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1647990751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1647990750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b0542b9f65845eeba1429f4bc5f234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generationConfig: {fileID: 11400000, guid: d103f87f69c2441db9d4981ceb0210f1, type: 2}
 --- !u!114 &1647990754
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -40,9 +40,6 @@ public class GameManager : MonoSingleton <GameManager>
 	private void Awake()
 	{
 		LevelConfig.instance = levelConfig;
-		RemoteSettings.Completed += generationConfig.SetRemoteLevelConfig;
-		RandomHubbleGenerator.GenerationConfig = generationConfig;
-		RandomHubbleGenerator.LoadStepData(0, LevelConfig.StartPopLives, LevelConfig.StartRotationLives);
 		Coord.mapScale = levelConfig.MapScale;
 		PrepareAnalyticsData();
 		

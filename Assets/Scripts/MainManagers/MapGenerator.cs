@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Randomly generates map
 /// </summary>
+[RequireComponent(typeof(IHubbleGenerator))]
 public class MapGenerator : MonoSingleton <MapGenerator> {
 
 	/// <summary>
@@ -26,7 +27,20 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 	/// Array of lists of nodes for certain colors
 	/// </summary>
 	[HideInInspector] public List <Node>[] thisColorNodes;
-	
+
+	/// <summary>
+	/// Object that generates colors and types
+	/// </summary>
+	public IHubbleGenerator hubbleGenerator;
+
+	private void Awake()
+	{
+		hubbleGenerator = GetComponent<IHubbleGenerator>();
+		if (hubbleGenerator == null)
+			Debug.LogError("[MapGenerator] " +
+			               "Hubble Generator Object does not contain component, that implements IHubbleGenerator !");
+	}
+
 	public void StartGame () {
 		AssembleConfig ();
 
@@ -64,7 +78,7 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 			for (int j = 0; j < height; j ++) {
 				Coord newCoord = new Coord (i, j);
 				if (Coord.MapContains (newCoord)) {
-					Node newNode = Map.SetNode (RandomHubbleGenerator.RandomColor(), RandomHubbleGenerator.RandomType(), newCoord);
+					Node newNode = Map.SetNode (hubbleGenerator.GetColor(), hubbleGenerator.GetType(), newCoord);
 					thisColorNodes [newNode.color].Add (newNode);
 					yield return new WaitForSeconds (.01f);
 				}
@@ -90,7 +104,7 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 		AnimationManager.Instance.isAnimating = true;
 
 		foreach (Node node in nodesToReestablish) {
-			node.Reestablish ();
+			node.Reestablish (hubbleGenerator);
 			yield return new WaitForSeconds (0.01f);
 			thisColorNodes [node.color].Add (node);
 		}
