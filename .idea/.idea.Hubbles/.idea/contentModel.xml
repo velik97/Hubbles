@@ -35,9 +35,9 @@
             <e p="IHubbleGenerator.cs" t="Include" />
             <e p="LevelConfig.cs" t="Include" />
             <e p="PreDefinedGenerationConfig.cs" t="Include" />
+            <e p="PredefinedHubbleGenerator.cs" t="Include" />
             <e p="ProceduralGenerationConfig.cs" t="Include" />
             <e p="ProceduralHubbleGenerator.cs" t="Include" />
-            <e p="TutorialHubbleGenerator.cs" t="Include" />
           </e>
           <e p="MainManagers" t="Include">
             <e p="AnimationManager.cs" t="Include" />

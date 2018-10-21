@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialHubbleGenerator : MonoBehaviour, IHubbleGenerator
+public class PredefinedHubbleGenerator : MonoBehaviour, IHubbleGenerator
 {
 	[SerializeField]
 	private PredefinedGenerationConfig predefinedHubbleGenerator;
@@ -15,7 +15,7 @@ public class TutorialHubbleGenerator : MonoBehaviour, IHubbleGenerator
 	{
 		proceduralHubbleGenerator = GetComponentInChildren<ProceduralHubbleGenerator>();
 		if (proceduralHubbleGenerator == null)
-			Debug.LogError("[TutorialHubbleGenerator] Need default hubble generator!");
+			Debug.LogError("[PredefinedHubbleGenerator] Need default hubble generator!");
 	}
 
 	public void LoadStepData(int score, int pops, int rots) {}

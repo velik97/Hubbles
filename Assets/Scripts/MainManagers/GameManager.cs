@@ -48,7 +48,6 @@ public class GameManager : MonoSingleton <GameManager>
 		if (tutorialMode)
 		{
 			onStartGame.AddListener(TutorialManager.Instance.StartGame);
-			TouchManager.Instance.tutorialMode = true;
 		}
 		else
 			PrepareAnalyticsData();

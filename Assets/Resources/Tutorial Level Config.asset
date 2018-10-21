@@ -14,8 +14,8 @@ MonoBehaviour:
   mapScale: 2
   width: 3
   height: 5
-  startPopLives: 10
-  startRotations: 10
+  startPopLives: 5
+  startRotations: 5
   colors:
   - {r: 0.21568628, g: 0.7764706, b: 0.9019608, a: 1}
   - {r: 0.9254902, g: 0.29803923, b: 0.33333334, a: 1}

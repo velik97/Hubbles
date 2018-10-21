@@ -2,11 +2,19 @@ fileFormatVersion: 2
 guid: 2bde7f988488f4de2b5a16778aa0e253
 TextureImporter:
   fileIDToRecycleName:
-    21300000: hubbles_isoncs_0
-    21300002: hubbles_isoncs_1
-    21300004: hubbles_isoncs_2
-    21300006: hubbles_isoncs_3
-    21300008: hubbles_isoncs_4
+    21300000: pop
+    21300002: rot
+    21300004: loadBar
+    21300006: pauseHolder_deactivated
+    21300008: x2
+    21300010: pause
+    21300012: pause_holder
+    21300014: pauseHolder_activate
+    21300016: add
+    21300018: plate
+    21300020: plate_active
+    21300022: plate_deactivate
+    21300024: loadBarBG
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -111,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hubbles_isoncs_0
+      name: pop
       rect:
         serializedVersion: 2
         x: 0
@@ -125,13 +133,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65d1f60553c6b43bdbaf1cfd45a76c25
+      spriteID: c37b5f305c57243ec92883bfeed5e4be
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hubbles_isoncs_1
+      name: rot
       rect:
         serializedVersion: 2
         x: 128
@@ -145,13 +153,53 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3474d6a1bb3694b34bf8e3f6dd072968
+      spriteID: 76961c4ac81af4d25964af7e45c013af
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hubbles_isoncs_2
+      name: loadBar
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 354
+        width: 128
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 14, y: 18, z: 14, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8e51b02a18ec422ba5658f028ddcc50
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pauseHolder_deactivated
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6d498052f26043bd965f768cd6e52a9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: x2
       rect:
         serializedVersion: 2
         x: 0
@@ -165,13 +213,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12d8ace4d31de48e89997169b3a2b335
+      spriteID: 8b59fb214914849ff8004d4273beacb3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hubbles_isoncs_3
+      name: pause
       rect:
         serializedVersion: 2
         x: 128
@@ -185,13 +233,53 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a081d29ecfea415eb9e77353ec3f9c4
+      spriteID: 20e5d9038fd974d899f44a3f6a435d21
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hubbles_isoncs_4
+      name: pause_holder
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e16b41d61508488eb61ed330ab7026c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pauseHolder_activate
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba8d36d9f515646d79efbc4d8fb7d747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: add
       rect:
         serializedVersion: 2
         x: 0
@@ -200,12 +288,92 @@ TextureImporter:
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 32, y: 32, z: 32, w: 32}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84d25e961d2fc4687b2cb1886d10c114
+      spriteID: 3d6bf292d90e8496887d74b4e11174f3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plate
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 60, y: 60, z: 60, w: 60}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41124404c11564bb194aa18be2378278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plate_active
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 60, y: 60, z: 60, w: 60}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82b31aa274ddb4a96a722c28eaab2c8a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plate_deactivate
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 60, y: 60, z: 60, w: 60}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 751d19a853c3e48878c8f6e6c5ed6cac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: loadBarBG
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 302
+        width: 128
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 10, y: 9, z: 10, w: 9}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ba91c3d7915444819079abf2deacf79
       vertices: []
       indices: 
       edges: []

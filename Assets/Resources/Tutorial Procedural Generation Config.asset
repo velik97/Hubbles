@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Name: Tutorial Procedural Generation Config
   m_EditorClassIdentifier: 
   syncWithServer: 0
-  startMinPopAvg: 1
-  endMinPopAvg: 1
-  startMaxPopAvg: 1
-  endMaxPopAvg: 1
-  startPopLim: 1
-  endPopLim: 1
-  startMinRotAvg: 1
-  endMinRotAvg: 1
-  startMaxRotAvg: 1
-  endMaxRotAvg: 1
-  startRotLim: 1
-  endRotLim: 1
+  startMinPopAvg: 0
+  endMinPopAvg: 0
+  startMaxPopAvg: 0
+  endMaxPopAvg: 0
+  startPopLim: 0
+  endPopLim: 0
+  startMinRotAvg: 0
+  endMinRotAvg: 0
+  startMaxRotAvg: 0
+  endMaxRotAvg: 0
+  startRotLim: 0
+  endRotLim: 0
   expDecrCoef: 0
-  multiplierChance: 0.05
+  multiplierChance: 0

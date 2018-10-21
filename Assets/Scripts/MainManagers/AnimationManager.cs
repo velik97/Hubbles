@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 
 /// <summary>
 /// Handles animation for hubbles and UI.
@@ -428,8 +431,8 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	/// <param name="nodes">nodes to be deleted</param>
 	public void DeleteGroup (List<Node> nodes) {
-		scoreText.text = HubblesManager.Instance.totalScore.ToString ();
-		nextLevelScoreText.text = LevelConfig.LevelScores[HubblesManager.Instance.level].ToString();
+		scoreText.text = FormatNumber(HubblesManager.Instance.totalScore);
+		nextLevelScoreText.text = "out of " + FormatNumber(LevelConfig.LevelScores[HubblesManager.Instance.level]);
 		levelText.text = HubblesManager.Instance.level.ToString ();
 		int maxScoreAchievableInThisLevel = LevelConfig.LevelScores[HubblesManager.Instance.level] -
 		                                    LevelConfig.LevelScores[HubblesManager.Instance.level - 1];
@@ -486,9 +489,13 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 
 		scoreStatus.SetPercentage (0f);
 		scoreText.text = 0.ToString ();
-		nextLevelScoreText.text = LevelConfig.LevelScores[1].ToString();
+		nextLevelScoreText.text = "out of " + FormatNumber(LevelConfig.LevelScores[1]);
 		levelText.text = 1.ToString();
 	}
 
-
+	public static string FormatNumber(int number)
+	{
+		var f = new NumberFormatInfo {NumberGroupSeparator = " "};
+		return number.ToString("#,0", f);
+	} 
 }

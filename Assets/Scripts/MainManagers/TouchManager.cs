@@ -29,9 +29,6 @@ public class TouchManager : MonoSingleton <TouchManager>
 	private float delayAfterAnimationOrMenuForFalseTouch = 0.05f;
 	private float lastTimeOfAnimationOrMenu;
 
-	[HideInInspector]
-	public bool tutorialMode;
-
 	private void Awake()
 	{
 		FindObjectsAndNullReferences ();
@@ -58,15 +55,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 				{
 					startTouchPos = currentTouchPos;
 					startTouchCoord = Coord.CoordFromVector2(startTouchPos);
-					if (tutorialMode)
-					{
-						if (TutorialManager.Instance.CoordIsAllowed(startTouchCoord))
-							resultState = TouchState.StartedTouching;
-						else
-							resultState = TouchState.StartedFalseTouch;
-					}
-					else
-						resultState = TouchState.StartedTouching;
+					resultState = TouchState.StartedTouching;
 				}
 				else
 					resultState = TouchState.StartedTouchingSurrounding;
@@ -80,15 +69,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 					resultState = TouchState.EndedFalseTouch;
 					break;
 				case TouchState.StartedTouching:
-					if (tutorialMode)
-					{
-						if (TutorialManager.Instance.ActionTypeIsAllowed(PlayerActionType.Tap))
-							resultState = TouchState.EndedTouching;
-						else
-							resultState = TouchState.EndedFalseTouch;
-					}
-					else
-						resultState = TouchState.EndedTouching;
+					resultState = TouchState.EndedTouching;
 					break;
 				case TouchState.StartedRotating:
 					resultState = TouchState.EndedRotating;
@@ -105,15 +86,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 			DetermineRotating(out isRotating);
 			if (isRotating)
 			{
-				if (tutorialMode)
-				{
-					if (TutorialManager.Instance.ActionTypeIsAllowed(PlayerActionType.Rotate))
-						resultState = TouchState.StartedRotating;
-					else
-						resultState = TouchState.StartedFalseTouch;
-				}
-				else 
-					resultState = TouchState.StartedRotating;
+				resultState = TouchState.StartedRotating;
 			}
 		}
 		else if (initialState == TouchState.StartedRotating)
