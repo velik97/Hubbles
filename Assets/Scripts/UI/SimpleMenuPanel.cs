@@ -5,13 +5,13 @@ public class SimpleMenuPanel : MenuPanel {
 
 	public override void OpenPanel () {
 		gameObject.SetActive (true);
-		OnOpened.Invoke ();
-		OnOpened.RemoveAllListeners ();
+		onOpened.Invoke ();
+		onOpened.RemoveAllListeners ();
 	}
 
 	public override void ClosePanel () {
 		gameObject.SetActive (false);
-		OnClosed.Invoke ();
-		OnClosed.RemoveAllListeners ();
+		onClosed.Invoke ();
+		onClosed.RemoveAllListeners ();
 	}
 }

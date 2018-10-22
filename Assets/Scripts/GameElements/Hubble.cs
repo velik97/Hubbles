@@ -37,7 +37,7 @@ public class Hubble : MonoBehaviour{
 	/// </summary>
 	public GameObject content;
 	/// <summary>
-	/// Animator of the hubble
+	/// GamePanelAnimator of the hubble
 	/// </summary>
 	public Animator animator;
 	/// <summary>

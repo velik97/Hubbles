@@ -1,60 +1,97 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manages menus to be opened and closed in right order
 /// </summary>
-public class MenuManager : MonoSingleton <MenuManager> {
+public class MenuManager : MonoSingleton <MenuManager>
+{
 
-	public Stack <MenuPanel> menuPanelStack;
+	[SerializeField]
+	private MenuPanel pauseMenu;
+	[SerializeField]
+	private MenuPanel loseMenu;
+	[SerializeField]
+	private MenuPanel gamePanel;
+
+	[Space(5)]
+	[SerializeField]
+	private Button pauseButton;
 	
-	private float delayAfterClosingMenu = 0.1f;
+	private Stack <MenuPanel> menuPanelStack;
 
-	/// <summary>
-	/// Button for taping out of menu
-	/// </summary>
-	public AnimatedMenuPanel shadowPanel;
+	public Stack<MenuPanel> MenuPanelStack
+	{
+		get
+		{
+			if (menuPanelStack == null)
+				menuPanelStack = new Stack<MenuPanel>();
+			return menuPanelStack;
+		}
+	}
+
+	private float delayAfterClosingMenu = 0.1f;
 
 	public bool MenuIsOpened {
 		get { return menuPanelStack != null && menuPanelStack.Count > 0; }
 	}
 
 	void Awake () {
-		RefreshStack ();
+		pauseButton.onClick.AddListener(OpenPauseMenu);
 	}
 
-	public void RefreshStack () {
-		menuPanelStack = new Stack<MenuPanel> ();
-	}
-
-	public void OpenMenuPanel (MenuPanel panel) {
+	private void OpenMenuPanel (MenuPanel panel) {
 		if (MenuIsOpened) {
-			MenuPanel previous = menuPanelStack.Peek ();
-			previous.OnClosed.AddListener (delegate {
+			MenuPanel previous = MenuPanelStack.Peek ();
+			previous.onClosed.AddListener (delegate {
 				panel.OpenPanel ();	
-				menuPanelStack.Push (panel);
+				MenuPanelStack.Push (panel);
 			});
 			previous.ClosePanel ();
 		} else {
-			shadowPanel.OpenPanel ();
 			panel.OpenPanel ();	
-			menuPanelStack.Push (panel);
+			MenuPanelStack.Push (panel);
 		}
 	}
 
-	public void CloseTopMenuPanel () {
+	private void CloseTopMenuPanel () {
 		if (MenuIsOpened) {
-			MenuPanel top = menuPanelStack.Pop ();
+			MenuPanel top = MenuPanelStack.Pop ();
 			if (MenuIsOpened) {
-				MenuPanel previous = menuPanelStack.Peek ();
-				top.OnClosed.AddListener (delegate {
+				MenuPanel previous = MenuPanelStack.Peek ();
+				top.onClosed.AddListener (delegate {
 					previous.OpenPanel ();
 				});
-			} else {
-				shadowPanel.ClosePanel ();
 			}
 			top.ClosePanel ();
 		}
+	}
+
+	public void OpenPauseMenu()
+	{
+		pauseButton.onClick.RemoveListener(OpenPauseMenu);
+		pauseButton.onClick.AddListener(ClosePauseMenu);
+		OpenMenuPanel(pauseMenu);
+		gamePanel.ClosePanel();
+	}
+
+	public void ClosePauseMenu()
+	{
+		pauseButton.onClick.RemoveListener(ClosePauseMenu);
+		pauseButton.onClick.AddListener(OpenPauseMenu);
+		CloseTopMenuPanel();
+		gamePanel.OpenPanel();
+	}
+
+	public void OpenLoseMenu()
+	{
+		OpenMenuPanel(loseMenu);
+	}
+
+	public void CloseLoseMenu()
+	{
+		CloseTopMenuPanel();
 	}
 }

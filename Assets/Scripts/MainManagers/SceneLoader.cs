@@ -10,7 +10,8 @@ public class SceneLoader : AnimatedMenuPanel {
 
 	public UnityEvent OnLoaded;
 
-	public StatusBar loadProgressBar;
+	public GameObject statusGraphicsObj;
+	private IStatusGraphics statusGraphics;
 
 	public float middleProgressPoint;
 	private float startProgressPoint;
@@ -18,28 +19,27 @@ public class SceneLoader : AnimatedMenuPanel {
 
 	public float timeToProccess;
 
-	protected override void Awake () {
-		base.Awake ();
+	public IStatusGraphics StatusGraphics
+	{
+		get
+		{
+			if (statusGraphics == null)
+				statusGraphics = statusGraphicsObj.GetComponent<IStatusGraphics>();
+			return statusGraphics;
+		}
+	}
+	
+	protected void Awake () {
 		EndLoadingScene ();
-	}
-
-	public override void OpenPanel () {
-		base.OpenPanel ();
-		animator.SetBool ("StartAnimation", true);
-	}
-
-	public override void ClosePanel () {
-		base.ClosePanel ();
-		animator.SetBool ("StartAnimation", true);
 	}
 
 	public void StartLoadingScene (int sceneIndex) {
 		startProgressPoint = 0f;
 		endProgressPoint = middleProgressPoint;
-		loadProgressBar.SetPercentage (startProgressPoint);
+		StatusGraphics.SetStatus (startProgressPoint);
 
-		OnOpened.AddListener (delegate {
-			StartCoroutine (ILoad ());	
+		onOpened.AddListener (delegate {
+			StartCoroutine (LoadCoroutine ());	
 		});
 		OnLoaded.AddListener (delegate {
 			SceneManager.LoadScene (sceneIndex);
@@ -50,22 +50,22 @@ public class SceneLoader : AnimatedMenuPanel {
 	public void EndLoadingScene () {
 		startProgressPoint = middleProgressPoint;
 		endProgressPoint = 1f;
-		loadProgressBar.SetPercentage (startProgressPoint);
+		StatusGraphics.SetStatus (startProgressPoint);
 		gameObject.SetActive (true);
 
-		OnLoaded.AddListener (ClosePanel);
-		StartCoroutine (ILoad ());
+		StartCoroutine (LoadCoroutine ());
 	}
 
-	IEnumerator ILoad () {
-		for (float timeOfsset = 0f; timeOfsset < timeToProccess; timeOfsset += Time.deltaTime) {
-			loadProgressBar.SetPercentage (startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOfsset / timeToProccess));
+	IEnumerator LoadCoroutine () {
+		for (float timeOffset = 0f; timeOffset < timeToProccess; timeOffset += Time.deltaTime) {
+			StatusGraphics.SetStatus (startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOffset / timeToProccess));
 			yield return null;
 		}
 
 		yield return null;
 
 		OnLoaded.Invoke ();
+		ClosePanel();
 	}
 
 }

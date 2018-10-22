@@ -7,36 +7,55 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class AnimatedMenuPanel  : MenuPanel {
 
-	protected Animator animator;
+	protected Animator anim;
+	private float disappearAnimationLength = 0f;
+	private float DisappearAnimationLength
+	{
+		get
+		{
+			if (disappearAnimationLength == 0f)
+			{
+				RuntimeAnimatorController ac = Anim.runtimeAnimatorController;
+				foreach (var clip in ac.animationClips)
+				{
+					if (clip.name.Contains("Disappear"))
+					{
+						disappearAnimationLength = clip.length;
+						break;
+					}
+				}
+			}
 
-	protected virtual void Awake () {
-		GetAnimator ();
+			return disappearAnimationLength;
+		}
 	}
 
-	protected void GetAnimator () {
-		if (!animator)
-			animator = GetComponent <Animator> ();
+	public Animator Anim
+	{
+		get
+		{
+			if (anim == null)
+				anim = GetComponent <Animator> ();
+			return anim;
+		}
 	}
 
 	public override void OpenPanel () {
 		gameObject.SetActive (true);
-		GetAnimator ();
-		animator.SetBool ("Appear", true);
+		Anim.SetTrigger("Appear");
+		onOpened.Invoke();
 	}
 
 	public override void ClosePanel () {
-		animator.SetBool ("Appear", false);
-		OnClosed.AddListener (delegate {
-			gameObject.SetActive (false);	
-			OnClosed.RemoveAllListeners ();
-		});
+		Anim.SetTrigger("Disappear");
+		onClosed.Invoke();
+		
+		if (deactivateOnClose)
+			this.InvokeWithDelay(() =>
+			{
+				gameObject.SetActive(false);
+			}, DisappearAnimationLength);
 	}
 
-	public void OnClosedInvoke () {
-		OnClosed.Invoke ();
-	}
-
-	public void OnOpenedInvoke () {
-		OnOpened.Invoke ();
-	}
+	
 }

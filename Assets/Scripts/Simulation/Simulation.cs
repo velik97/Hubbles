@@ -104,7 +104,7 @@ public class Simulation : MonoBehaviour
 			gainedLives[i] = lives * mult;
 			randColor = hubbleGenerator.GetColor(randColor);
 			if (statusBar != null)
-			    statusBar.SetPercentage(i, simulationSteps);
+			    statusBar.SetStatus(i, simulationSteps);
 
 			if (i % 2000 == 0)
 				yield return null;

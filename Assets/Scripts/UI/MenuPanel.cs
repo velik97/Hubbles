@@ -5,10 +5,12 @@ using UnityEngine.Events;
 /// <summary>
 /// Menu panel, that can be opened or closed
 /// </summary>
-public abstract class MenuPanel : MonoBehaviour {
-
-	public UnityEvent OnClosed;
-	public UnityEvent OnOpened;
+public abstract class MenuPanel : MonoBehaviour
+{
+	public bool deactivateOnClose = true;
+	
+	public UnityEvent onClosed;
+	public UnityEvent onOpened;
 
 	public abstract void OpenPanel ();
 

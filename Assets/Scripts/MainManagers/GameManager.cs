@@ -40,7 +40,6 @@ public class GameManager : MonoSingleton <GameManager>
 		LevelConfig.instance = levelConfig;
 		Coord.mapScale = levelConfig.MapScale;
 		
-		onStartGame.AddListener(sceneLoader.EndLoadingScene);
 		onStartGame.AddListener(MapGenerator.Instance.StartGame);
 		onStartGame.AddListener(AnimationManager.Instance.StartGame);
 		onStartGame.AddListener(HubblesManager.Instance.StartGame);

@@ -438,7 +438,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		                                    LevelConfig.LevelScores[HubblesManager.Instance.level - 1];
 		int scoreAchievedInThisLevel = HubblesManager.Instance.totalScore - 
 		                               LevelConfig.LevelScores[HubblesManager.Instance.level - 1];
-		scoreStatus.SetPercentage(scoreAchievedInThisLevel, maxScoreAchievableInThisLevel);
+		scoreStatus.SetStatus(scoreAchievedInThisLevel, maxScoreAchievableInThisLevel);
 		StartCoroutine (IDeleteGroup(nodes));
 	}
 
@@ -487,7 +487,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		popLivesText.text = LevelConfig.StartPopLives.ToString();
 		rotationLivesText.text = LevelConfig.StartRotationLives.ToString();
 
-		scoreStatus.SetPercentage (0f);
+		scoreStatus.SetStatus (0f);
 		scoreText.text = 0.ToString ();
 		nextLevelScoreText.text = "out of " + FormatNumber(LevelConfig.LevelScores[1]);
 		levelText.text = 1.ToString();
