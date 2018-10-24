@@ -15,7 +15,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     [SerializeField] private float waitBeforeHint = 5f;
     
     private bool hintIsShown = false;
-    private bool playerIsGoingRight = true;
+    private bool playerIsGoingRight = false;
 
     private float waitedBeforeHint = 0f; 
 
@@ -23,6 +23,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         HubblesManager.Instance.onHighlighted.AddListener(PlayerInteracted);
         HubblesManager.Instance.onPoped.AddListener(PlayerInteracted);
+        waitedBeforeHint = waitBeforeHint;
     }
 
     private void PlayerInteracted()
@@ -36,7 +37,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         waitedBeforeHint += Time.deltaTime;
         playerIsGoingRight = waitedBeforeHint < waitBeforeHint;
-        
+                
         if (!hintIsShown && !playerIsGoingRight)
             ShowHint();
     }

@@ -58,16 +58,18 @@
           <e p="UI" t="Include">
             <e p="AnimatedMenuPanel.cs" t="Include" />
             <e p="CameraResizer.cs" t="Include" />
+            <e p="DisappearableAnimatableIntegerText.cs" t="Include" />
             <e p="FieldResizer.cs" t="Include" />
             <e p="HighlightPanel.cs" t="Include" />
+            <e p="InGameUIManager.cs" t="Include" />
             <e p="MenuPanel.cs" t="Include" />
             <e p="MultipleMenuPanel.cs" t="Include" />
-            <e p="SetableHeaderAndText.cs" t="Include" />
+            <e p="ShakableAnimatableIntegerText.cs" t="Include" />
             <e p="SimpleMenuPanel.cs" t="Include" />
             <e p="StatusBar.cs" t="Include" />
           </e>
           <e p="Util" t="Include">
-            <e p="AnimationFunctions.cs" t="Include" />
+            <e p="AnimationF.cs" t="Include" />
             <e p="Coord.cs" t="Include" />
             <e p="Enums.cs" t="Include" />
             <e p="Extensions.cs" t="Include" />

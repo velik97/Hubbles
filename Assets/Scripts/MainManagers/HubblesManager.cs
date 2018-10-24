@@ -53,8 +53,6 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// </summary>
 	[HideInInspector] public int totalScore;
 	/// <summary>
-	/// Total achieved score in this session
-	/// <summary>
 	/// Level in the game
 	/// </summary>
 	[HideInInspector] public int level;
@@ -124,23 +122,20 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	private void StartTouch()
 	{
 		FindCurrentNode ();			
-		if (!oneColorGroup.Contains (currentNode) && oneColorGroup.Count > 0) {
-			AnimationManager.Instance.UnHighLightEveryThing (true);
-			oneColorGroup.Clear ();
+		if (!oneColorGroup.Contains (currentNode) && oneColorGroup.Count > 0)
+		{
+			ClearHighlightedGroup();
 		}
 	}
 	
 	private void TouchSurrounding()
 	{
-		if (oneColorGroup.Count > 0) {
-			AnimationManager.Instance.UnHighLightEveryThing(true);
-			oneColorGroup.Clear();
-		}
+		ClearHighlightedGroup();
 	}
 	
 	public void StartRotating(Func<float> getAngle)
 	{
-		AnimationManager.Instance.UnHighLightEveryThing(true);
+		ClearHighlightedGroup();
 		startRotatingCoord = TouchManager.Instance.startTouchCoord;
 		surroundingNodes = Map.NodesFromCoords
 			(Map.NearCoords (TouchManager.Instance.startTouchCoord, out canRotate, Map.AreRotable));
@@ -156,9 +151,6 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			AnimationManager.Instance.Rescale (currentNode, true);
 			AnimationManager.Instance.StartRotating (currentNode, surroundingNodes, getAngle);
 		}
-		if (oneColorGroup.Count > 0) {
-			oneColorGroup.Clear();
-		}
 	}
 	
 	public void EndRotating(Func<float> getAngle)
@@ -167,7 +159,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			int turns = (Mathf.RoundToInt (getAngle() / 60f) % 360 + 360) % 6;
 			AnimationManager.Instance.StopRotating ();
 			AnimationManager.Instance.PullToMap (currentNode, surroundingNodes, turns, getAngle());
-			AnimationManager.Instance.rotationLivesText.text = rotLives.ToString();
+			InGameUIManager.Instance.SetRotLives(rotLives);
 			if (turns != 0) {
 				if (previousNode!=null) {
 					if (currentNode != previousNode || !turnedPreviously) {
@@ -194,7 +186,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	
 	private void EndTouch()
 	{
-		AnimationManager.Instance.UnHighLightEveryThing(false);
+		AnimationManager.Instance.UnHighLightEverything(false);
 		if (oneColorGroup.Count > 0) {
 			DeleteGroup (currentNode.color);
 			popLives -= 1;
@@ -212,6 +204,13 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 			AnimationManager.Instance.HighLightHubbles (oneColorGroup);
 			onHighlighted.Invoke();
 		}
+	}
+
+	public void ClearHighlightedGroup()
+	{
+		AnimationManager.Instance.UnHighLightEverything(true);
+		if (oneColorGroup.Count > 0)
+			oneColorGroup.Clear();
 	}
 
 	/// <summary>
@@ -241,7 +240,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	public void ContinueWithNewSteps (int steps) {
 		popLives += steps;
 		gameEnded = false;
-		AnimationManager.Instance.popLivesText.text = popLives.ToString();		
+		InGameUIManager.Instance.SetPopLives(popLives);		
 		AnimationManager.Instance.isAnimating = false;
 	}
 

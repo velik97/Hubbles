@@ -14,4 +14,9 @@ public interface IStatusGraphics
 	void SetStatus(float status);
 }
 
+public interface IAnimatableIntegerText
+{
+	void SetValue(int value);
+}
+
 

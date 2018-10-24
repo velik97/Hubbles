@@ -7,47 +7,35 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class AnimatedMenuPanel  : MenuPanel {
 
-	protected Animator anim;
+	protected Animator animator;
 	private float disappearAnimationLength = 0f;
+
+	private void Awake()
+	{
+		animator = GetComponentInChildren<Animator>();
+	}
+
 	private float DisappearAnimationLength
 	{
 		get
 		{
 			if (disappearAnimationLength == 0f)
 			{
-				RuntimeAnimatorController ac = Anim.runtimeAnimatorController;
-				foreach (var clip in ac.animationClips)
-				{
-					if (clip.name.Contains("Disappear"))
-					{
-						disappearAnimationLength = clip.length;
-						break;
-					}
-				}
+				disappearAnimationLength = animator.AnimationDuration("Disappear");
 			}
 
 			return disappearAnimationLength;
 		}
 	}
 
-	public Animator Anim
-	{
-		get
-		{
-			if (anim == null)
-				anim = GetComponent <Animator> ();
-			return anim;
-		}
-	}
-
 	public override void OpenPanel () {
 		gameObject.SetActive (true);
-		Anim.SetTrigger("Appear");
+		animator.SetTrigger("Appear");
 		onOpened.Invoke();
 	}
 
 	public override void ClosePanel () {
-		Anim.SetTrigger("Disappear");
+		animator.SetTrigger("Disappear");
 		onClosed.Invoke();
 		
 		if (deactivateOnClose)

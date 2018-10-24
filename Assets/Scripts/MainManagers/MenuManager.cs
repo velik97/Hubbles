@@ -71,6 +71,7 @@ public class MenuManager : MonoSingleton <MenuManager>
 
 	public void OpenPauseMenu()
 	{
+		HubblesManager.Instance.ClearHighlightedGroup();
 		pauseButton.onClick.RemoveListener(OpenPauseMenu);
 		pauseButton.onClick.AddListener(ClosePauseMenu);
 		OpenMenuPanel(pauseMenu);
@@ -87,11 +88,13 @@ public class MenuManager : MonoSingleton <MenuManager>
 
 	public void OpenLoseMenu()
 	{
+		pauseButton.onClick.RemoveListener(OpenPauseMenu);
 		OpenMenuPanel(loseMenu);
 	}
 
 	public void CloseLoseMenu()
 	{
+		pauseButton.onClick.AddListener(OpenPauseMenu);
 		CloseTopMenuPanel();
 	}
 }

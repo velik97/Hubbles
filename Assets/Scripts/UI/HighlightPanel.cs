@@ -1,37 +1,62 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 /// <summary>
 /// Panel, that highlights, when all hubbles of certain color are highlighted
 /// </summary>
-public class HighlightPanel : MonoBehaviour {
+public class HighlightPanel : MonoSingleton<HighlightPanel> {
 
-	public Canvas parentCanvas;
-	public Image image;
-	public Color defaultColor;
+	[SerializeField] private Image frameImage;
+	[SerializeField] private Image innerImage;
 
-	public float setTime;
+	[SerializeField] private float setTime;
+	[SerializeField] private float innerLightness;
 
-	private IEnumerator currentCoroutine;
+	private Coroutine currentCoroutine;
 
-	public void SetColor (Color color, bool betweenHubbles) {
-		parentCanvas.sortingOrder = betweenHubbles ? 2 : -2;
+	private Color startInnerColor;
+	private Color startFrameColor;
+	private Color frameColor;
+	private Color innerColor;
+
+	private bool highLighted = false;
+
+	public void Highlight(Color color) {
+		highLighted = true;
 		if (currentCoroutine != null)
 			StopCoroutine (currentCoroutine);
-		currentCoroutine = ISetColor (color);
-		StartCoroutine (currentCoroutine);
+
+		startFrameColor = new Color(color.r, color.g, color.b, 0f);
+		startInnerColor = startFrameColor;
+		
+		frameColor = new Color(color.r, color.g, color.b, 1f);
+		innerColor = new Color(color.r, color.g, color.b, innerLightness);
+
+		currentCoroutine = this.PlayAnimation(SetColor, setTime);
 	}
 
-	IEnumerator ISetColor (Color color) {
-		Color prevColor = image.color;
+	public void Unhighlight()
+	{
+		if (!highLighted)
+			return;
+		highLighted = false;
+		
+		if (currentCoroutine != null)
+			StopCoroutine (currentCoroutine);
 
-		for (float t = 0f; t < setTime; t += Time.deltaTime) {
-			image.color = Color.Lerp (prevColor, color, AnimationFunctions.EasyOut (t / setTime, 3));
-			yield return null;
-		}
+		startFrameColor = frameImage.color;
+		startInnerColor = innerImage.color;
+		
+		frameColor = new Color(startFrameColor.r, startFrameColor.g, startFrameColor.b, 0f);
+		innerColor = frameColor;
 
-		image.color = color;
-		yield return null;
+		currentCoroutine = this.PlayAnimation(SetColor, setTime);
+	}
+
+	private void SetColor(float t)
+	{
+		frameImage.color = Color.Lerp(startFrameColor, frameColor, t);
+		
+		innerImage.color = Color.Lerp(startInnerColor, innerColor, t);
 	}
 }

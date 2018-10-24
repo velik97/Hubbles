@@ -41,8 +41,9 @@ public class GameManager : MonoSingleton <GameManager>
 		Coord.mapScale = levelConfig.MapScale;
 		
 		onStartGame.AddListener(MapGenerator.Instance.StartGame);
-		onStartGame.AddListener(AnimationManager.Instance.StartGame);
 		onStartGame.AddListener(HubblesManager.Instance.StartGame);
+		onStartGame.AddListener(AnimationManager.Instance.StartGame);
+		onStartGame.AddListener(InGameUIManager.Instance.StartGame);
 
 		if (tutorialMode)
 		{

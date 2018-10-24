@@ -13,21 +13,21 @@ public class SceneLoader : AnimatedMenuPanel {
 	public GameObject statusGraphicsObj;
 	private IStatusGraphics statusGraphics;
 
+	private IStatusGraphics StatusGraphics
+	{
+		get
+		{
+			if (statusGraphicsObj == null)
+				statusGraphics = GetComponentInChildren<IStatusGraphics>();
+			return statusGraphics;
+		}
+	}
+
 	public float middleProgressPoint;
 	private float startProgressPoint;
 	private float endProgressPoint;
 
 	public float timeToProccess;
-
-	public IStatusGraphics StatusGraphics
-	{
-		get
-		{
-			if (statusGraphics == null)
-				statusGraphics = statusGraphicsObj.GetComponent<IStatusGraphics>();
-			return statusGraphics;
-		}
-	}
 	
 	protected void Awake () {
 		EndLoadingScene ();

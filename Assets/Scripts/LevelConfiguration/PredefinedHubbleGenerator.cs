@@ -11,14 +11,12 @@ public class PredefinedHubbleGenerator : MonoBehaviour, IHubbleGenerator
 
 	private int index = 0;
 
+	public void LoadStepData(int score, int pops, int rots) {}
+
 	private void Awake()
 	{
 		proceduralHubbleGenerator = GetComponentInChildren<ProceduralHubbleGenerator>();
-		if (proceduralHubbleGenerator == null)
-			Debug.LogError("[PredefinedHubbleGenerator] Need default hubble generator!");
 	}
-
-	public void LoadStepData(int score, int pops, int rots) {}
 
 	public int GetColor()
 	{

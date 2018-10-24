@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DisappearableTextAnimationController
+  m_Controller: {fileID: 9100000, guid: 5773482ac544a4fecb0ca62d859988d2, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 4eae340ea28334a3faf36a9761f11b0f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e1fe346c55ca54ba096dd6ff6b33cec5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3b109c418ab8f4c7bab3a4b53a9b43c5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c5ba6d8ce2a4446918d48b8293a0b8d2, type: 2}

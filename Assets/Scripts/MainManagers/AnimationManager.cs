@@ -13,13 +13,9 @@ using System.Text;
 public class AnimationManager : MonoSingleton <AnimationManager> {
 
 	/// <summary>
-	/// Time of highlight for a hubble
-	/// </summary>
-	[Header("HighLighting")]
-	public float highLightTime;
-	/// <summary>
 	/// Time between highlights of hubbles
 	/// </summary>
+	[Header("HighLighting")]
 	public float deltaHighLightTime;
 	/// <summary>
 	/// Pitch of pop for the first hubble
@@ -29,14 +25,6 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// Difference between pitch of hubbles' pop
 	/// </summary>
 	public float pitchStep;
-	/// <summary>
-	/// Time of 'all of one color' panel highlight
-	/// </summary>
-	public float panelHighLightTime;
-	/// <summary>
-	/// Panel, that highlights, when all hubbles of certain color are collected
-	/// </summary>
-	public HighlightPanel highLightPanel;
 
 	/// <summary>
 	/// Time of pulling back after rotation
@@ -72,67 +60,6 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	public AudioClip rattle;
 
-	/// <summary>
-	/// Game object, that holds points' UI. Deprecated
-	/// </summary>
-	[Header("Objects")]
-	public GameObject pointsHolder;
-	/// <summary>
-	/// Prefab of points UI
-	/// </summary>
-	public GameObject pointsPrefab;
-
-	/// <summary>
-	/// Text of popLives
-	/// </summary>
-	[Header("UI")]
-	public Text popLivesText;
-	/// <summary>
-	/// Text of rotationLives
-	/// </summary>
-	public Text rotationLivesText;
-	/// <summary>
-	/// Text of total scores
-	/// </summary>
-	public Text scoreText;
-	/// <summary>
-	/// Text of next level scores
-	/// </summary>
-	public Text nextLevelScoreText;
-	/// <summary>
-	/// Text of total scores
-	/// </summary>
-	public Text levelText;
-	/// <summary>
-	/// Status bar for level
-	/// </summary>
-	public StatusBar scoreStatus;
-	/// <summary>
-	/// Deprecated
-	/// </summary>
-
-	/// <summary>
-	/// UI objects showing points, highlighted in certain step
-	/// </summary>
-	private GameObject[] pointsTextsObj;
-	/// <summary>
-	/// UI objects showing points, highlighted in current step
-	/// </summary>
-	private GameObject currentPointsTextObj;
-	/// <summary>
-	/// Is points UI highlighted
-	/// </summary>
-	private bool pointsTextIsHighLighted;
-	
-	public GameObject additionalPopsObj;
-	private bool additionalPopsIsHighLighted;
-	
-	public GameObject additionalRotationsObj;
-	private bool additionalRotationsIsHighLighted;
-
-	public GameObject multiplierObj;
-	private bool multiplierIsHighLighted;
-
 	private float offsetAngle;
 	private float currentAngle;
 	[Space(10)]
@@ -149,7 +76,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <summary>
 	/// Unhighlight hubbles and all UI
 	/// </summary>
-	public void UnHighLightEveryThing (bool unhighlightHubbles) {
+	public void UnHighLightEverything (bool unhighlightHubbles) {
 		if (highLightingCoroutines.Count > 0) {
 			foreach (Coroutine coroutine in highLightingCoroutines) {
 				StopCoroutine (coroutine);
@@ -163,21 +90,11 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 				node.hubble.UnHighlight ();
 			}
 		}
-		highLightPanel.SetColor (new Color (1, 1, 1, 0), false);
-		if (currentPointsTextObj!=null) {
-			if (currentPointsTextObj.transform.localScale != Vector3.zero) {
-				currentPointsTextObj.GetComponent <Animator> ().SetBool ("Appear", false);
-			}
-		}
-		if (additionalPopsObj.transform.localScale != Vector3.zero) {
-			additionalPopsObj.GetComponent <Animator> ().SetBool ("Appear", false);
-		}
-		if (additionalRotationsObj.transform.localScale != Vector3.zero) {
-			additionalRotationsObj.GetComponent <Animator> ().SetBool ("Appear", false);
-		}
-		if (multiplierObj.transform.localScale != Vector3.zero) {
-			multiplierObj.GetComponent <Animator> ().SetBool ("Appear", false);
-		}
+		HighlightPanel.Instance.Unhighlight();
+		
+		InGameUIManager.Instance.SetMultiplier(1);
+		InGameUIManager.Instance.SetExtraPopLives(0);
+		InGameUIManager.Instance.SetExtraRotLives(0);
 	}
 
 	/// <summary>
@@ -189,22 +106,10 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	}
 	
 	IEnumerator IHighLightHubbles (List<Node> nodes) {
-		pointsTextIsHighLighted = false;
-		additionalPopsIsHighLighted = false;
-		additionalRotationsIsHighLighted = false;
-		multiplierIsHighLighted = false;
-
 		float pitch = Mathf.Exp(startPitch);
-		int points = 0;
 		int popHeal = 0;
 		int rotationHeal = 0;
 		int multiplier = 1;
-		currentPointsTextObj = pointsTextsObj[nodes[0].color];
-
-		Text pointsText = currentPointsTextObj.GetComponentInChildren<Text>();
-		Text additionalPopHealText = additionalPopsObj.GetComponentInChildren<Text>();
-		Text additionalRotationHealText = additionalRotationsObj.GetComponentInChildren<Text>();
-		Text multiplayerText = multiplierObj.GetComponentInChildren<Text>();
 
 		foreach (Node node in nodes) {
 			pitch += pitchStep;
@@ -215,55 +120,33 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 			switch (node.type)
 			{
 				case HubbleType.Usual:
-					if (!pointsTextIsHighLighted) {
-						currentPointsTextObj.GetComponent <Animator> ().SetBool ("Appear", true);
-						pointsTextIsHighLighted = true;
-					}
-					points += node.points;
-					pointsText.text = points.ToString();
 					break;
 				
 				case HubbleType.PopLive:
-					if (!additionalPopsIsHighLighted) {
-						additionalPopsObj.GetComponent <Animator> ().SetBool ("Appear", true);
-						additionalPopsIsHighLighted = true;
-					}
 					popHeal += 1;
-					additionalPopHealText.text = "+ " + (popHeal*multiplier);
+					InGameUIManager.Instance.SetExtraPopLives(popHeal*multiplier);
 					break;
 				
 				case HubbleType.RotationLive:
-					if (!additionalRotationsIsHighLighted) {
-						additionalRotationsObj.GetComponent <Animator> ().SetBool ("Appear", true);
-						additionalRotationsIsHighLighted = true;
-					}
 					rotationHeal += 1;
-					additionalRotationHealText.text = "+ " + (rotationHeal*multiplier);
+					InGameUIManager.Instance.SetExtraRotLives(rotationHeal*multiplier);
 					break;
 				
 				case HubbleType.Multiplier:
-					if (!multiplierIsHighLighted) {
-						multiplierObj.GetComponent <Animator> ().SetBool ("Appear", true);
-						multiplierIsHighLighted = true;
-					}
 					multiplier *= 2;
-					multiplayerText.text = "x" + multiplier;
-					additionalPopHealText.text = "+ " + (popHeal*multiplier);
-					additionalRotationHealText.text = "+ " + (rotationHeal*multiplier);
+					InGameUIManager.Instance.SetMultiplier(multiplier);
+					InGameUIManager.Instance.SetExtraPopLives(popHeal*multiplier);
+					InGameUIManager.Instance.SetExtraRotLives(rotationHeal*multiplier);
 					break;
 			}
 
 		}
 		if (HubblesManager.Instance.allAreOneColor) {
-			highLightPanel.SetColor (HubblesAppearanceInfo.Instance.LightColors[nodes[0].color], false);
-			if (!multiplierIsHighLighted) {
-				multiplierObj.GetComponent <Animator> ().SetBool ("Appear", true);
-				multiplierIsHighLighted = true;
-			}
+			HighlightPanel.Instance.Highlight (HubblesAppearanceInfo.Instance.UsualColors[nodes[0].color]);
 			multiplier *= 2;
-			multiplayerText.text = "x" + multiplier;
-			additionalPopHealText.text = "+ " + (popHeal*multiplier);
-			additionalRotationHealText.text = "+ " + (rotationHeal*multiplier);
+			InGameUIManager.Instance.SetMultiplier(multiplier);
+			InGameUIManager.Instance.SetExtraPopLives(popHeal*multiplier);
+			InGameUIManager.Instance.SetExtraRotLives(rotationHeal*multiplier);
 		}
 	}
 
@@ -283,7 +166,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		float t = 0f;
 		if (makeSmaller) {
 			while (t < pullTime) {
-				float scale = (1 + (rescalingPercent - 1) * AnimationFunctions.EasyOut(t/pullTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
+				float scale = (1 + (rescalingPercent - 1) * AnimationF.EasyOut(t/pullTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
 				node.hubble.transform.localScale = Vector3.one * scale;
 				yield return null;
 				t += Time.deltaTime;
@@ -291,7 +174,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 			node.hubble.transform.localScale = Vector3.one * HubblesAppearanceInfo.Instance.FitHubbleSize * rescalingPercent;
 		} else {
 			while (t < pullTime) {
-				float scale = (rescalingPercent + (1 - rescalingPercent) * AnimationFunctions.EasyOut(t/pullTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
+				float scale = (rescalingPercent + (1 - rescalingPercent) * AnimationF.EasyOut(t/pullTime, easyRescalingPow)) * HubblesAppearanceInfo.Instance.FitHubbleSize;
 				node.hubble.transform.localScale = Vector3.one * scale;
 				yield return null;
 				t += Time.deltaTime;
@@ -353,7 +236,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="surroundingNodes">surrounding neighbours</param>
 	/// <param name="angle">angle of rotation</param>
 	public void Rotate (Node mainNode, List<Node> surroundingNodes, float angle) {
-		currentAngle = (((int)angle) / 60) * 60f + AnimationFunctions.EasyInOut((angle % 60) / 60 , easyRotationPow) * 60;
+		currentAngle = (((int)angle) / 60) * 60f + AnimationF.EasyInOut((angle % 60) / 60 , easyRotationPow) * 60;
 		mainNode.hubble.transform.rotation = Quaternion.Euler (new Vector3(0,0, - currentAngle));
 		foreach (Node node in surroundingNodes) {
 			node.hubble.content.transform.rotation = Quaternion.identity;
@@ -422,7 +305,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 			HubblesManager.Instance.Turn (turns);
 		}
 		offsetAngle = 0f;
-		rotationLivesText.text = HubblesManager.Instance.rotLives.ToString();
+		InGameUIManager.Instance.SetRotLives(HubblesManager.Instance.rotLives);
 	}
 
 
@@ -431,14 +314,8 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	/// <param name="nodes">nodes to be deleted</param>
 	public void DeleteGroup (List<Node> nodes) {
-		scoreText.text = FormatNumber(HubblesManager.Instance.totalScore);
-		nextLevelScoreText.text = "out of " + FormatNumber(LevelConfig.LevelScores[HubblesManager.Instance.level]);
-		levelText.text = HubblesManager.Instance.level.ToString ();
-		int maxScoreAchievableInThisLevel = LevelConfig.LevelScores[HubblesManager.Instance.level] -
-		                                    LevelConfig.LevelScores[HubblesManager.Instance.level - 1];
-		int scoreAchievedInThisLevel = HubblesManager.Instance.totalScore - 
-		                               LevelConfig.LevelScores[HubblesManager.Instance.level - 1];
-		scoreStatus.SetStatus(scoreAchievedInThisLevel, maxScoreAchievableInThisLevel);
+		InGameUIManager.Instance.SetScore(HubblesManager.Instance.totalScore);
+		InGameUIManager.Instance.SetLevel(HubblesManager.Instance.level);
 		StartCoroutine (IDeleteGroup(nodes));
 	}
 
@@ -451,49 +328,19 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 		yield return new WaitForSeconds(deleteTime);
 		StartCoroutine (MapGenerator.Instance.ReestablishMap (nodes));
 		SoundManager.Instance.Play(bigPop);
-		popLivesText.text = HubblesManager.Instance.popLives.ToString();
-		rotationLivesText.text = HubblesManager.Instance.rotLives.ToString();
+		InGameUIManager.Instance.SetPopLives(HubblesManager.Instance.popLives);
+		InGameUIManager.Instance.SetRotLives(HubblesManager.Instance.rotLives);
 	}
 
-	void FindObjectsAndNullReferences () {
-
-		if (pointsTextsObj != null) {
-			foreach (GameObject uip in pointsTextsObj) {
-				if (uip != null)
-					Destroy (uip);
-			}
-		}
-
-		pointsTextsObj = new GameObject[HubblesAppearanceInfo.Instance.LightColors.Length];
-		for (int i = 0; i < pointsTextsObj.Length; i++) {
-			pointsTextsObj [i] = Instantiate (pointsPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-			pointsTextsObj [i].transform.SetParent (pointsHolder.transform, false);
-			pointsTextsObj [i].transform.localScale = Vector3.zero;
-			Image[] images = pointsTextsObj [i].GetComponentsInChildren <Image> ();
-			images [0].color = HubblesAppearanceInfo.Instance.LightColors [i];
-			images [1].color = HubblesAppearanceInfo.Instance.UsualColors [i];
-			pointsTextsObj [i].GetComponentInChildren <Text> ().color = HubblesAppearanceInfo.Instance.DarkColors [i];
-		}
-
+	void FindObjectsAndNullReferences ()
+	{
 		highLightingCoroutines = new List<Coroutine>();
 		rotateCoroutines = new List<Coroutine>(); 
 
 		offsetAngle = 0f;
- 
-		additionalPopsObj.transform.localScale = Vector3.zero;
-		additionalRotationsObj.transform.localScale = Vector3.zero;
-		multiplierObj.transform.localScale = Vector3.zero;
-
-		popLivesText.text = LevelConfig.StartPopLives.ToString();
-		rotationLivesText.text = LevelConfig.StartRotationLives.ToString();
-
-		scoreStatus.SetStatus (0f);
-		scoreText.text = 0.ToString ();
-		nextLevelScoreText.text = "out of " + FormatNumber(LevelConfig.LevelScores[1]);
-		levelText.text = 1.ToString();
 	}
 
-	public static string FormatNumber(int number)
+	private static string FormatNumber(int number)
 	{
 		var f = new NumberFormatInfo {NumberGroupSeparator = " "};
 		return number.ToString("#,0", f);
