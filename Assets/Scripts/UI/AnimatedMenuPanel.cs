@@ -5,14 +5,20 @@ using System.Collections;
 /// Menu panel that closes or opens with animations
 /// </summary>
 [RequireComponent(typeof(Animator))]
-public class AnimatedMenuPanel  : MenuPanel {
-
-	protected Animator animator;
+public class AnimatedMenuPanel  : MenuPanel
+{
+	
+	private Animator animator;
 	private float disappearAnimationLength = 0f;
 
-	private void Awake()
+	private Animator Animator
 	{
-		animator = GetComponentInChildren<Animator>();
+		get
+		{
+			if (animator == null)
+				animator = GetComponentInChildren<Animator>();
+			return animator;
+		}
 	}
 
 	private float DisappearAnimationLength
@@ -30,12 +36,12 @@ public class AnimatedMenuPanel  : MenuPanel {
 
 	public override void OpenPanel () {
 		gameObject.SetActive (true);
-		animator.SetTrigger("Appear");
+		Animator.SetTrigger("Appear");
 		onOpened.Invoke();
 	}
 
 	public override void ClosePanel () {
-		animator.SetTrigger("Disappear");
+		Animator.SetTrigger("Disappear");
 		onClosed.Invoke();
 		
 		if (deactivateOnClose)

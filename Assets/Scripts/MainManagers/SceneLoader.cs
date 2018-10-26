@@ -10,14 +10,13 @@ public class SceneLoader : AnimatedMenuPanel {
 
 	public UnityEvent OnLoaded;
 
-	public GameObject statusGraphicsObj;
 	private IStatusGraphics statusGraphics;
 
 	private IStatusGraphics StatusGraphics
 	{
 		get
 		{
-			if (statusGraphicsObj == null)
+			if (statusGraphics == null)
 				statusGraphics = GetComponentInChildren<IStatusGraphics>();
 			return statusGraphics;
 		}
@@ -28,21 +27,17 @@ public class SceneLoader : AnimatedMenuPanel {
 	private float endProgressPoint;
 
 	public float timeToProccess;
-	
-	protected void Awake () {
-		EndLoadingScene ();
-	}
 
-	public void StartLoadingScene (int sceneIndex) {
+	public void StartLoadingScene (string sceneName) {
 		startProgressPoint = 0f;
 		endProgressPoint = middleProgressPoint;
-		StatusGraphics.SetStatus (startProgressPoint);
+		StatusGraphics.SetStatus(startProgressPoint);
 
 		onOpened.AddListener (delegate {
 			StartCoroutine (LoadCoroutine ());	
 		});
 		OnLoaded.AddListener (delegate {
-			SceneManager.LoadScene (sceneIndex);
+			SceneManager.LoadScene (sceneName);
 		});
 		OpenPanel ();
 	}
@@ -50,7 +45,7 @@ public class SceneLoader : AnimatedMenuPanel {
 	public void EndLoadingScene () {
 		startProgressPoint = middleProgressPoint;
 		endProgressPoint = 1f;
-		StatusGraphics.SetStatus (startProgressPoint);
+		StatusGraphics.SetStatus(startProgressPoint);
 		gameObject.SetActive (true);
 
 		StartCoroutine (LoadCoroutine ());

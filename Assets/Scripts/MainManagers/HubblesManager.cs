@@ -62,7 +62,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// </summary>
 	public bool gameEnded;
 
-	public bool debugCoords;
+//	public bool debugCoords;
 
 	[HideInInspector] public UnityEvent onHighlighted;
 	[HideInInspector] public UnityEvent onPoped;
@@ -79,7 +79,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 
 	public void StartGame () {
 		popLives = LevelConfig.StartPopLives;
-		rotLives = LevelConfig.StartRotationLives;
+		rotLives = LevelConfig.StartRotLives;
 		FindObjectsAndNullReferences ();
 		SubscribeOnTouchEvents ();
 
@@ -87,8 +87,8 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		totalRotsPerLevel = 0;
 		totalOneColorGroupPopPerLevel = 0;
 
-		if (debugCoords)
-			StartCoroutine(DebugCoords());
+//		if (debugCoords)
+//			StartCoroutine(DebugCoords());
 	}
 
 	/// <summary>
@@ -369,23 +369,23 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		level = 1;
 	}
 
-	private IEnumerator DebugCoords()
-	{
-		while (true)
-		{
-			for (var i = 0; i < Map.nodeMap.GetLength(0); i++)
-			{
-				for (var j = 0; j < Map.nodeMap.GetLength(1); j++)
-				{
-					if (Map.nodeMap[i, j] != null && Map.nodeMap[i, j].hubble != null && Map.nodeMap[i, j].hubble.text != null)
-					{
-						Map.nodeMap[i, j].hubble.text.text = i + ", " + j;
-					}
-				}	
-			}
-			yield return null;
-		}
-	}
+//	private IEnumerator DebugCoords()
+//	{
+//		while (true)
+//		{
+//			for (var i = 0; i < Map.nodeMap.GetLength(0); i++)
+//			{
+//				for (var j = 0; j < Map.nodeMap.GetLength(1); j++)
+//				{
+//					if (Map.nodeMap[i, j] != null && Map.nodeMap[i, j].hubble != null && Map.nodeMap[i, j].hubble.text != null)
+//					{
+//						Map.nodeMap[i, j].hubble.text.text = i + ", " + j;
+//					}
+//				}	
+//			}
+//			yield return null;
+//		}
+//	}
 //	void OnDrawGizmos () {
 //		if (currentNode != null) {
 //			if (currentNode.hubble != null) {

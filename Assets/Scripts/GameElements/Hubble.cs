@@ -11,39 +11,44 @@ public class Hubble : MonoBehaviour{
 	/// <summary>
 	/// Circle in the middle
 	/// </summary>
-	public GameObject mainCircle;
+	[SerializeField] private SpriteRenderer mainCircle;
 	/// <summary>
 	/// Highlight circle
 	/// </summary>
-	public GameObject highLight;
+	[SerializeField] private SpriteRenderer highlight;
 	/// <summary>
 	/// Text in circle for points or bonuses
 	/// </summary>
-	public Text text;
-	/// <summary>
-	/// Sprite  in circle for bonuses
-	/// </summary>
-	public SpriteRenderer sr;
+	[SerializeField] private Text text;
 	/// <summary>
 	/// Text in circle
 	/// </summary>
-	public GameObject textObject;
+	[SerializeField] private GameObject textObject;
 	/// <summary>
-	/// Sprite Renderer in circle
+	/// Object of multiplier power up
 	/// </summary>
-	public GameObject srObject;
+	[SerializeField] private GameObject multiplierObj;
+	/// <summary>
+	/// Object of pop live power up
+	/// </summary>
+	[SerializeField] private GameObject popLiveObj;
+	/// <summary>
+	/// Object of rot live power up
+	/// </summary>
+	[SerializeField] private GameObject rotLiveObj;
 	/// <summary>
 	/// Content in circle whether it's a text or a sprite
 	/// </summary>
+	[HideInInspector]
 	public GameObject content;
 	/// <summary>
 	/// GamePanelAnimator of the hubble
 	/// </summary>
-	public Animator animator;
+	[SerializeField] private Animator animator;
 	/// <summary>
 	/// Sound of highlight
 	/// </summary>
-	public AudioClip popSound;
+	[SerializeField] private AudioClip popSound;
 
 	private void Awake()
 	{
@@ -57,51 +62,9 @@ public class Hubble : MonoBehaviour{
 	/// <param name="type">type of hubble</param>
 	/// <param name="prevType">prev type of hubble</param>
 	/// <param name="points">points of hubble</param>
-	public void Set (int color, HubbleType type, HubbleType prevType, int points)
+	public void Set (int color, HubbleType type, int points)
 	{
-		if (type == HubbleType.Usual ^ prevType == HubbleType.Usual)
-		{
-			if (content != null)
-				content.SetActive(false);
-			content = type == HubbleType.Usual ? textObject : srObject;
-			if (content != null)
-				content.SetActive(true);
-		}
-			
-		bool contentWasInstantiated = false;
-		if (type == HubbleType.Usual && text == null)
-		{
-			textObject = Instantiate
-				(HubblesAppearanceInfo.Instance.textPrefab, transform.position, Quaternion.identity);
-			content = textObject;
-			text = content.GetComponentInChildren <Text> ();
-			contentWasInstantiated = true;
-		}
-		else if (type != HubbleType.Usual && sr == null)
-		{
-			srObject = Instantiate
-				(HubblesAppearanceInfo.Instance.imagePrefab, transform.position, Quaternion.identity);
-			content = srObject;
-			sr = content.GetComponentInChildren <SpriteRenderer> ();
-			contentWasInstantiated = true;
-		}
-
-		if (contentWasInstantiated)
-		{
-			content.transform.SetParent (mainCircle.transform, true);
-			content.transform.localPosition = Vector3.zero;
-			content.transform.localScale = Vector3.one;
-		}
-
-		mainCircle.GetComponent <SpriteRenderer> ().color = HubblesAppearanceInfo.Instance.UsualColors [color];
-		highLight.GetComponent <SpriteRenderer> ().color = HubblesAppearanceInfo.Instance.LightColors [color];
-
 		StartCoroutine (AdjustColorAndTypeWithDelay (color, type, points));
-	}
-	
-	public void Set(int color, HubbleType type, int points)
-	{
-		Set(color, type, HubbleType.Usual, points);
 	}
 
 	/// <summary>
@@ -111,24 +74,42 @@ public class Hubble : MonoBehaviour{
 	/// <param name="type">type of hubble</param>
 	/// <param name="points">points of hubble</param>
 	IEnumerator AdjustColorAndTypeWithDelay (int color, HubbleType type, int points) {
-		yield return new WaitForSeconds (points == 1 ? .01f : .2f);
-		if (type == HubbleType.Usual) {
-			text.text = points.ToString ();
-			text.color = HubblesAppearanceInfo.Instance.DarkColors [color];
-		} else {
-			switch (type)
+		yield return new WaitForSeconds (.01f);
+		
+		if (content != null)
+			content.SetActive(false);
+		switch (type)
+		{
+			case HubbleType.Usual:
+				content = textObject;
+				break;
+			case HubbleType.PopLive:
+				content = popLiveObj;
+				break;
+			case HubbleType.RotationLive:
+				content = rotLiveObj;
+				break;
+			case HubbleType.Multiplier:
+				content = multiplierObj;
+				break;
+		}
+		if (content != null)
+			content.SetActive(true);
+
+		mainCircle.color = HubblesAppearanceInfo.Instance.UsualColors [color];
+		highlight.color = HubblesAppearanceInfo.Instance.LightColors [color];
+
+		if (type == HubbleType.Usual)
+		{
+			text.text = points.ToString();
+			text.color = HubblesAppearanceInfo.Instance.DarkColors[color];
+		}
+		else
+		{
+			foreach (var sr in content.GetComponentsInChildren<SpriteRenderer>())
 			{
-				case HubbleType.PopLive:
-					sr.sprite = HubblesAppearanceInfo.Instance.popLiveSprite;
-					break;
-				case HubbleType.RotationLive:
-					sr.sprite = HubblesAppearanceInfo.Instance.rotationLiveSprite;
-					break;
-				case HubbleType.Multiplier:
-					sr.sprite = HubblesAppearanceInfo.Instance.multiplierSprite;
-					break;
+				sr.color = HubblesAppearanceInfo.Instance.DarkColors[color];
 			}
-			sr.color = HubblesAppearanceInfo.Instance.DarkColors [color];
 		}
 	}
 

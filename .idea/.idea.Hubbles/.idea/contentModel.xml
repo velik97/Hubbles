@@ -39,6 +39,7 @@
             <e p="ProceduralHubbleGenerator.cs" t="Include" />
           </e>
           <e p="MainManagers" t="Include">
+            <e p="AddManager.cs" t="Include" />
             <e p="AnimationManager.cs" t="Include" />
             <e p="BonusManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />

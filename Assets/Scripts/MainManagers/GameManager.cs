@@ -35,8 +35,31 @@ public class GameManager : MonoSingleton <GameManager>
 
 	private Dictionary<string, object> analyticsData = new Dictionary<string, object>();
 
+	private bool PassedTutorial
+	{
+		get
+		{
+			bool passed = false;
+			if (PlayerPrefs.HasKey("PassedTutorial"))
+				passed = PlayerPrefs.GetInt("PassedTutorial") == 1;
+			return passed;
+		}
+		set
+		{
+			PlayerPrefs.SetInt("PassedTutorial", value ? 1 : 0);
+		}
+	}
+
 	private void Awake()
 	{
+		if (!tutorialMode && !PassedTutorial)
+		{
+			GoToTutorial();
+			return;
+		}
+		
+		sceneLoader.EndLoadingScene();
+
 		LevelConfig.instance = levelConfig;
 		Coord.mapScale = levelConfig.MapScale;
 		
@@ -50,7 +73,9 @@ public class GameManager : MonoSingleton <GameManager>
 			onStartGame.AddListener(TutorialManager.Instance.StartGame);
 		}
 		else
+		{
 			PrepareAnalyticsData();
+		}
 	}
 
 	void Start () {
@@ -59,7 +84,11 @@ public class GameManager : MonoSingleton <GameManager>
 
 	public void Lose () {
 		if (tutorialMode)
-			GoToMenu();
+		{
+			PassedTutorial = true;
+			AnalyticsEvent.TutorialComplete();
+			sceneLoader.StartLoadingScene("Main");
+		}
 		else
 			onLose.Invoke ();
 	}
@@ -79,12 +108,17 @@ public class GameManager : MonoSingleton <GameManager>
 	}
 
 	public void Restart () {
-		// TODO Change to scene index 1
-		sceneLoader.StartLoadingScene (1);
+		sceneLoader.StartLoadingScene("Main");
 	}
 
-	public void GoToMenu () {
-		sceneLoader.StartLoadingScene (1);
+	public void GoToTutorial () {
+		sceneLoader.StartLoadingScene("Tutorial");
+	}
+
+	public void ContinueAfterAdd()
+	{
+		HubblesManager.Instance.ContinueWithNewSteps(LevelConfig.AddBonusPopLives);
+		MenuManager.Instance.CloseLoseMenu();
 	}
 
 	private void PrepareAnalyticsData()

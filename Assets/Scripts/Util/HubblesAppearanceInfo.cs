@@ -5,12 +5,12 @@ using UnityEngine.UI;
 /// <summary>
 /// Contains color and sizes for hubbles and colors for theirs highlight and content
 /// </summary>
-public class HubblesAppearanceInfo : MonoSingleton <HubblesAppearanceInfo> {
- 
+public class HubblesAppearanceInfo : MonoSingleton <HubblesAppearanceInfo>
+{
+	[Range(0f,1f)]
+	public float graphicsDarkness;
 	[Range(0f,1f)]
 	public float highlightLightness;
-	[Range(0f,1f)]
-	public float textDarkness;
 	[Range(0f,1f)]
 	public float hubbleSize;
 
@@ -25,11 +25,6 @@ public class HubblesAppearanceInfo : MonoSingleton <HubblesAppearanceInfo> {
 	private Color[] lightColors;
 
 	public Hubble hubblePrefab;
-	public GameObject imagePrefab;
-	public Sprite popLiveSprite;
-	public Sprite rotationLiveSprite;
-	public Sprite multiplierSprite;
-	public GameObject textPrefab;
 
 	public Color[] UsualColors
 	{
@@ -69,9 +64,9 @@ public class HubblesAppearanceInfo : MonoSingleton <HubblesAppearanceInfo> {
 		lightColors = new Color[length];
 
 		for (int i = 0; i < length; i++) {
-			usualColors [i] = LevelConfig.Colors [i];
-			lightColors [i] = Color.Lerp (Color.white, LevelConfig.Colors [i], highlightLightness);
-			darkColors [i] = Color.Lerp (LevelConfig.Colors [i], Color.black, textDarkness);
+			usualColors[i] = LevelConfig.Colors[i];
+			darkColors[i] = Color.Lerp (LevelConfig.Colors[i], Color.black, graphicsDarkness);
+			lightColors[i] = Color.Lerp (LevelConfig.Colors[i], Color.white, highlightLightness);
 		}
 	}
 

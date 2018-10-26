@@ -139,7 +139,8 @@ public class TouchManager : MonoSingleton <TouchManager>
 
 	private void DetermineFalseTouch(out bool possibleFalseTouch)
 	{
-		if (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened)
+		if (AnimationManager.Instance.isAnimating ||
+		    (!GameManager.Instance.tutorialMode && MenuManager.Instance.MenuIsOpened))
 			lastTimeOfAnimationOrMenu = 0f;
 		else
 			lastTimeOfAnimationOrMenu += Time.deltaTime;

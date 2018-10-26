@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class TutorialManager : MonoSingleton<TutorialManager>
 {
     [SerializeField] private Animator pointerHandAnimator;
-    [SerializeField] private Animator hintTextAnimator;
     
     [Space(10)]
     [SerializeField] private float waitBeforeHint = 5f;
@@ -44,14 +43,12 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void ShowHint()
     {
-        hintTextAnimator.SetTrigger("Appear");
         pointerHandAnimator.SetTrigger("Shake");
         hintIsShown = true;
     }
 
     private void HideHint()
     {
-        hintTextAnimator.SetTrigger("Disappear");
         pointerHandAnimator.SetTrigger("Disappear");
         hintIsShown = false;
     }

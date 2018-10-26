@@ -123,7 +123,7 @@ public class InGameUIManager : MonoSingleton<InGameUIManager>
 		levelScoreStatus = levelScoreStatusObj.GetComponentInChildren<IStatusGraphics>();
 		
 		SetPopLives(LevelConfig.StartPopLives);
-		SetRotLives(LevelConfig.StartRotationLives);
+		SetRotLives(LevelConfig.StartRotLives);
 
 		SetExtraRotLives(0);
 		SetExtraPopLives(0);

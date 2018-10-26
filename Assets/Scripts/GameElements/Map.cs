@@ -43,7 +43,7 @@ public class Node: IComparable<Node> {
 		color = hubbleGenerator.GetColor(color);
 		HubbleType newType = hubbleGenerator.GetHubbleType();
 		
-		hubble.Set (color, newType, type, points);
+		hubble.Set (color, newType, points);
 		type = newType;
 		hubble.Appear ();
 		hubble.UnHighlight ();
@@ -68,7 +68,7 @@ public class Node: IComparable<Node> {
 		this.color = color;
 		this.points += pointsDif;
 		hubble.Change ();
-		hubble.Set (color, type, this.type, this.points);
+		hubble.Set (color, type, this.points);
 		this.type = type;
 		MapGenerator.Instance.thisColorNodes [this.color].Add (this as Node);
 	}

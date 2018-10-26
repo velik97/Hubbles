@@ -15,7 +15,8 @@ MonoBehaviour:
   width: 7
   height: 11
   startPopLives: 10
-  startRotations: 20
+  startRotLives: 20
+  addBonusPopLives: 5
   colors:
   - {r: 0.9254902, g: 0.29803923, b: 0.33333334, a: 1}
   - {r: 0.9490196, g: 0.8, b: 0.1254902, a: 1}

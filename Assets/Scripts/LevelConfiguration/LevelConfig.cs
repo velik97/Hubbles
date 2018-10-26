@@ -16,7 +16,10 @@ public class LevelConfig : ScriptableObject
 	[SerializeField]
 	private int startPopLives;
 	[SerializeField]
-	private int startRotations;
+	private int startRotLives;
+	
+	[SerializeField]
+	private int addBonusPopLives;
 	
 	[SerializeField]
 	private Color[] colors;
@@ -44,9 +47,14 @@ public class LevelConfig : ScriptableObject
 		get { return instance.startPopLives; }
 	}
 	
-	public static int StartRotationLives
+	public static int StartRotLives
 	{
-		get { return instance.startRotations; }
+		get { return instance.startRotLives; }
+	}
+
+	public static int AddBonusPopLives
+	{
+		get { return instance.addBonusPopLives; }
 	}
 
 	public static Color[] Colors
