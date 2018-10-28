@@ -8,6 +8,8 @@ using UnityEngine.Events;
 public class TouchManager : MonoSingleton <TouchManager>
 {
 	public ReactiveProperty<TouchState> touchState;
+	public ReactiveProperty<Vector2> currentTouchPos;
+	public ReactiveProperty<bool> isClicking;
 
 	/// <summary>
 	/// Min distance from point of touch start enough to start rotation
@@ -20,7 +22,6 @@ public class TouchManager : MonoSingleton <TouchManager>
 	private float deltaAngle;
 	[HideInInspector] public Vector2 startTouchPos;
 	[HideInInspector] public Coord startTouchCoord;
-	private Vector2 currentTouchPos;
 	public GameObject field;
 	private LayerMask touchFieldsLayer;
 
@@ -53,7 +54,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 					resultState = TouchState.StartedFalseTouch;
 				else if (touchIsOnField)
 				{
-					startTouchPos = currentTouchPos;
+					startTouchPos = currentTouchPos.Value;
 					startTouchCoord = Coord.CoordFromVector2(startTouchPos);
 					resultState = TouchState.StartedTouching;
 				}
@@ -112,7 +113,10 @@ public class TouchManager : MonoSingleton <TouchManager>
 	{
 		isTouching = false;
 		touchIsOnField = false;
-		if (Input.touches.Length > 0 || Input.GetMouseButton(0))
+
+		isClicking.Value = Input.touches.Length > 0 || Input.GetMouseButton(0);
+		
+		if (isClicking.Value)
 		{
 			Vector3 inputPosition;
 
@@ -128,8 +132,8 @@ public class TouchManager : MonoSingleton <TouchManager>
 			if (Physics.Raycast(camRay, out hit, 2f, touchFieldsLayer))
 			{
 				isTouching = true;
-				currentTouchPos = (Vector2)hit.point;
-				if (hit.transform.gameObject == field && Coord.MapContains(Coord.CoordFromVector2(currentTouchPos)))
+				currentTouchPos.Value = (Vector2)hit.point;
+				if (hit.transform.gameObject == field && Coord.MapContains(Coord.CoordFromVector2(currentTouchPos.Value)))
 				{
 					touchIsOnField = true;
 				}
@@ -139,8 +143,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 
 	private void DetermineFalseTouch(out bool possibleFalseTouch)
 	{
-		if (AnimationManager.Instance.isAnimating ||
-		    (!GameManager.Instance.tutorialMode && MenuManager.Instance.MenuIsOpened))
+		if (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened)
 			lastTimeOfAnimationOrMenu = 0f;
 		else
 			lastTimeOfAnimationOrMenu += Time.deltaTime;
@@ -153,8 +156,8 @@ public class TouchManager : MonoSingleton <TouchManager>
 	private void DetermineRotating (out bool isRotating)
 	{
 		isRotating = false;
-		if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadius * minRotateRadius) {
-			previousRotateVector = currentTouchPos - startTouchPos;
+		if ((startTouchPos - currentTouchPos.Value).sqrMagnitude > minRotateRadius * minRotateRadius) {
+			previousRotateVector = currentTouchPos.Value - startTouchPos;
 			isRotating = true;
 			angle = 0f;
 		}
@@ -162,13 +165,13 @@ public class TouchManager : MonoSingleton <TouchManager>
 
 	private void FindRotatingAngle()
 	{
-		currentRotateVector = currentTouchPos - startTouchPos;
+		currentRotateVector = currentTouchPos.Value - startTouchPos;
 		deltaAngle = Vector2.Angle (previousRotateVector, currentRotateVector);
 		if (Vector3.Cross (previousRotateVector, currentRotateVector).z > 0) {
 			deltaAngle *= -1;
 		}
-		if ((startTouchPos - currentTouchPos).sqrMagnitude < minRotateRadius * minRotateRadius) {
-			deltaAngle *= ((startTouchPos - currentTouchPos).magnitude) / minRotateRadius;
+		if ((startTouchPos - currentTouchPos.Value).sqrMagnitude < minRotateRadius * minRotateRadius) {
+			deltaAngle *= ((startTouchPos - currentTouchPos.Value).magnitude) / minRotateRadius;
 		}
 		previousRotateVector = currentRotateVector;
 		angle += deltaAngle;
@@ -185,6 +188,8 @@ public class TouchManager : MonoSingleton <TouchManager>
 		}
 		mainCamera = Camera.main;
 		touchFieldsLayer = LayerMask.GetMask ("TouchFields");
+		isClicking = new ReactiveProperty<bool>();
+		currentTouchPos = new ReactiveProperty<Vector2>();
 		touchState = new ReactiveProperty<TouchState>();
 		touchState.Value = TouchState.Empty;
 	}

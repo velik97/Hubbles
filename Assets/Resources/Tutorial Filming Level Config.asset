@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9de32e7413ef41e9b47d14f13d76d99, type: 3}
-  m_Name: Tutorial Level Config
+  m_Name: Tutorial Filming Level Config
   m_EditorClassIdentifier: 
-  mapScale: 1.5
-  width: 5
-  height: 7
-  startPopLives: 10
-  startRotLives: 10
+  mapScale: 2
+  width: 3
+  height: 5
+  startPopLives: 100
+  startRotLives: 100
   addBonusPopLives: 0
   colors:
   - {r: 0.21568628, g: 0.7764706, b: 0.9019608, a: 1}

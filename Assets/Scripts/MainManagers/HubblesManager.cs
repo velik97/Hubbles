@@ -34,7 +34,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// <summary>
 	/// Does chosen color group contains all hubbles of such color
 	/// </summary>
-	[HideInInspector] public bool allAreOneColor;
+	public bool allAreOneColor;
 	/// <summary>
 	/// Was on previous step
 	/// </summary>

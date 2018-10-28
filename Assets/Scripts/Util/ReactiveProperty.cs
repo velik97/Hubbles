@@ -8,6 +8,12 @@ public class ReactiveProperty<T>
     private T value;
     private GenericEvent<T> stream;
 
+//    public ReactiveProperty(T value, GenericEvent<T> stream)
+//    {
+//        this.value = (T) new System.Object();
+//        this.stream = stream;
+//    }
+
     private GenericEvent<T> Stream
     {
         get
@@ -23,6 +29,8 @@ public class ReactiveProperty<T>
         get { return value; }
         set
         {
+            if (value.Equals(this.value))
+                return;
             Stream.Invoke(value);
             this.value = value;
         }

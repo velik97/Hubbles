@@ -39,10 +39,11 @@ public class MenuManager : MonoSingleton <MenuManager>
 	}
 
 	void Awake () {
-		pauseButton.onClick.AddListener(OpenPauseMenu);
+		if (pauseButton != null)
+			pauseButton.onClick.AddListener(OpenPauseMenu);
 	}
 
-	private void OpenMenuPanel (MenuPanel panel) {
+	public void OpenMenuPanel (MenuPanel panel) {
 		if (MenuIsOpened) {
 			MenuPanel previous = MenuPanelStack.Peek ();
 			previous.onClosed.AddListener (delegate {
@@ -56,7 +57,7 @@ public class MenuManager : MonoSingleton <MenuManager>
 		}
 	}
 
-	private void CloseTopMenuPanel () {
+	public void CloseTopMenuPanel () {
 		if (MenuIsOpened) {
 			MenuPanel top = MenuPanelStack.Pop ();
 			if (MenuIsOpened) {

@@ -8,49 +8,83 @@ using UnityEngine.UI;
 
 public class TutorialManager : MonoSingleton<TutorialManager>
 {
-    [SerializeField] private Animator pointerHandAnimator;
-    
-    [Space(10)]
-    [SerializeField] private float waitBeforeHint = 5f;
-    
-    private bool hintIsShown = false;
-    private bool playerIsGoingRight = false;
+    [SerializeField] private MenuPanel[] hintMenuPanels;
+    [SerializeField] private int scoreForPopTutorial;
+    [SerializeField] private GameObject rotLivesUI;
 
-    private float waitedBeforeHint = 0f; 
+    private MenuPanel currentMenuPanel;
 
     public void StartGame()
     {
-        HubblesManager.Instance.onHighlighted.AddListener(PlayerInteracted);
-        HubblesManager.Instance.onPoped.AddListener(PlayerInteracted);
-        waitedBeforeHint = waitBeforeHint;
+       GameManager.Instance.sceneLoader.onLoaded.AddListener(OpenPopHint); 
+    }
+    
+    private void OpenPopHint()
+    {
+        if (currentMenuPanel != null)
+            currentMenuPanel.RemoveAllListeners();
+        currentMenuPanel = hintMenuPanels[0];
+        currentMenuPanel.onClosed.AddListener(StartTeachingPop);
+        MenuManager.Instance.OpenMenuPanel(currentMenuPanel);
     }
 
-    private void PlayerInteracted()
+    private void StartTeachingPop()
     {
-        waitedBeforeHint = 0f;
-        if (hintIsShown)
-            HideHint();
+        HubblesManager.Instance.onPoped.AddListener(CheckPopTutorial);
     }
 
-    private void Update()
+    private void CheckPopTutorial()
     {
-        waitedBeforeHint += Time.deltaTime;
-        playerIsGoingRight = waitedBeforeHint < waitBeforeHint;
-                
-        if (!hintIsShown && !playerIsGoingRight)
-            ShowHint();
+        if (HubblesManager.Instance.totalScore >= scoreForPopTutorial)
+        {
+            OpenRotHint();
+            HubblesManager.Instance.onPoped.RemoveListener(CheckPopTutorial);
+        }
+    }
+    
+    private void OpenRotHint()
+    {
+        if (currentMenuPanel != null)
+            currentMenuPanel.RemoveAllListeners();
+        currentMenuPanel = hintMenuPanels[1];
+        currentMenuPanel.onClosed.AddListener(StartTeachingRot);
+        MenuManager.Instance.OpenMenuPanel(currentMenuPanel);
+    }
+    
+    private void StartTeachingRot()
+    {
+        foreach (var text in rotLivesUI.GetComponentsInChildren<Text>())
+        {
+            var textColor = text.color;
+            textColor.a = 1f;
+            text.color = textColor;
+        }
+        
+        foreach (var image in rotLivesUI.GetComponentsInChildren<Image>())
+        {
+            var imageColor = image.color;
+            imageColor.a = 1f;
+            image.color = imageColor;
+        }
+
+        HubblesManager.Instance.onPoped.AddListener(CheckRotTutorial);
     }
 
-    private void ShowHint()
+    private void CheckRotTutorial()
     {
-        pointerHandAnimator.SetTrigger("Shake");
-        hintIsShown = true;
+        if (HubblesManager.Instance.allAreOneColor)
+        {
+            EndTutorial();
+            HubblesManager.Instance.onPoped.RemoveListener(CheckRotTutorial);
+        }
     }
 
-    private void HideHint()
+    private void EndTutorial()
     {
-        pointerHandAnimator.SetTrigger("Disappear");
-        hintIsShown = false;
+        if (currentMenuPanel != null)
+            currentMenuPanel.RemoveAllListeners();
+        currentMenuPanel = hintMenuPanels[2];
+        MenuManager.Instance.OpenMenuPanel(currentMenuPanel);
     }
 }
 

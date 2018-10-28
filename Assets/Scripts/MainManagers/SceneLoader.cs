@@ -8,7 +8,7 @@ using UnityEngine.Events;
 /// </summary>
 public class SceneLoader : AnimatedMenuPanel {
 
-	public UnityEvent OnLoaded;
+	public UnityEvent onLoaded;
 
 	private IStatusGraphics statusGraphics;
 
@@ -26,7 +26,7 @@ public class SceneLoader : AnimatedMenuPanel {
 	private float startProgressPoint;
 	private float endProgressPoint;
 
-	public float timeToProccess;
+	public float timeToProcess;
 
 	public void StartLoadingScene (string sceneName) {
 		startProgressPoint = 0f;
@@ -36,7 +36,7 @@ public class SceneLoader : AnimatedMenuPanel {
 		onOpened.AddListener (delegate {
 			StartCoroutine (LoadCoroutine ());	
 		});
-		OnLoaded.AddListener (delegate {
+		onLoaded.AddListener (delegate {
 			SceneManager.LoadScene (sceneName);
 		});
 		OpenPanel ();
@@ -52,14 +52,14 @@ public class SceneLoader : AnimatedMenuPanel {
 	}
 
 	IEnumerator LoadCoroutine () {
-		for (float timeOffset = 0f; timeOffset < timeToProccess; timeOffset += Time.deltaTime) {
-			StatusGraphics.SetStatus (startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOffset / timeToProccess));
+		for (float timeOffset = 0f; timeOffset < timeToProcess; timeOffset += Time.deltaTime) {
+			StatusGraphics.SetStatus (startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOffset / timeToProcess));
 			yield return null;
 		}
 
 		yield return null;
 
-		OnLoaded.Invoke ();
+		onLoaded.Invoke ();
 		ClosePanel();
 	}
 

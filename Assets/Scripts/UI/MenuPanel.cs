@@ -15,4 +15,10 @@ public abstract class MenuPanel : MonoBehaviour
 	public abstract void OpenPanel ();
 
 	public abstract void ClosePanel ();
+
+	public virtual void RemoveAllListeners()
+	{
+		onClosed.RemoveAllListeners();
+		onOpened.RemoveAllListeners();
+	}
 }
