@@ -54,9 +54,12 @@
             <e p="Simulation.cs" t="Include" />
           </e>
           <e p="Tutorial" t="Include">
-            <e p="TutorialHand.cs" t="Include" />
+            <e p="TutorialFinger.cs" t="Include" />
             <e p="TutorialHintMenu.cs" t="Include" />
             <e p="TutorialManager.cs" t="Include" />
+            <e p="TutoriaMultiplier.cs" t="Include" />
+            <e p="VideoManager.cs" t="Include" />
+            <e p="VideoUI.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
             <e p="AnimatedMenuPanel.cs" t="Include" />
@@ -74,6 +77,7 @@
           <e p="Util" t="Include">
             <e p="AnimationF.cs" t="Include" />
             <e p="Coord.cs" t="Include" />
+            <e p="DestroyInTime.cs" t="Include" />
             <e p="Enums.cs" t="Include" />
             <e p="Extensions.cs" t="Include" />
             <e p="HubblesAppearanceInfo.cs" t="Include" />
