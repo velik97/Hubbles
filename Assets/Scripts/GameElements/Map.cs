@@ -98,7 +98,7 @@ public class Node: IComparable<Node> {
 /// <summary>
 /// Handles random map generation 
 /// </summary>
-public class Map {
+public static class Map {
 
 	/// <summary>
 	/// Array of all nodes

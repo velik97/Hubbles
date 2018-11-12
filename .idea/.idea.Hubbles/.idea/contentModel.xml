@@ -53,6 +53,11 @@
           <e p="Simulation" t="Include">
             <e p="Simulation.cs" t="Include" />
           </e>
+          <e p="Test" t="Include">
+            <e p="BoolMap.cs" t="Include" />
+            <e p="RotatingProblemSolver.cs" t="Include" />
+            <e p="Test.cs" t="Include" />
+          </e>
           <e p="Tutorial" t="Include">
             <e p="TutorialFinger.cs" t="Include" />
             <e p="TutorialHintMenu.cs" t="Include" />
@@ -76,6 +81,7 @@
           </e>
           <e p="Util" t="Include">
             <e p="AnimationF.cs" t="Include" />
+            <e p="ArrayRetyper.cs" t="Include" />
             <e p="Coord.cs" t="Include" />
             <e p="DestroyInTime.cs" t="Include" />
             <e p="Enums.cs" t="Include" />
@@ -83,6 +89,7 @@
             <e p="HubblesAppearanceInfo.cs" t="Include" />
             <e p="Interfaces.cs" t="Include" />
             <e p="MonoSingleton.cs" t="Include" />
+            <e p="ParallelTaskManager.cs" t="Include" />
             <e p="ReactiveProperty.cs" t="Include" />
           </e>
         </e>

@@ -45,5 +45,4 @@ public class SoundManager : MonoSingleton <SoundManager> {
 		yield return new WaitUntil(() => !source.isPlaying);
 		freeAudioSourcesQueue.Enqueue(source);
 	}
-
 }
