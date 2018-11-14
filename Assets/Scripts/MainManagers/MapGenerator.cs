@@ -46,7 +46,6 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 
 		Camera.main.ResizeInGame ();
 		StartCoroutine(GenerateMap ());
-		FieldResizer.Instance.Resize (width, height);
 		Coord.MapSize = new Coord (width, height);
 	}
 		

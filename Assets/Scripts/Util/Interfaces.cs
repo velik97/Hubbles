@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using UnityEngine;
 
 public interface IHubbleGenerator
 {
@@ -17,6 +18,13 @@ public interface IStatusGraphics
 public interface IAnimatableIntegerText
 {
 	void SetValue(int value);
+}
+
+public interface ITouchSource
+{
+	Vector2 TouchPos();
+	bool IsTouching();
+	bool TouchIsOnField();
 }
 
 

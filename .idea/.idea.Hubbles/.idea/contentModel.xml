@@ -48,7 +48,6 @@
             <e p="MenuManager.cs" t="Include" />
             <e p="SceneLoader.cs" t="Include" />
             <e p="SoundManager.cs" t="Include" />
-            <e p="TouchManager.cs" t="Include" />
           </e>
           <e p="Simulation" t="Include">
             <e p="Simulation.cs" t="Include" />
@@ -56,7 +55,9 @@
           <e p="Test" t="Include">
             <e p="BoolMap.cs" t="Include" />
             <e p="RotatingProblemSolver.cs" t="Include" />
-            <e p="Test.cs" t="Include" />
+          </e>
+          <e p="TouchProcessing" t="Include">
+            <e p="TouchManager.cs" t="Include" />
           </e>
           <e p="Tutorial" t="Include">
             <e p="TutorialFinger.cs" t="Include" />
@@ -70,7 +71,6 @@
             <e p="AnimatedMenuPanel.cs" t="Include" />
             <e p="CameraResizer.cs" t="Include" />
             <e p="DisappearableAnimatableIntegerText.cs" t="Include" />
-            <e p="FieldResizer.cs" t="Include" />
             <e p="HighlightPanel.cs" t="Include" />
             <e p="InGameUIManager.cs" t="Include" />
             <e p="MenuPanel.cs" t="Include" />

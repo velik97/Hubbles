@@ -16,75 +16,35 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void StartGame()
     {
-       GameManager.Instance.sceneLoader.onLoaded.AddListener(OpenPopHint); 
+       GameManager.Instance.sceneLoader.onLoaded.AddListener(TeachPop); 
+    }
+
+    private void TeachPop()
+    {
+        TouchManager.Instance.SetOtherInput(TutorialFinger.Instance.tutorialFingerTouchSource);
+        for (int i = 0; i < 3; i++)
+        {
+            Coord c = Coord.Random();
+            TutorialFinger.Instance.ClickOnCoord(c);
+            TutorialFinger.Instance.ClickOnCoord(c);
+        }
+        TutorialFinger.Instance.done.AddListener(TeachRotate);
+    }
+
+    private void TeachRotate()
+    {
+        BoolMap boolMap = new BoolMap(Map.nodeMap, 0);
+        ParallelTaskManager.Instance.CallFuncParallel<IEnumerable<RotationStep>>(
+            () => RotatingProblemSolver.FindRotationSequence(boolMap),
+            ExecuteRotation);
     }
     
-    private void OpenPopHint()
+    private void ExecuteRotation(IEnumerable<RotationStep> steps)
     {
-        if (currentMenuPanel != null)
-            currentMenuPanel.RemoveAllListeners();
-        currentMenuPanel = hintMenuPanels[0];
-        currentMenuPanel.onClosed.AddListener(StartTeachingPop);
-        MenuManager.Instance.OpenMenuPanel(currentMenuPanel);
-    }
-
-    private void StartTeachingPop()
-    {
-        HubblesManager.Instance.onPoped.AddListener(CheckPopTutorial);
-    }
-
-    private void CheckPopTutorial()
-    {
-        if (HubblesManager.Instance.totalScore >= scoreForPopTutorial)
+        foreach (var s in steps)
         {
-            OpenRotHint();
-            HubblesManager.Instance.onPoped.RemoveListener(CheckPopTutorial);
+            TutorialFinger.Instance.RotateOnCoord(s.coord, s.turns);
         }
-    }
-    
-    private void OpenRotHint()
-    {
-        if (currentMenuPanel != null)
-            currentMenuPanel.RemoveAllListeners();
-        currentMenuPanel = hintMenuPanels[1];
-        currentMenuPanel.onClosed.AddListener(StartTeachingRot);
-        MenuManager.Instance.OpenMenuPanel(currentMenuPanel);
-    }
-    
-    private void StartTeachingRot()
-    {
-        foreach (var text in rotLivesUI.GetComponentsInChildren<Text>())
-        {
-            var textColor = text.color;
-            textColor.a = 1f;
-            text.color = textColor;
-        }
-        
-        foreach (var image in rotLivesUI.GetComponentsInChildren<Image>())
-        {
-            var imageColor = image.color;
-            imageColor.a = 1f;
-            image.color = imageColor;
-        }
-
-        HubblesManager.Instance.onPoped.AddListener(CheckRotTutorial);
-    }
-
-    private void CheckRotTutorial()
-    {
-        if (HubblesManager.Instance.allAreOneColor)
-        {
-            EndTutorial();
-            HubblesManager.Instance.onPoped.RemoveListener(CheckRotTutorial);
-        }
-    }
-
-    private void EndTutorial()
-    {
-        if (currentMenuPanel != null)
-            currentMenuPanel.RemoveAllListeners();
-        currentMenuPanel = hintMenuPanels[2];
-        MenuManager.Instance.OpenMenuPanel(currentMenuPanel);
     }
 }
 

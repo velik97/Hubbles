@@ -36,7 +36,6 @@ public static class RotatingProblemSolver
 					if (minGroupsCount == 1)
 					{
 						boolMap = step;
-						Debug.Log(step);
 					}
 
 					break;

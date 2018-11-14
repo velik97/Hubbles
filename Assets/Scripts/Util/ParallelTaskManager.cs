@@ -75,7 +75,7 @@ public class ParallelTaskManager : MonoSingleton<ParallelTaskManager>
     /// </summary>
     /// <param name="parallelTask">to be called in a parallel thread</param>
     /// <param name="callback">to be called after <paramref name="parallelTask"/> is complete</param>
-    /// <exception cref="ThreadStartException">В <paramref name="parallelTask"/>it's not possible to call UnityEngine methods inside of a <paramref name="parallelTask"/></exception>
+    /// <exception cref="ThreadStartException">It's not possible to call UnityEngine methods inside of a <paramref name="parallelTask"/></exception>
     public void CallFuncParallel(Action parallelTask, Action callback)
     {
         ThreadStart threadStart = new ThreadStart(delegate

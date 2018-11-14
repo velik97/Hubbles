@@ -48,6 +48,11 @@ public class Coord
 		this.y = y;
 	}
 
+	public Vector2 ToVector2()
+	{
+		return Vector2FromCoord(this);
+	}
+
 	public static Coord Bad {
 		get {
 			return new Coord (-1, -1);
@@ -69,6 +74,14 @@ public class Coord
 
 			return new Coord (mapSize.x - 1, mapSize.y - 1);
 		}
+	}
+
+	public static Coord Random()
+	{
+		int y = UnityEngine.Random.Range(0, MapSize.y);
+		int x = UnityEngine.Random.Range(0, y % 2 == 0 ? MapSize.x - 1 : MapSize.x);
+		
+		return new Coord(x, y);
 	}
 
 	public static bool MapContains (Coord coord) {
@@ -100,21 +113,6 @@ public class Coord
 		if (coord.y % 2 == 0)
 			resault += Vector2.right * Coord.Step.x * .5f;
 		return resault;
-	}
-
-	public static Coord LECoordFromVector2 (Vector2 v) {
-		if (mapSize == null) {
-			Debug.LogError ("static field 'mapSize' of 'HexCoord' class wasn't set!");
-			return Bad;
-		}
-
-		int closestX;
-		int closestY;
-
-		closestY = Mathf.RoundToInt ((v.y) / Step.y);
-		closestX = Mathf.RoundToInt ((v.x + ((closestY % 2 == 0) ? (-Step.x / 2f) : (0f))) / Step.x);
-
-		return new Coord (closestX, closestY);
 	}
 
 	public static bool operator == (Coord a, Coord b) {

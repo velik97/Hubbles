@@ -8,13 +8,14 @@ using UnityEngine.Events;
 public class TouchManager : MonoSingleton <TouchManager>
 {
 	public ReactiveProperty<TouchState> touchState;
-	public ReactiveProperty<Vector2> currentTouchPos;
-	public ReactiveProperty<bool> isClicking;
 
 	/// <summary>
 	/// Min distance from point of touch start enough to start rotation
 	/// </summary>
 	public float minRotateRadius;
+
+	private ITouchSource touchSource;
+	private Vector2 currentTouchPos;
 
 	private Vector2 previousRotateVector;
 	private Vector2 currentRotateVector;
@@ -22,10 +23,6 @@ public class TouchManager : MonoSingleton <TouchManager>
 	private float deltaAngle;
 	[HideInInspector] public Vector2 startTouchPos;
 	[HideInInspector] public Coord startTouchCoord;
-	public GameObject field;
-	private LayerMask touchFieldsLayer;
-
-	private Camera mainCamera;
 
 	private float delayAfterAnimationOrMenuForFalseTouch = 0.05f;
 	private float lastTimeOfAnimationOrMenu;
@@ -33,28 +30,38 @@ public class TouchManager : MonoSingleton <TouchManager>
 	private void Awake()
 	{
 		FindObjectsAndNullReferences ();
+		touchSource = new DesktopTouchSource();
+	}
+
+	public void SetUserInput()
+	{
+#if UNITY_EDITOR
+		touchSource = new DesktopTouchSource();
+#else
+		touchSource = new MobileTouchSource();
+#endif
+	}
+
+	public void SetOtherInput(ITouchSource otherTouchSource)
+	{
+		touchSource = otherTouchSource;
 	}
 
 	private void Update ()
-	{
+	{		
 		TouchState initialState = touchState.Value;
 		TouchState resultState = initialState;
-		bool isTouching = false;
-		bool touchIsOnField = false;
-		DetermineTouches(out isTouching, out touchIsOnField);
 
-		bool possibleFalseTouch = false;
-		DetermineFalseTouch(out possibleFalseTouch);
-
-		if (isTouching)
+		if (touchSource.IsTouching())
 		{
+			currentTouchPos = touchSource.TouchPos();
 			if (initialState == TouchState.Empty)
 			{
-				if (possibleFalseTouch)
+				if (DetermineFalseTouch())
 					resultState = TouchState.StartedFalseTouch;
-				else if (touchIsOnField)
+				else if (touchSource.TouchIsOnField())
 				{
-					startTouchPos = currentTouchPos.Value;
+					startTouchPos = currentTouchPos;
 					startTouchCoord = Coord.CoordFromVector2(startTouchPos);
 					resultState = TouchState.StartedTouching;
 				}
@@ -83,9 +90,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 
 		if (initialState == TouchState.StartedTouching)
 		{
-			bool isRotating = false;
-			DetermineRotating(out isRotating);
-			if (isRotating)
+			if (DetermineRotating())
 			{
 				resultState = TouchState.StartedRotating;
 			}
@@ -103,75 +108,37 @@ public class TouchManager : MonoSingleton <TouchManager>
 		    resultState == TouchState.EndedFalseTouch)
 			touchState.Value = TouchState.Empty;
 	}
-	
-	
 
-	/// <summary>
-	/// Determine touch conditions
-	/// </summary>
-	private void DetermineTouches (out bool isTouching, out bool touchIsOnField)
-	{
-		isTouching = false;
-		touchIsOnField = false;
-
-		isClicking.Value = Input.touches.Length > 0 || Input.GetMouseButton(0);
-		
-		if (isClicking.Value)
-		{
-			Vector3 inputPosition;
-
-#if UNITY_EDITOR
-			inputPosition = Input.mousePosition;
-#else
-			inputPosition = (Vector3)Input.touches[0].position;
-#endif
-
-			Ray camRay = mainCamera.ScreenPointToRay(inputPosition);
-			RaycastHit hit;
-			
-			if (Physics.Raycast(camRay, out hit, 2f, touchFieldsLayer))
-			{
-				isTouching = true;
-				currentTouchPos.Value = (Vector2)hit.point;
-				if (hit.transform.gameObject == field && Coord.MapContains(Coord.CoordFromVector2(currentTouchPos.Value)))
-				{
-					touchIsOnField = true;
-				}
-			}
-		}
-	}
-
-	private void DetermineFalseTouch(out bool possibleFalseTouch)
+	private bool DetermineFalseTouch()
 	{
 		if (AnimationManager.Instance.isAnimating || MenuManager.Instance.MenuIsOpened)
-			lastTimeOfAnimationOrMenu = 0f;
-		else
-			lastTimeOfAnimationOrMenu += Time.deltaTime;
-		possibleFalseTouch = lastTimeOfAnimationOrMenu < delayAfterAnimationOrMenuForFalseTouch;
+			lastTimeOfAnimationOrMenu = Time.time;
+
+		return Time.time - lastTimeOfAnimationOrMenu < delayAfterAnimationOrMenuForFalseTouch;
 	}
 
 	/// <summary>
 	/// Determine rotation conditions
 	/// </summary>
-	private void DetermineRotating (out bool isRotating)
+	private bool DetermineRotating ()
 	{
-		isRotating = false;
-		if ((startTouchPos - currentTouchPos.Value).sqrMagnitude > minRotateRadius * minRotateRadius) {
-			previousRotateVector = currentTouchPos.Value - startTouchPos;
-			isRotating = true;
+		if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadius * minRotateRadius) {
+			previousRotateVector = currentTouchPos - startTouchPos;
 			angle = 0f;
+			return true;
 		}
+		return false;
 	}
 
 	private void FindRotatingAngle()
 	{
-		currentRotateVector = currentTouchPos.Value - startTouchPos;
+		currentRotateVector = currentTouchPos - startTouchPos;
 		deltaAngle = Vector2.Angle (previousRotateVector, currentRotateVector);
 		if (Vector3.Cross (previousRotateVector, currentRotateVector).z > 0) {
 			deltaAngle *= -1;
 		}
-		if ((startTouchPos - currentTouchPos.Value).sqrMagnitude < minRotateRadius * minRotateRadius) {
-			deltaAngle *= ((startTouchPos - currentTouchPos.Value).magnitude) / minRotateRadius;
+		if ((startTouchPos - currentTouchPos).sqrMagnitude < minRotateRadius * minRotateRadius) {
+			deltaAngle *= ((startTouchPos - currentTouchPos).magnitude) / minRotateRadius;
 		}
 		previousRotateVector = currentRotateVector;
 		angle += deltaAngle;
@@ -181,15 +148,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 	/// Find and initialize everything in start of the game
 	/// </summary>
 	void FindObjectsAndNullReferences () {
-		field = GameObject.FindWithTag ("MainField");
 		minRotateRadius *= Camera.main.orthographicSize;
-		if (field == null) {
-			Debug.LogError ("There is no object with 'MainField' tag!");
-		}
-		mainCamera = Camera.main;
-		touchFieldsLayer = LayerMask.GetMask ("TouchFields");
-		isClicking = new ReactiveProperty<bool>();
-		currentTouchPos = new ReactiveProperty<Vector2>();
 		touchState = new ReactiveProperty<TouchState>();
 		touchState.Value = TouchState.Empty;
 	}
@@ -201,10 +160,72 @@ public class TouchManager : MonoSingleton <TouchManager>
 		touchState.RemoveAllListeners();
 	}
 
-
 	void OnDrawGizmos () {
 		Gizmos.color = Color.blue;
 		Gizmos.DrawWireSphere (startTouchPos, 0.1f);
 	}
+	
+	public abstract class UserTouchSource : ITouchSource
+	{
+		private readonly LayerMask touchFieldsLayer = LayerMask.GetMask("TouchFields");
+		private readonly Camera mainCamera = Camera.main;
+		private Vector2 pos = Vector2.zero;
 
+		public Vector2 TouchPos()
+		{
+			Ray camRay = mainCamera.ScreenPointToRay(InputPosition());
+			RaycastHit hit;
+			
+			if (Physics.Raycast(camRay, out hit, 2f, touchFieldsLayer))
+			{
+				pos = hit.point;
+			}			
+			return pos;
+		}
+
+		public abstract bool IsTouching();
+
+		public bool TouchIsOnField()
+		{
+			Ray camRay = mainCamera.ScreenPointToRay(InputPosition());
+			RaycastHit hit;
+			
+			if (Physics.Raycast(camRay, out hit, 2f, touchFieldsLayer))
+			{
+				if (Coord.MapContains(Coord.CoordFromVector2(pos)))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		protected abstract Vector2 InputPosition();
+	}
+
+	public class DesktopTouchSource : UserTouchSource
+	{
+		public override bool IsTouching()
+		{
+			return Input.GetMouseButton(0);
+		}
+
+		protected override Vector2 InputPosition()
+		{
+			return Input.mousePosition;
+		}
+	}
+	
+	public class MobileTouchSource : UserTouchSource
+	{
+		public override bool IsTouching()
+		{
+			return Input.touches.Length > 0;
+		}
+
+		protected override Vector2 InputPosition()
+		{
+			return Input.touches.Length > 0 ? Input.touches[0].position : Vector2.zero;
+		}
+	}
 }

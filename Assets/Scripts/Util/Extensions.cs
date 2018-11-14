@@ -5,6 +5,19 @@ using UnityEngine;
 public static class Extensions
 {
 	/// <summary>
+	/// Returns normal to given vector 
+	/// </summary>
+	/// <param name="v">vector to take normal for</param>
+	/// <param name="rightSide">does normal look to the right side from given vector</param>
+	/// <returns>normal</returns>
+	public static Vector2 Normal(this Vector2 v, bool rightSide = true)
+	{
+		if (rightSide)
+			return new Vector2(v.y, -v.x);
+		return new Vector2(-v.y, v.x);
+	}
+	
+	/// <summary>
 	/// Sets status of <c>IStatusGraphics</c> object with specific integer value
 	/// </summary>
 	/// <param name="graphics">graphics to be set</param>
@@ -87,7 +100,7 @@ public static class Extensions
 	/// <param name="percentage">percent of ease function</param>
 	/// <param name="pow">pow of ease function</param>
 	public static Coroutine PlayAnimation(this MonoBehaviour monoBehaviour, Action<float> animationAction, float duration,
-		AnimationF.BetweenEaseFunc easeCurve, float percentage, int pow = 2)
+		AnimationF.BetweenEaseFunc easeCurve, float percentage = 1f, int pow = 2)
 	{
 		return monoBehaviour.StartCoroutine(PlayAnimationCoroutine(animationAction, duration,
 			par => easeCurve(par, percentage, pow)));
@@ -142,10 +155,9 @@ public static class Extensions
 	private static IEnumerator PlayAnimationCoroutine(Action<float> animationAction, float duration,
 		AnimationF.GeneralEaseFunc easeFunc)
 	{
-		float t = 0f;
 		float startTime = Time.time;
 
-		while ((t = (Time.time - startTime)/duration) < 1f)
+		for (var t = 0f; t < 1f; t = (Time.time - startTime)/duration)
 		{
 			animationAction.Invoke(easeFunc(t));
 			yield return null;
