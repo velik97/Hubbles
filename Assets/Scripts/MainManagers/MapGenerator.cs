@@ -1,14 +1,19 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
 /// Randomly generates map
 /// </summary>
 [RequireComponent(typeof(IHubbleGenerator))]
-public class MapGenerator : MonoSingleton <MapGenerator> {
-
+public class MapGenerator : MonoSingleton <MapGenerator>
+{
+	/// <summary>
+	/// Invokes after map being reestablished
+	/// </summary>
+	public UnityEvent onReestablished;
 	/// <summary>
 	/// Map width
 	/// </summary>
@@ -27,6 +32,18 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 	/// Array of lists of nodes for certain colors
 	/// </summary>
 	[HideInInspector] public List <Node>[] thisColorNodes;
+
+	public int BiggestGroupNumber
+	{
+		get
+		{
+			var maxNum = 0;
+			for (var i = 1; i < thisColorNodes.Length; i++)
+				if (thisColorNodes[i].Count > thisColorNodes[maxNum].Count)
+					maxNum = i;
+			return maxNum;
+		}
+	}
 
 	/// <summary>
 	/// Object that generates colors and types
@@ -110,7 +127,7 @@ public class MapGenerator : MonoSingleton <MapGenerator> {
 		if (!HubblesManager.Instance.gameEnded)
 			AnimationManager.Instance.isAnimating = false;
 		HubblesManager.Instance.oneColorGroup.Clear ();
-	
+		onReestablished.Invoke();
 	}
 
 

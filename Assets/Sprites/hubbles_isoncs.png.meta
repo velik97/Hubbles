@@ -18,6 +18,7 @@ TextureImporter:
     21300026: HighlightBG
     21300028: hubble_main_circle
     21300030: hubbles_highlight
+    21300032: hubbles_lives
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -417,6 +418,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5974ee938548d47c1b59714da9ea9f8e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hubbles_lives
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7db5bd11374d4a1cbbed10163a16ef5
       vertices: []
       indices: 
       edges: []

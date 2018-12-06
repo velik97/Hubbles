@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class TutorialFinger : MonoSingleton<TutorialFinger>
 {
     public ITouchSource tutorialFingerTouchSource;
-    public UnityEvent done;
+    public UnityEvent onExecutedAllCommands;
     
     [Header("Refs")]
     [SerializeField] private GameObject finger;
@@ -44,6 +44,11 @@ public class TutorialFinger : MonoSingleton<TutorialFinger>
         outOfScreenPosition = transform.position;
     }
 
+    public void WaitForSeconds(float seconds)
+    {
+        queueOfCoroutines.Enqueue(WaitForSecondsCoroutine(seconds));
+    }
+
     public void ClickOnCoord(Coord coord)
     {
         queueOfCoroutines.Enqueue(MoveToCoordCoroutine(coord));
@@ -70,7 +75,7 @@ public class TutorialFinger : MonoSingleton<TutorialFinger>
             if (queueOfCoroutines.Count == 0)
             {
                 if (isDoingSomething)
-                    done.Invoke();
+                    onExecutedAllCommands.Invoke();
                 isDoingSomething = false;
                 yield return null;
             }
@@ -173,6 +178,11 @@ public class TutorialFinger : MonoSingleton<TutorialFinger>
     private IEnumerator DelayBetweenActions()
     {
         yield return new WaitForSeconds(delayBetweenActions);
+    }
+
+    private IEnumerator WaitForSecondsCoroutine(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 
     private void SetShadowPosition(float t)

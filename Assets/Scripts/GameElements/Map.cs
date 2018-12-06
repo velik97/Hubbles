@@ -227,6 +227,19 @@ public static class Map {
 		return nodeMap[coord.x, coord.y];
 	}
 
+	public static Coord CoordFromNode(Node node)
+	{
+		for (int x = 0; x < nodeMap.GetLength(0); x++)
+		{
+			for (int y = 0; y < nodeMap.GetLength(1); y++)
+			{
+				if (node == nodeMap[x, y])
+					return new Coord(x, y);
+			}	
+		}
+		return Coord.Bad;
+	}
+
 	/// <summary>
 	/// Is node on x,y coord can be rotated
 	/// </summary>

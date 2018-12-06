@@ -13,10 +13,13 @@ public class ParallelTaskManager : MonoSingleton<ParallelTaskManager>
     private Queue<Exception> parallelExceptionQueue;
     private static readonly object parallelTaskLock = new object();
 
+    public int activeThreads;
+
     private void Awake ()
     {
         parallelRequestQueue = new Queue<Action>();
         parallelExceptionQueue = new Queue<Exception>();
+        activeThreads = 0;
     }
 
     private void Update()
@@ -48,7 +51,9 @@ public class ParallelTaskManager : MonoSingleton<ParallelTaskManager>
         {
             try
             {
+                activeThreads++;
                 T receiveData = paralellTask();
+                activeThreads--;
                 lock (parallelTaskLock)
                 {
                     parallelRequestQueue.Enqueue(delegate
@@ -59,6 +64,7 @@ public class ParallelTaskManager : MonoSingleton<ParallelTaskManager>
             }
             catch (Exception e)
             {
+                activeThreads--;
                 lock (parallelTaskLock)
                 {
                     parallelExceptionQueue.Enqueue(e);
@@ -82,7 +88,9 @@ public class ParallelTaskManager : MonoSingleton<ParallelTaskManager>
         {
             try
             {
+                activeThreads++;
                 parallelTask.Invoke();
+                activeThreads--;
                 lock (parallelTaskLock)
                 {
                     parallelRequestQueue.Enqueue(callback.Invoke);
@@ -90,6 +98,7 @@ public class ParallelTaskManager : MonoSingleton<ParallelTaskManager>
             }
             catch (Exception e)
             {
+                activeThreads--;
                 lock (parallelTaskLock)
                 {
                     parallelExceptionQueue.Enqueue(e);

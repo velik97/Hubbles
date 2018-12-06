@@ -12,7 +12,7 @@ public static class RotatingProblemSolver
 	/// <summary>
 	/// Returns sequence of steps, that you need to make to collect all hubbles of certain color in a group 
 	/// </summary>
-	/// <param name="color">color of hubbles to be collected</param>
+	/// <param name="boolMap">initial map</param>
 	/// <returns>sequence of steps, that you need to make to collect all hubbles of certain color in a group</returns>
 	public static IEnumerable<RotationStep> FindRotationSequence(BoolMap boolMap)
 	{
@@ -20,6 +20,7 @@ public static class RotatingProblemSolver
 		int minGroupsCount = boolMap.GroupsCount();
 
 		allPossibleSteps.Enqueue(boolMap);
+		Debug.Log(boolMap);
 
 		while (minGroupsCount > 1)
 		{
@@ -44,6 +45,7 @@ public static class RotatingProblemSolver
 				allPossibleSteps.Enqueue(step);
 			}
 		}
+		Debug.Log(boolMap);
 
 		Stack<RotationStep> steps = new Stack<RotationStep>();
 		

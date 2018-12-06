@@ -54,7 +54,7 @@ public static class Extensions
 	/// Plays animation in a coroutine giving animationAction params from 0 to 1
 	/// </summary>
 	/// <param name="monoBehaviour">method will be invoked on this</param>
-	/// <param name="animationAction">action to be done each frame</param>
+	/// <param name="animationAction">action to be onExecutedAllCommands each frame</param>
 	/// <param name="duration">duration of action</param>
 	public static Coroutine PlayAnimation(this MonoBehaviour monoBehaviour, Action<float> animationAction, float duration)
 	{
@@ -66,7 +66,7 @@ public static class Extensions
 	/// Plays animation in a coroutine giving animationAction params from 0 to 1 with specific ease func
 	/// </summary>
 	/// <param name="monoBehaviour">method will be invoked on this</param>
-	/// <param name="animationAction">action to be done each frame</param>
+	/// <param name="animationAction">action to be onExecutedAllCommands each frame</param>
 	/// <param name="duration">duration of action</param>
 	/// <param name="easeCurve">ease function</param>
 	public static Coroutine PlayAnimation(this MonoBehaviour monoBehaviour, Action<float> animationAction, float duration,
@@ -79,7 +79,7 @@ public static class Extensions
 	/// Plays animation in a coroutine giving animationAction params from 0 to 1 with specific ease func
 	/// </summary>
 	/// <param name="monoBehaviour">method will be invoked on this</param>
-	/// <param name="animationAction">action to be done each frame</param>
+	/// <param name="animationAction">action to be onExecutedAllCommands each frame</param>
 	/// <param name="duration">duration of action</param>
 	/// <param name="easeCurve">ease function</param>
 	/// <param name="pow">pow of ease function</param>
@@ -94,7 +94,7 @@ public static class Extensions
 	/// Plays animation in a coroutine giving animationAction params from 0 to 1 with specific ease func
 	/// </summary>
 	/// <param name="monoBehaviour">method will be invoked on this</param>
-	/// <param name="animationAction">action to be done each frame</param>
+	/// <param name="animationAction">action to be onExecutedAllCommands each frame</param>
 	/// <param name="duration">duration of action</param>
 	/// <param name="easeCurve">ease function</param>
 	/// <param name="percentage">percent of ease function</param>
@@ -110,7 +110,7 @@ public static class Extensions
 	/// Plays animation in a coroutine giving animationAction params from 0 to 1 with specific ease func
 	/// </summary>
 	/// <param name="monoBehaviour">method will be invoked on this</param>
-	/// <param name="animationAction">action to be done each frame</param>
+	/// <param name="animationAction">action to be onExecutedAllCommands each frame</param>
 	/// <param name="duration">duration of action</param>
 	/// <param name="easeCurve">ease function</param>
 	public static Coroutine PlayAnimation(this MonoBehaviour monoBehaviour, Action<float> animationAction, float duration,

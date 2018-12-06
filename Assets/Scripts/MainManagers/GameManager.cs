@@ -87,7 +87,7 @@ public class GameManager : MonoSingleton <GameManager>
 		{
 			PassedTutorial = true;
 			AnalyticsEvent.TutorialComplete();
-			sceneLoader.StartLoadingScene("Main");
+			this.InvokeWithDelay(() => sceneLoader.StartLoadingScene("Main"), 2f);
 		}
 		else
 			onLose.Invoke ();

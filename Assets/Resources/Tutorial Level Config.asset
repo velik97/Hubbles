@@ -14,8 +14,8 @@ MonoBehaviour:
   mapScale: 1.5
   width: 5
   height: 7
-  startPopLives: 10
-  startRotLives: 10
+  startPopLives: 50
+  startRotLives: 1000
   addBonusPopLives: 0
   colors:
   - {r: 0.21568628, g: 0.7764706, b: 0.9019608, a: 1}

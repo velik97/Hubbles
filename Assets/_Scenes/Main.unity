@@ -2068,7 +2068,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   middleProgressPoint: 0.5
-  timeToProcess: 0
+  timeToProcess: 1
 --- !u!1 &1294912920
 GameObject:
   m_ObjectHideFlags: 0
@@ -3532,6 +3532,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e301e8693bfd3409b8960765cd201e84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onReestablished:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   width: 0
   height: 0
 --- !u!4 &1647990755
