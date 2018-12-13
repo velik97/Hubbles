@@ -77,6 +77,11 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	private int totalOneColorGroupPopPerLevel;
 	private int totalRotsPerLevel;
 
+	public int CurrentNodeColor
+	{
+		get {return currentNode == null ? -1 : currentNode.color;}
+	}
+	
 	public void StartGame () {
 		popLives = LevelConfig.StartPopLives;
 		rotLives = LevelConfig.StartRotLives;
@@ -122,7 +127,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	private void StartTouch()
 	{
 		FindCurrentNode ();			
-		if (!oneColorGroup.Contains (currentNode) && oneColorGroup.Count > 0)
+		if (!oneColorGroup.Contains(currentNode) && oneColorGroup.Count > 0)
 		{
 			ClearHighlightedGroup();
 		}
@@ -295,17 +300,17 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	/// </summary>
 	void FindGroup () {
 		Queue<Coord> queue = new Queue<Coord> ();
-		queue.Enqueue (TouchManager.Instance.startTouchCoord);
-		oneColorGroup.Add (currentNode);
+		queue.Enqueue(TouchManager.Instance.startTouchCoord);
+		oneColorGroup.Add(currentNode);
 		Coord particularCoord;
-		Map.nodeMap [TouchManager.Instance.startTouchCoord.x, TouchManager.Instance.startTouchCoord.y].SetActive (true);
+		Map.nodeMap[TouchManager.Instance.startTouchCoord.x, TouchManager.Instance.startTouchCoord.y].SetActive (true);
 		
 		while (queue.Count != 0) {
 			particularCoord = queue.Dequeue();
 			foreach (Coord coord in Map.NearCoords(particularCoord, Map.AreTheSameСolor)) {
-				Map.nodeMap [coord.x, coord.y].SetActive (true);
-				oneColorGroup.Add (Map.nodeMap[coord.x, coord.y]);
-				queue.Enqueue (coord);
+				Map.nodeMap[coord.x, coord.y].SetActive (true);
+				oneColorGroup.Add(Map.nodeMap[coord.x, coord.y]);
+				queue.Enqueue(coord);
 			}
 		}
 			

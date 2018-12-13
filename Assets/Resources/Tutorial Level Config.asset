@@ -15,7 +15,7 @@ MonoBehaviour:
   width: 5
   height: 7
   startPopLives: 50
-  startRotLives: 1000
+  startRotLives: 1000000
   addBonusPopLives: 0
   colors:
   - {r: 0.21568628, g: 0.7764706, b: 0.9019608, a: 1}

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
@@ -11,12 +12,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 {
 
     [SerializeField] private GameObject[] hints;
+    [SerializeField] private GameObject[] colorHints;
     [SerializeField] private GameObject praise;
+
+    private int biggestGroupNumber;
     
     public void StartGame()
     {
         ActivateHint(-1);
         GameManager.Instance.sceneLoader.onLoaded.AddListener(TeachPop);
+        AnalyticsEvent.TutorialStart();
     }
 
     private void TeachPop()
@@ -47,31 +52,45 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         {
             TeachRotate();
             MapGenerator.Instance.onReestablished.RemoveListener(CheckPopGoal);
+            AnalyticsEvent.TutorialStep(0);
         }
     }
 
     private void TeachRotate()
     {
         ActivateHint(3);
+        biggestGroupNumber = MapGenerator.Instance.BiggestGroupNumber;
         CollectGroup();
     }
 
     private void CollectGroup()
     {
         TouchManager.Instance.SetOtherInput(TutorialFinger.Instance.tutorialFingerTouchSource);
-        var biggestGroupNumber = MapGenerator.Instance.BiggestGroupNumber;
         BoolMap boolMap = new BoolMap(Map.nodeMap, biggestGroupNumber);
         ParallelTaskManager.Instance.CallFuncParallel<IEnumerable<RotationStep>>(
             () => RotatingProblemSolver.FindRotationSequence(boolMap),
-            ExecuteRotation);
+            ExecuteRotation);   
+    }
+
+    private void ExecuteRotation(IEnumerable<RotationStep> steps)
+    {
+        if (!steps.Any())
+        {
+            biggestGroupNumber = (biggestGroupNumber + 1) % 4;
+            CollectGroup();
+            return;
+        }
+        foreach (var s in steps)
+        {
+            TutorialFinger.Instance.RotateOnCoord(s.coord, s.turns);
+        }
         TutorialFinger.Instance.onExecutedAllCommands.AddListener(PopCollectedGroup);
         TutorialFinger.Instance.onExecutedAllCommands.AddListener(() => TutorialFinger.Instance.onExecutedAllCommands
             .RemoveListener(PopCollectedGroup));
     }
-
+    
     private void PopCollectedGroup()
     {
-        var biggestGroupNumber = MapGenerator.Instance.BiggestGroupNumber;
         var c = Map.CoordFromNode(MapGenerator.Instance.thisColorNodes[biggestGroupNumber][0]);
         TutorialFinger.Instance.ClickOnCoord(c);
         TutorialFinger.Instance.WaitForSeconds(1f);
@@ -84,7 +103,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void LearnRotate()
     {
+        biggestGroupNumber = MapGenerator.Instance.BiggestGroupNumber;
+        while (true)
+        {
+            BoolMap boolMap = new BoolMap(Map.nodeMap, biggestGroupNumber);  
+            if (boolMap.GroupsCount() > 1)
+                break;
+            biggestGroupNumber = (biggestGroupNumber + 1) % 4;
+        }
         ActivateHint(1);
+        ActivateColorGroupHint(biggestGroupNumber);
         TouchManager.Instance.SetUserInput();
         HubblesManager.Instance.onPoped.AddListener(CheckRotateGoal);
     }
@@ -93,8 +121,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         if (HubblesManager.Instance.allAreOneColor)
         {
+            if (HubblesManager.Instance.CurrentNodeColor != biggestGroupNumber)
+                return;
             LearnPop2();
             HubblesManager.Instance.onPoped.RemoveListener(CheckRotateGoal);
+            AnalyticsEvent.TutorialStep(1);
         }
     }
 
@@ -117,17 +148,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void TutorialIsFinished()
     {
+        AnalyticsEvent.TutorialComplete();
         ActivateHint(3);
         GameManager.Instance.Lose();
-    }
-    
-    private void ExecuteRotation(IEnumerable<RotationStep> steps)
-    {
-        print("steps: " + steps.Count());
-        foreach (var s in steps)
-        {
-            TutorialFinger.Instance.RotateOnCoord(s.coord, s.turns);
-        }
     }
 
     private void ActivateHint(int hintNumber)
@@ -137,6 +160,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             hints[i].SetActive(hintNumber == i);
         }
         praise.SetActive(hintNumber == 3);
+    }
+    
+    private void ActivateColorGroupHint(int hintNumber)
+    {
+        print(hintNumber);
+        for (var i = 0; i < colorHints.Length; i++)
+        {
+            colorHints[i].SetActive(hintNumber == i);
+        }
     }
 }
 

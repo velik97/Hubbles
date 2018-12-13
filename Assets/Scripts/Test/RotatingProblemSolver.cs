@@ -20,7 +20,6 @@ public static class RotatingProblemSolver
 		int minGroupsCount = boolMap.GroupsCount();
 
 		allPossibleSteps.Enqueue(boolMap);
-		Debug.Log(boolMap);
 
 		while (minGroupsCount > 1)
 		{
@@ -45,7 +44,6 @@ public static class RotatingProblemSolver
 				allPossibleSteps.Enqueue(step);
 			}
 		}
-		Debug.Log(boolMap);
 
 		Stack<RotationStep> steps = new Stack<RotationStep>();
 		
@@ -58,7 +56,10 @@ public static class RotatingProblemSolver
 			boolMap = boolMap.parent;
 		}
 
-		return steps;
+		while (steps.Count > 0)
+		{
+			yield return steps.Pop();
+		}
 	}
 
 }

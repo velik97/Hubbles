@@ -9,8 +9,8 @@ public class ShakableAnimatableIntegerText : MonoBehaviour, IAnimatableIntegerTe
     [SerializeField] private string prefix = "";
     [SerializeField] private bool formatThousands = false;
 
-    private Text text;
-    private Animator animator;
+    [SerializeField] private Text text;
+    [SerializeField] private Animator animator;
     private float shakeAnimationLength = 0f;
     private float ShakeAnimationLength
     {
@@ -29,8 +29,10 @@ public class ShakableAnimatableIntegerText : MonoBehaviour, IAnimatableIntegerTe
 
     private void Awake()
     {
-        text = GetComponentInChildren<Text>();
-        animator = GetComponentInChildren<Animator>();
+        if (text == null)
+            text = GetComponentInChildren<Text>();
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
         previousValue = int.MinValue;
     }
 

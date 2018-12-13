@@ -43,7 +43,8 @@ public class Node: IComparable<Node> {
 		color = hubbleGenerator.GetColor(color);
 		HubbleType newType = hubbleGenerator.GetHubbleType();
 		
-		hubble.Set (color, newType, points);
+		AlignToMap();
+		hubble.Set(color, newType, points);
 		type = newType;
 		hubble.Appear ();
 		hubble.UnHighlight ();
@@ -93,6 +94,12 @@ public class Node: IComparable<Node> {
 			return -1;
 		return 1;
 	}
+
+	private void AlignToMap()
+	{
+		var alignedPosition = Coord.Vector2FromCoord(Map.CoordFromNode(this));
+		hubble.transform.position = alignedPosition;
+	}
 }
 	
 /// <summary>
@@ -118,8 +125,8 @@ public static class Map {
 	/// <param name="coord">coord for new node</param>
 	/// <returns>created node</returns>
 	public static Node SetNode (int color, HubbleType type, Coord coord) {
-		Hubble hubble = Object.Instantiate (HubblesAppearanceInfo.Instance.hubblePrefab,
-			 Coord.Vector2FromCoord (coord), Quaternion.identity);
+		Hubble hubble = Object.Instantiate(HubblesAppearanceInfo.Instance.hubblePrefab,
+			 Coord.Vector2FromCoord(coord), Quaternion.identity);
 		hubble.transform.localScale *= HubblesAppearanceInfo.Instance.FitHubbleSize;
 		
 		return SetNode (color, type, 1, hubble, coord);
@@ -227,6 +234,9 @@ public static class Map {
 		return nodeMap[coord.x, coord.y];
 	}
 
+	/// <summary>
+	/// Coord of given node
+	/// </summary>
 	public static Coord CoordFromNode(Node node)
 	{
 		for (int x = 0; x < nodeMap.GetLength(0); x++)

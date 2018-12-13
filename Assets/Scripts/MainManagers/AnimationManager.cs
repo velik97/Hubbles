@@ -321,15 +321,15 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 
 	IEnumerator IDeleteGroup (List<Node> nodes) {
 		isAnimating = true;
-		foreach (Node node in nodes) {
-			node.SetActive (false);
-			node.hubble.DisAppear ();
-		}
-		yield return new WaitForSeconds(deleteTime);
-		StartCoroutine (MapGenerator.Instance.ReestablishMap (nodes));
-		SoundManager.Instance.Play(bigPop);
 		InGameUIManager.Instance.SetPopLives(HubblesManager.Instance.popLives);
 		InGameUIManager.Instance.SetRotLives(HubblesManager.Instance.rotLives);
+		foreach (Node node in nodes) {
+			node.SetActive(false);
+			node.hubble.DisAppear();
+		}
+		yield return new WaitForSeconds(deleteTime);
+		SoundManager.Instance.Play(bigPop);
+		StartCoroutine(MapGenerator.Instance.ReestablishMap(nodes));
 	}
 
 	void FindObjectsAndNullReferences ()

@@ -66,8 +66,10 @@ public class ProceduralHubbleGenerator : MonoBehaviour, IHubbleGenerator
             return HubbleType.PopLive;
 
         comparer += rotLivesChance * 100000f;
+        // TODO Delete rotations live concept
         if (randomNumber < comparer)
-            return HubbleType.RotationLive;
+            return HubbleType.Usual;
+//            return HubbleType.RotationLive;
 
         comparer += proceduralGenerationConfig.multiplierChance * 100000f;
         if (randomNumber < comparer)

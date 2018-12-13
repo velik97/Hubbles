@@ -114,15 +114,15 @@ public class MapGenerator : MonoSingleton <MapGenerator>
 		int color = nodesToReestablish[0].color;
 
 		foreach (Node node in nodesToReestablish) {
-			thisColorNodes [color].Remove (node);
+			thisColorNodes[color].Remove (node);
 		}
 
 		AnimationManager.Instance.isAnimating = true;
 
 		foreach (Node node in nodesToReestablish) {
-			node.Reestablish (hubbleGenerator);
+			node.Reestablish(hubbleGenerator);
 			yield return new WaitForSeconds (0.01f);
-			thisColorNodes [node.color].Add (node);
+			thisColorNodes[node.color].Add (node);
 		}
 		if (!HubblesManager.Instance.gameEnded)
 			AnimationManager.Instance.isAnimating = false;

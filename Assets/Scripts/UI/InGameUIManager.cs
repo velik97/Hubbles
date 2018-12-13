@@ -57,6 +57,27 @@ public class InGameUIManager : MonoSingleton<InGameUIManager>
 	[SerializeField] private GameObject levelScoreStatusObj;
 	private IStatusGraphics levelScoreStatus;
 
+	private int record = -1;
+
+	public int Record
+	{
+		get
+		{
+			if (record != -1) return record;
+			record = 0;
+			if (PlayerPrefs.HasKey("Record"))
+				record = PlayerPrefs.GetInt("Record");
+			return record;
+		}
+		set
+		{
+			if (value <= record)
+				return;
+			PlayerPrefs.SetInt("Record", value);
+			record = value;
+		}
+	}
+
 	public void StartGame()
 	{
 		FindObjectsAndNullReferences();
@@ -90,9 +111,13 @@ public class InGameUIManager : MonoSingleton<InGameUIManager>
 		int scoreAchievedInThisLevel = HubblesManager.Instance.totalScore - 
 		                               LevelConfig.LevelScores[HubblesManager.Instance.level - 1];
 		levelScoreStatus.SetStatus(scoreAchievedInThisLevel, maxScoreAchievableInThisLevel);
+
+		if (GameManager.Instance.tutorialMode || score <= Record) return;
+		Record = score;
+		SetRecord(score);
 	}
 
-	public void SetRecord(int score)
+	private void SetRecord(int score)
 	{
 		recordText.SetValue(score);
 	}
@@ -129,9 +154,9 @@ public class InGameUIManager : MonoSingleton<InGameUIManager>
 		SetExtraPopLives(0);
 		SetMultiplier(1);
 		
-		SetRecord(0);
 		SetScore(0);
 		SetLevel(1);
+		SetRecord(Record);
 	}
 
 }
