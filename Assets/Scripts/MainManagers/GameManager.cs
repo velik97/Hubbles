@@ -31,6 +31,8 @@ public class GameManager : MonoSingleton <GameManager>
 	/// </summary>
 	public SceneLoader sceneLoader;
 
+	public Button showAdButton;
+
 	public bool tutorialMode;
 
 	private Dictionary<string, object> analyticsData = new Dictionary<string, object>();
@@ -90,7 +92,10 @@ public class GameManager : MonoSingleton <GameManager>
 			this.InvokeWithDelay(() => sceneLoader.StartLoadingScene("Main"), 2f);
 		}
 		else
-			onLose.Invoke ();
+		{
+			onLose.Invoke();
+			showAdButton.interactable = AdManager.Instance.RewardedAdIsReady;
+		}
 	}
 
 	public void LevelDone(int level, int popLives, int rotLives, int totalPopsPerLevel, int totalRotsPerLevel,
@@ -107,16 +112,27 @@ public class GameManager : MonoSingleton <GameManager>
 		AnalyticsEvent.LevelComplete(level, analyticsData);
 	}
 
-	public void Restart () {
+	public void ShowRewardedAd()
+	{
+		AdManager.Instance.ShowRewardedAd(ContinueAfterAd, StartNewGame, StartNewGame);
+	}
+
+	public void Restart() {
+		AdManager.Instance.ShowSimpleAd(StartNewGame, StartNewGame, StartNewGame);
+	}
+
+	public void StartNewGame()
+	{
 		sceneLoader.StartLoadingScene("Main");
 	}
 
-	public void GoToTutorial () {
+	public void GoToTutorial() {
 		sceneLoader.StartLoadingScene("Tutorial");
 	}
 
-	public void ContinueAfterAdd()
+	public void ContinueAfterAd()
 	{
+		print(0);
 		HubblesManager.Instance.ContinueWithNewSteps(LevelConfig.AddBonusPopLives);
 		MenuManager.Instance.CloseLoseMenu();
 	}

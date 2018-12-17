@@ -66,6 +66,7 @@ public class MenuManager : MonoSingleton <MenuManager>
 					previous.OpenPanel ();
 				});
 			}
+			print(2);
 			top.ClosePanel ();
 		}
 	}
@@ -95,6 +96,7 @@ public class MenuManager : MonoSingleton <MenuManager>
 
 	public void CloseLoseMenu()
 	{
+		print(1);
 		pauseButton.onClick.AddListener(OpenPauseMenu);
 		CloseTopMenuPanel();
 	}
