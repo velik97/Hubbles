@@ -141,9 +141,10 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	public void StartRotating(Func<float> getAngle)
 	{
 		ClearHighlightedGroup();
-		startRotatingCoord = TouchManager.Instance.startTouchCoord;
+		startRotatingCoord = TouchManager.Instance.startRotatingCoord;
+		currentNode = Map.NodeFromCoord(startRotatingCoord);
 		surroundingNodes = Map.NodesFromCoords
-			(Map.NearCoords (TouchManager.Instance.startTouchCoord, out canRotate, Map.AreRotable));
+			(Map.NearCoords (startRotatingCoord, out canRotate, Map.AreRotable));
 		bool haveLives = rotLives > 0 ||
 		                 (turnedPreviously && previousNode != null && previousNode == currentNode);
 		canRotate &= haveLives;

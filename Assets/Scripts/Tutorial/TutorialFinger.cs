@@ -24,7 +24,6 @@ public class TutorialFinger : MonoSingleton<TutorialFinger>
     [SerializeField] private float delayBetweenActions = .5f;
     
     [Header("Rotate params")]
-    [SerializeField] private float rotateShift = 1f;
     [SerializeField] private float rotateSectionTime = .5f;
 
     private GameObject currentTrail;
@@ -58,9 +57,9 @@ public class TutorialFinger : MonoSingleton<TutorialFinger>
 
     public void RotateOnCoord(Coord coord, int turns)
     {
-        queueOfCoroutines.Enqueue(MoveToCoordCoroutine(coord));
+        queueOfCoroutines.Enqueue(MoveToCoordCoroutine(coord.Neighbour(NeighbourType.BottomRight)));
         queueOfCoroutines.Enqueue(DelayBetweenActions());
-        queueOfCoroutines.Enqueue(RotateCoroutine(turns));
+        queueOfCoroutines.Enqueue(RotateCoroutine(coord, turns));
     }
 
     public void GetAway()
@@ -110,30 +109,30 @@ public class TutorialFinger : MonoSingleton<TutorialFinger>
         }, moveTime, AnimationF.EasyInOut);
     }
 
-    private IEnumerator RotateCoroutine(int turns)
+    private IEnumerator RotateCoroutine(Coord coord, int turns)
     {
         yield return StartTouch();
-        Vector2 startPosition = transform.position;
-        float angle = 30f;
+        Vector2 coordPosition = Coord.Vector2FromCoord(coord);
+        float dist = (coordPosition - Coord.Vector2FromCoord(coord.Neighbour(NeighbourType.BottomRight))).magnitude;
+        float angle = -60f;
         Func<Vector2> angle2Vec = delegate
         {
             float a = Mathf.Deg2Rad * angle;
             float sin = Mathf.Sin(a);
             float cos = Mathf.Cos(a);
-            return startPosition + (Vector2.right * cos + Vector2.up * sin) * rotateShift;
-        };
-
-        yield return this.PlayAnimation(t => SetPosition(Vector2.Lerp(startPosition, angle2Vec(), t)),
-            rotateSectionTime, AnimationF.EasyInOut);
+            return coordPosition + (Vector2.right * cos + Vector2.up * sin) * dist;
+        }; 
 
         if (turns == 5)
             turns = -1;
         if (turns == 4)
             turns = -2;
+        
+        turns = Mathf.RoundToInt(Mathf.Sign(turns) * (Mathf.Abs(turns) + 1));
 
         yield return this.PlayAnimation(t =>
             {
-                angle = 30f - 60f * turns * t;
+                angle = -60f - 60f * turns * t;
                 SetPosition(angle2Vec());
             },
             rotateSectionTime * Mathf.Abs(turns), AnimationF.EasyInOut);

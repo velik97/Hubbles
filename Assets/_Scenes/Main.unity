@@ -2361,9 +2361,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minRotateRadius: 0.1
+  rotationDecreaseDistance: 0.05
   angle: 0
   startTouchPos: {x: 0, y: 0}
   startTouchCoord:
+    x: 0
+    y: 0
+  startRotatingPos: {x: 0, y: 0}
+  startRotatingCoord:
     x: 0
     y: 0
 --- !u!1 &1413906267

@@ -155,14 +155,13 @@ public class Coord
 			.Select(v => Vector3.Cross(v, dir).z)
 			.Sum()
 		));
-
 		Coord rotationCoord = startCoord.Neighbour(
-			(NeighbourType)((int) dirNeighbourType + sign)
+			(NeighbourType) (((int) dirNeighbourType + sign + 6) % 6)
 		);
 		if (!MapContains(rotationCoord))
 		{
 			rotationCoord = startCoord.Neighbour(
-				(NeighbourType)((int) dirNeighbourType - sign)
+				(NeighbourType) (((int) dirNeighbourType - sign + 6) % 6)
 			);
 		}
 		return rotationCoord;

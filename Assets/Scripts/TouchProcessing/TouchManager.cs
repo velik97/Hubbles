@@ -14,6 +14,8 @@ public class TouchManager : MonoSingleton <TouchManager>
 	/// </summary>
 	public float minRotateRadius;
 
+	public float rotationDecreaseDistance = 0.5f;
+
 	private ITouchSource touchSource;
 	private Vector2 currentTouchPos;
 
@@ -23,9 +25,15 @@ public class TouchManager : MonoSingleton <TouchManager>
 	private float deltaAngle;
 	[HideInInspector] public Vector2 startTouchPos;
 	[HideInInspector] public Coord startTouchCoord;
+	[HideInInspector] public Vector2 startRotatingPos;
+	[HideInInspector] public Coord startRotatingCoord;
 
 	private float delayAfterAnimationOrMenuForFalseTouch = 0.05f;
 	private float lastTimeOfAnimationOrMenu;
+
+	private float[] rotateDistanceFractions = {0.04f, 0.16f, 0.36f, 0.64f}; // = {0.2, 0.4, 0.6, 0.8}^2
+	private Vector2[] rotationVectorFractions = new Vector2[4];
+	private bool[] fractionsAreReached = new bool[4];
 
 	private void Awake()
 	{
@@ -102,6 +110,8 @@ public class TouchManager : MonoSingleton <TouchManager>
 		
 		if (resultState != initialState)
 			touchState.Value = resultState;
+		if (resultState == TouchState.EndedRotating)
+			UpdateAfterEndOfRotating();
 		if (resultState == TouchState.EndedRotating ||
 		    resultState == TouchState.EndedTouching ||
 		    resultState == TouchState.EndedTouchingSurrounding || 
@@ -122,8 +132,23 @@ public class TouchManager : MonoSingleton <TouchManager>
 	/// </summary>
 	private bool DetermineRotating ()
 	{
-		if ((startTouchPos - currentTouchPos).sqrMagnitude > minRotateRadius * minRotateRadius) {
-			previousRotateVector = currentTouchPos - startTouchPos;
+		float sqrDist = (startTouchPos - currentTouchPos).sqrMagnitude;
+		
+		for (var i = 0; i < fractionsAreReached.Length; i++)
+		{
+			if (fractionsAreReached[i])
+				continue;
+			fractionsAreReached[i] = sqrDist > minRotateRadius * minRotateRadius * rotateDistanceFractions[i];
+			if (!fractionsAreReached[i])
+				return false;
+			rotationVectorFractions[i] = currentTouchPos;
+		}
+		
+		if (sqrDist > minRotateRadius * minRotateRadius)
+		{
+			startRotatingCoord = Coord.RotationCoord(startTouchPos, currentTouchPos, rotationVectorFractions);
+			startRotatingPos = Coord.Vector2FromCoord(startRotatingCoord);
+			previousRotateVector = currentTouchPos - startRotatingPos;
 			angle = 0f;
 			return true;
 		}
@@ -132,16 +157,23 @@ public class TouchManager : MonoSingleton <TouchManager>
 
 	private void FindRotatingAngle()
 	{
-		currentRotateVector = currentTouchPos - startTouchPos;
+		currentRotateVector = currentTouchPos - startRotatingPos;
 		deltaAngle = Vector2.Angle (previousRotateVector, currentRotateVector);
 		if (Vector3.Cross (previousRotateVector, currentRotateVector).z > 0) {
 			deltaAngle *= -1;
 		}
-		if ((startTouchPos - currentTouchPos).sqrMagnitude < minRotateRadius * minRotateRadius) {
-			deltaAngle *= ((startTouchPos - currentTouchPos).magnitude) / minRotateRadius;
+		if (currentRotateVector.sqrMagnitude < rotationDecreaseDistance * rotationDecreaseDistance)
+		{
+			print(0);
+			deltaAngle *= currentRotateVector.magnitude / rotationDecreaseDistance;
 		}
 		previousRotateVector = currentRotateVector;
 		angle += deltaAngle;
+	}
+
+	private void UpdateAfterEndOfRotating()
+	{
+		fractionsAreReached = new bool[4];
 	}
 
 	/// <summary>
@@ -149,6 +181,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 	/// </summary>
 	void FindObjectsAndNullReferences () {
 		minRotateRadius *= Camera.main.orthographicSize;
+		rotationDecreaseDistance *= Camera.main.orthographicSize;
 		touchState = new ReactiveProperty<TouchState>();
 		touchState.Value = TouchState.Empty;
 	}
