@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 /// <summary>
 /// Coords for hexagonal field
@@ -51,6 +54,27 @@ public class Coord
 	public Vector2 ToVector2()
 	{
 		return Vector2FromCoord(this);
+	}
+
+	public Coord Neighbour(NeighbourType neighbourType)
+	{
+		switch (neighbourType)
+		{
+			case NeighbourType.Right:
+				return new Coord(x + 1, y);
+			case NeighbourType.TopRight:
+				return new Coord(x + (y % 2 == 0 ? 1 : 0), y + 1);
+			case NeighbourType.TopLeft:
+				return new Coord(x - (y % 2 == 0 ? 0 : 1), y + 1);
+			case NeighbourType.Left:
+				return new Coord(x - 1, y);
+			case NeighbourType.BottomLeft:
+				return new Coord(x - (y % 2 == 0 ? 0 : 1), y - 1);
+			case NeighbourType.BottomRight:
+				return new Coord(x + (y % 2 == 0 ? 1 : 0), y - 1);
+			default:
+				return Bad;
+		}
 	}
 
 	public static Coord Bad {
@@ -115,6 +139,35 @@ public class Coord
 		return resault;
 	}
 
+	public static Coord RotationCoord(Vector2 startPoint, Vector2 endPoint, Vector2[] midPoints)
+	{
+		Coord startCoord = CoordFromVector2(startPoint);
+		Vector2[] directions =
+			Enumerable.Range(0,6)
+				.Select(i => Vector2FromCoord(startCoord.Neighbour((NeighbourType)i)) - Vector2FromCoord(startCoord))
+				.ToArray();
+
+		Vector2 dir = endPoint - startPoint;
+		NeighbourType dirNeighbourType = (NeighbourType)MyMath.ArgMax(directions, v => Vector2.Dot(dir, v));
+		var sign = Mathf.RoundToInt(Mathf.Sign(
+			midPoints
+			.Select(v => v - startPoint)
+			.Select(v => Vector3.Cross(v, dir).z)
+			.Sum()
+		));
+
+		Coord rotationCoord = startCoord.Neighbour(
+			(NeighbourType)((int) dirNeighbourType + sign)
+		);
+		if (!MapContains(rotationCoord))
+		{
+			rotationCoord = startCoord.Neighbour(
+				(NeighbourType)((int) dirNeighbourType - sign)
+			);
+		}
+		return rotationCoord;
+	}
+
 	public static bool operator == (Coord a, Coord b) {
 		System.Object aObj = a as System.Object;
 		System.Object bObj = b as System.Object;
@@ -145,4 +198,14 @@ public class Coord
 			return "HexCoord.Bad";
 		return "x: " + x + " ,y: " + y;
 	}
+}
+
+public enum NeighbourType
+{
+	Right = 0,
+	TopRight = 1,
+	TopLeft = 2,
+	Left = 3,
+	BottomLeft = 4,
+	BottomRight = 5
 }
