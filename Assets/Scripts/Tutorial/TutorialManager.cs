@@ -164,7 +164,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     
     private void ActivateColorGroupHint(int hintNumber)
     {
-        print(hintNumber);
         for (var i = 0; i < colorHints.Length; i++)
         {
             colorHints[i].SetActive(hintNumber == i);

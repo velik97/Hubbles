@@ -8,13 +8,12 @@ using UnityEngine.UI;
 /// </summary>
 public class MenuManager : MonoSingleton <MenuManager>
 {
-
 	[SerializeField]
 	private MenuPanel pauseMenu;
 	[SerializeField]
 	private MenuPanel loseMenu;
 	[SerializeField]
-	private MenuPanel gamePanel;
+	private Animator blackFadeAnimator;
 
 	[Space(5)]
 	[SerializeField]
@@ -32,8 +31,6 @@ public class MenuManager : MonoSingleton <MenuManager>
 		}
 	}
 
-	private float delayAfterClosingMenu = 0.1f;
-
 	public bool MenuIsOpened {
 		get { return menuPanelStack != null && menuPanelStack.Count > 0; }
 	}
@@ -41,33 +38,41 @@ public class MenuManager : MonoSingleton <MenuManager>
 	void Awake () {
 		if (pauseButton != null)
 			pauseButton.onClick.AddListener(OpenPauseMenu);
+		if (blackFadeAnimator != null)
+			blackFadeAnimator.gameObject.SetActive(false);
 	}
 
 	public void OpenMenuPanel (MenuPanel panel) {
 		if (MenuIsOpened) {
-			MenuPanel previous = MenuPanelStack.Peek ();
-			previous.onClosed.AddListener (delegate {
-				panel.OpenPanel ();	
-				MenuPanelStack.Push (panel);
+			MenuPanel previous = MenuPanelStack.Peek();
+			previous.onClosed.AddListener(delegate {
+				panel.OpenPanel();	
+				MenuPanelStack.Push(panel);
 			});
-			previous.ClosePanel ();
+			previous.ClosePanel();
 		} else {
-			panel.OpenPanel ();	
-			MenuPanelStack.Push (panel);
+			panel.OpenPanel();	
+			MenuPanelStack.Push(panel);
 		}
+		blackFadeAnimator.gameObject.SetActive(true);
+		blackFadeAnimator.SetTrigger("Appear");
 	}
 
 	public void CloseTopMenuPanel () {
 		if (MenuIsOpened) {
-			MenuPanel top = MenuPanelStack.Pop ();
+			MenuPanel top = MenuPanelStack.Pop();
 			if (MenuIsOpened) {
-				MenuPanel previous = MenuPanelStack.Peek ();
-				top.onClosed.AddListener (delegate {
-					previous.OpenPanel ();
+				MenuPanel previous = MenuPanelStack.Peek();
+				top.onClosed.AddListener(delegate {
+					previous.OpenPanel();
 				});
 			}
-			print(2);
-			top.ClosePanel ();
+			top.ClosePanel();
+			if (!MenuIsOpened)
+			{
+				blackFadeAnimator.SetTrigger("Disappear");
+				this.InvokeWithDelay(() => blackFadeAnimator.gameObject.SetActive(false), 0.25f);
+			}
 		}
 	}
 
@@ -75,17 +80,13 @@ public class MenuManager : MonoSingleton <MenuManager>
 	{
 		HubblesManager.Instance.ClearHighlightedGroup();
 		pauseButton.onClick.RemoveListener(OpenPauseMenu);
-		pauseButton.onClick.AddListener(ClosePauseMenu);
 		OpenMenuPanel(pauseMenu);
-		gamePanel.ClosePanel();
 	}
 
 	public void ClosePauseMenu()
 	{
-		pauseButton.onClick.RemoveListener(ClosePauseMenu);
 		pauseButton.onClick.AddListener(OpenPauseMenu);
 		CloseTopMenuPanel();
-		gamePanel.OpenPanel();
 	}
 
 	public void OpenLoseMenu()
@@ -96,7 +97,6 @@ public class MenuManager : MonoSingleton <MenuManager>
 
 	public void CloseLoseMenu()
 	{
-		print(1);
 		pauseButton.onClick.AddListener(OpenPauseMenu);
 		CloseTopMenuPanel();
 	}

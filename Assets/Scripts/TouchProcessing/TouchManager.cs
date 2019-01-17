@@ -19,20 +19,22 @@ public class TouchManager : MonoSingleton <TouchManager>
 	private ITouchSource touchSource;
 	private Vector2 currentTouchPos;
 
-	private Vector2 previousRotateVector;
-	private Vector2 currentRotateVector;
-	[HideInInspector] public float angle;
-	private float deltaAngle;
 	[HideInInspector] public Vector2 startTouchPos;
 	[HideInInspector] public Coord startTouchCoord;
-	[HideInInspector] public Vector2 startRotatingPos;
-	[HideInInspector] public Coord startRotatingCoord;
 
 	private float delayAfterAnimationOrMenuForFalseTouch = 0.05f;
 	private float lastTimeOfAnimationOrMenu;
 
+	[HideInInspector] public Vector2 startRotatingPos;
+	[HideInInspector] public Coord startRotatingCoord;
+	
+	private Vector2 previousRotateVector;
+	private Vector2 currentRotateVector;
+	[HideInInspector] public float angle;
+	private float deltaAngle;
+	
 	private float[] rotateDistanceFractions = {0.04f, 0.16f, 0.36f, 0.64f}; // = {0.2, 0.4, 0.6, 0.8}^2
-	private Vector2[] rotationVectorFractions = new Vector2[4];
+	private Vector2[] rotateVectorFractions = new Vector2[4];
 	private bool[] fractionsAreReached = new bool[4];
 
 	private void Awake()
@@ -141,12 +143,12 @@ public class TouchManager : MonoSingleton <TouchManager>
 			fractionsAreReached[i] = sqrDist > minRotateRadius * minRotateRadius * rotateDistanceFractions[i];
 			if (!fractionsAreReached[i])
 				return false;
-			rotationVectorFractions[i] = currentTouchPos;
+			rotateVectorFractions[i] = currentTouchPos;
 		}
 		
 		if (sqrDist > minRotateRadius * minRotateRadius)
 		{
-			startRotatingCoord = Coord.RotationCoord(startTouchPos, currentTouchPos, rotationVectorFractions);
+			startRotatingCoord = Coord.RotationCoord(startTouchPos, currentTouchPos, rotateVectorFractions);
 			startRotatingPos = Coord.Vector2FromCoord(startRotatingCoord);
 			previousRotateVector = currentTouchPos - startRotatingPos;
 			angle = 0f;

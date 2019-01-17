@@ -10,37 +10,15 @@ public class AdManager : MonoSingleton<AdManager>
     private const string simpleAdId = "video";
     private const string rewardedAdId = "rewardedVideo";
 
-    private const float secondsBetweenAds = 60f;
-    private float lastTimeAdShown = 0f;
     private bool rewardedVideoWasShown = false;
-
-    private bool EnoughTimeHasPassed
-    {
-        get { return Time.time - lastTimeAdShown > secondsBetweenAds; }
-    }
 
     public bool RewardedAdIsReady
     {
         get { return !rewardedVideoWasShown && Advertisement.IsReady(rewardedAdId); }
     }
     
-    public bool SimpleAdIsReady
-    {
-        get { return Advertisement.IsReady(simpleAdId); }
-    }
-
-    public bool RewardedVideoWasShown
-    {
-        get { return rewardedVideoWasShown; }
-    }
-    
     public void ShowSimpleAd(UnityAction finished, UnityAction skipped, UnityAction failed)
     {
-        if (!EnoughTimeHasPassed)
-        {
-            failed.Invoke();
-            return;
-        }
         ShowAd(simpleAdId, finished, skipped, finished);
     }
 
@@ -67,7 +45,6 @@ public class AdManager : MonoSingleton<AdManager>
                             skipped.Invoke();
                             break;
                         case ShowResult.Finished:
-                            lastTimeAdShown = Time.time;
                             finished.Invoke();
                             break;
                     }

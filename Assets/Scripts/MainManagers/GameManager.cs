@@ -132,7 +132,6 @@ public class GameManager : MonoSingleton <GameManager>
 
 	public void ContinueAfterAd()
 	{
-		print(0);
 		HubblesManager.Instance.ContinueWithNewSteps(LevelConfig.AddBonusPopLives);
 		MenuManager.Instance.CloseLoseMenu();
 	}

@@ -5,10 +5,10 @@ AnimatorOverrideController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: GamePanelAnimationController
+  m_Name: FadeAnimatorController
   m_Controller: {fileID: 9100000, guid: 5773482ac544a4fecb0ca62d859988d2, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 3b109c418ab8f4c7bab3a4b53a9b43c5, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: c902dce093aa94902b86e24ab851a5e8, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ba9b47e61470947fcbe7e14523a34bd0, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 4eae340ea28334a3faf36a9761f11b0f, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 06bcd1aa0e4a444e1b70861adfd16f69, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 45083011f51ed4d96bd63c36876f8a95, type: 2}

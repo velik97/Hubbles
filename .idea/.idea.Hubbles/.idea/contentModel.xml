@@ -84,6 +84,7 @@
             <e p="BoolMap.cs" t="Include" />
             <e p="Coord.cs" t="Include" />
             <e p="DestroyInTime.cs" t="Include" />
+            <e p="DontDestroyOnLoad.cs" t="Include" />
             <e p="Enums.cs" t="Include" />
             <e p="Extensions.cs" t="Include" />
             <e p="HubblesAppearanceInfo.cs" t="Include" />
