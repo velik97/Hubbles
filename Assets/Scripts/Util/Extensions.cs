@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using UnityEngine;
 
 public static class Extensions
@@ -165,5 +166,11 @@ public static class Extensions
 		
 		animationAction.Invoke(easeFunc(1f));
 		yield return null;
+	}
+	
+	public static string FormatThousands(this int number)
+	{
+		var f = new NumberFormatInfo {NumberGroupSeparator = " "};
+		return number.ToString("#,0", f);
 	}
 }

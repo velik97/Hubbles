@@ -72,6 +72,7 @@
             <e p="DisappearableAnimatableIntegerText.cs" t="Include" />
             <e p="HighlightPanel.cs" t="Include" />
             <e p="InGameUIManager.cs" t="Include" />
+            <e p="LoseMenu.cs" t="Include" />
             <e p="MenuPanel.cs" t="Include" />
             <e p="MultipleMenuPanel.cs" t="Include" />
             <e p="ShakableAnimatableIntegerText.cs" t="Include" />

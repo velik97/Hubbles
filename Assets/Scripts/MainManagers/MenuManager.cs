@@ -8,16 +8,12 @@ using UnityEngine.UI;
 /// </summary>
 public class MenuManager : MonoSingleton <MenuManager>
 {
-	[SerializeField]
-	private MenuPanel pauseMenu;
-	[SerializeField]
-	private MenuPanel loseMenu;
-	[SerializeField]
-	private Animator blackFadeAnimator;
-
+	[SerializeField] private MenuPanel pauseMenu;
+	[SerializeField] private MenuPanel loseMenu;
+	[SerializeField] private Animator blackFadeAnimator;
+	
 	[Space(5)]
-	[SerializeField]
-	private Button pauseButton;
+	[SerializeField] private Button pauseButton;
 	
 	private Stack <MenuPanel> menuPanelStack;
 

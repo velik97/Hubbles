@@ -194,14 +194,14 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 	{
 		AnimationManager.Instance.UnHighLightEverything(false);
 		if (oneColorGroup.Count > 0) {
-			DeleteGroup (currentNode.color);
+			DeleteGroup(currentNode.color);
 			popLives -= 1;
 			totalPopsPerLevel++;
 			if (popLives < 0)
 				popLives = 0;
 			MapGenerator.Instance.hubbleGenerator.LoadStepData(totalScore, popLives, rotLives);
-			CheckLivesAndAims ();
-			AnimationManager.Instance.DeleteGroup (oneColorGroup);
+			CheckLivesAndAims();
+			AnimationManager.Instance.DeleteGroup(oneColorGroup);
 			previousNode = null;
 			turnedPreviously = false;
 			onPoped.Invoke();
@@ -235,7 +235,7 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		}
 		if (popLives == 0) {
 			gameEnded = true;
-			GameManager.Instance.Lose ();
+			GameManager.Instance.Lose();
 		}
 	}
 
@@ -294,6 +294,9 @@ public class HubblesManager : MonoSingleton <HubblesManager> {
 		totalScore += points * multiplier;
 		popLives += popHeal * multiplier;
 		rotLives += rotHeal * multiplier;
+		
+		if (GameManager.Instance.tutorialMode || totalScore <= GameManager.Instance.Record) return;
+		GameManager.Instance.Record = totalScore;
 	}
 
 	/// <summary>

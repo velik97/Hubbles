@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,7 +56,7 @@ public class DisappearableAnimatableIntegerText : MonoBehaviour, IAnimatableInte
             {
                 if (!highlighted)
                     Appear();
-                text.text = prefix + (formatThousands ? FormatNumber(value) : value.ToString());
+                text.text = prefix + (formatThousands ? value.FormatThousands() : value.ToString());
                 highlighted = true;
             }, () => !disappearing);
         }
@@ -73,11 +72,5 @@ public class DisappearableAnimatableIntegerText : MonoBehaviour, IAnimatableInte
         animator.SetTrigger("Disappear");
         disappearing = true;
         this.InvokeWithDelay(() => disappearing = false, DisappearAnimationLength);
-    }
-    
-    private static string FormatNumber(int number)
-    {
-        var f = new NumberFormatInfo {NumberGroupSeparator = " "};
-        return number.ToString("#,0", f);
     } 
 }

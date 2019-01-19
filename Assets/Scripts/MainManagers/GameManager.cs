@@ -31,11 +31,30 @@ public class GameManager : MonoSingleton <GameManager>
 	/// </summary>
 	public SceneLoader sceneLoader;
 
-	public Button showAdButton;
-
 	public bool tutorialMode;
 
 	private Dictionary<string, object> analyticsData = new Dictionary<string, object>();
+	
+	private int record = -1;
+
+	public int Record
+	{
+		get
+		{
+			if (record != -1) return record;
+			record = 0;
+			if (PlayerPrefs.HasKey("Record"))
+				record = PlayerPrefs.GetInt("Record");
+			return record;
+		}
+		set
+		{
+			if (value <= record)
+				return;
+			PlayerPrefs.SetInt("Record", value);
+			record = value;
+		}
+	}
 
 	private bool PassedTutorial
 	{
@@ -94,7 +113,6 @@ public class GameManager : MonoSingleton <GameManager>
 		else
 		{
 			onLose.Invoke();
-			showAdButton.interactable = AdManager.Instance.RewardedAdIsReady;
 		}
 	}
 
