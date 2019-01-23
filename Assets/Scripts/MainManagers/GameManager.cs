@@ -73,6 +73,7 @@ public class GameManager : MonoSingleton <GameManager>
 
 	private void Awake()
 	{
+		Camera.main.ResizeInGame();
 		if (!tutorialMode && !PassedTutorial)
 		{
 			GoToTutorial();

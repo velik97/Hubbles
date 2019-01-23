@@ -59,10 +59,9 @@ public class MapGenerator : MonoSingleton <MapGenerator>
 	}
 
 	public void StartGame () {
-		AssembleConfig ();
+		AssembleConfig();
 
-		Camera.main.ResizeInGame ();
-		StartCoroutine(GenerateMap ());
+		StartCoroutine(GenerateMap());
 		Coord.MapSize = new Coord (width, height);
 	}
 		

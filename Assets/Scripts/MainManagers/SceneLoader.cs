@@ -10,6 +10,8 @@ public class SceneLoader : AnimatedMenuPanel {
 
 	public UnityEvent onLoaded;
 
+	private bool isOpened = true;
+
 	private IStatusGraphics statusGraphics;
 
 	private IStatusGraphics StatusGraphics
@@ -33,33 +35,46 @@ public class SceneLoader : AnimatedMenuPanel {
 		endProgressPoint = middleProgressPoint;
 		StatusGraphics.SetStatus(startProgressPoint);
 
-		onOpened.AddListener (delegate {
-			StartCoroutine (LoadCoroutine ());	
+		onLoaded.AddListener(() =>
+		{
+			SceneManager.LoadScene(sceneName);
 		});
-		onLoaded.AddListener (delegate {
-			SceneManager.LoadScene (sceneName);
-		});
-		OpenPanel ();
+		if (isOpened)
+		{
+			StartCoroutine(LoadCoroutine());
+		}
+		else
+		{
+			onOpened.AddListener(() =>
+			{
+				isOpened = true;
+				StartCoroutine(LoadCoroutine());	
+			});
+			OpenPanel();	
+		}
 	}
 
-	public void EndLoadingScene () {
+	public void EndLoadingScene() {
 		startProgressPoint = middleProgressPoint;
 		endProgressPoint = 1f;
 		StatusGraphics.SetStatus(startProgressPoint);
-		gameObject.SetActive (true);
+		gameObject.SetActive(true);
 
-		StartCoroutine (LoadCoroutine ());
+		StartCoroutine(LoadCoroutine());
+		onClosed.AddListener(() => isOpened = false);
 	}
 
-	IEnumerator LoadCoroutine () {
+	private IEnumerator LoadCoroutine() {
 		for (float timeOffset = 0f; timeOffset < timeToProcess; timeOffset += Time.deltaTime) {
-			StatusGraphics.SetStatus (startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOffset / timeToProcess));
+			StatusGraphics.SetStatus(startProgressPoint + (endProgressPoint - startProgressPoint) * (timeOffset / timeToProcess));
 			yield return null;
 		}
 
 		yield return null;
 
-		onLoaded.Invoke ();
+		onLoaded.Invoke();
+		if (endProgressPoint < 1f)
+			yield break;
 		ClosePanel();
 	}
 
