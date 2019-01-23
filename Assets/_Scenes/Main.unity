@@ -2740,6 +2740,7 @@ MonoBehaviour:
   startTouchCoord:
     x: 0
     y: 0
+  delayAfterAnimationOrMenuForFalseTouch: 0.05
   startRotatingPos: {x: 0, y: 0}
   startRotatingCoord:
     x: 0

@@ -74,7 +74,6 @@ public class MenuManager : MonoSingleton <MenuManager>
 
 	public void OpenPauseMenu()
 	{
-		HubblesManager.Instance.ClearHighlightedGroup();
 		pauseButton.onClick.RemoveListener(OpenPauseMenu);
 		OpenMenuPanel(pauseMenu);
 	}

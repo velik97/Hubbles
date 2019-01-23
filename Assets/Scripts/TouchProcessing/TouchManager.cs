@@ -12,9 +12,9 @@ public class TouchManager : MonoSingleton <TouchManager>
 	/// <summary>
 	/// Min distance from point of touch start enough to start rotation
 	/// </summary>
-	public float minRotateRadius;
+	[SerializeField] private float minRotateRadius;
 
-	public float rotationDecreaseDistance = 0.5f;
+	[SerializeField] private float rotationDecreaseDistance = 0.5f;
 
 	private ITouchSource touchSource;
 	private Vector2 currentTouchPos;
@@ -22,7 +22,7 @@ public class TouchManager : MonoSingleton <TouchManager>
 	[HideInInspector] public Vector2 startTouchPos;
 	[HideInInspector] public Coord startTouchCoord;
 
-	private float delayAfterAnimationOrMenuForFalseTouch = 0.05f;
+	[SerializeField] private float delayAfterAnimationOrMenuForFalseTouch = 0.05f;
 	private float lastTimeOfAnimationOrMenu;
 
 	[HideInInspector] public Vector2 startRotatingPos;
@@ -62,12 +62,14 @@ public class TouchManager : MonoSingleton <TouchManager>
 		TouchState initialState = touchState.Value;
 		TouchState resultState = initialState;
 
+		bool possibleFalseTouch = DetermineFalseTouch();
+
 		if (touchSource.IsTouching())
 		{
 			currentTouchPos = touchSource.TouchPos();
 			if (initialState == TouchState.Empty)
 			{
-				if (DetermineFalseTouch())
+				if (possibleFalseTouch)
 					resultState = TouchState.StartedFalseTouch;
 				else if (touchSource.TouchIsOnField())
 				{

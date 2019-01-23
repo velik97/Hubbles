@@ -102,10 +102,10 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// </summary>
 	/// <param name="nodes">nodes to be highlighted</param>
 	public void HighLightHubbles (List<Node> nodes) {
-		highLightingCoroutines.Add(StartCoroutine(IHighLightHubbles(nodes)));
+		highLightingCoroutines.Add(StartCoroutine(HighLightHubblesCoroutine(nodes)));
 	}
 	
-	IEnumerator IHighLightHubbles (List<Node> nodes) {
+	private IEnumerator HighLightHubblesCoroutine (List<Node> nodes) {
 		float pitch = Mathf.Exp(startPitch);
 		int popHeal = 0;
 		int rotationHeal = 0;
@@ -157,10 +157,10 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="node">central node</param>
 	/// <param name="makeSmaller">make smaller or bigger</param>
 	public void Rescale (Node node, bool makeSmaller) {
-		rotateCoroutines.Add( StartCoroutine (IRescale(node, makeSmaller)));
+		rotateCoroutines.Add( StartCoroutine (RescaleCoroutine(node, makeSmaller)));
 	}
 
-	IEnumerator IRescale (Node node, bool makeSmaller) {
+	private IEnumerator RescaleCoroutine (Node node, bool makeSmaller) {
 		if (!makeSmaller)
 			isAnimating = true;
 		float t = 0f;
@@ -192,7 +192,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="surroundingNodes">surrounding neighbours</param>
 	/// <param name="getAngle">function that returns current angle</param>
 	public void StartRotating (Node mainNode, List<Node> surroundingNodes, Func<float> getAngle) {
-		rotateCoroutines.Add(StartCoroutine (IRotate (mainNode, surroundingNodes, getAngle)));
+		rotateCoroutines.Add(StartCoroutine (RotateCoroutine (mainNode, surroundingNodes, getAngle)));
 	}
 
 	/// <summary>
@@ -215,7 +215,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="mainNode">central node</param>
 	/// <param name="surroundingNodes">surrounding neighbours</param>
 	/// <param name="getAngle">function that returns current angle</param>
-	IEnumerator IRotate (Node mainNode, List<Node> surroundingNodes, Func<float> getAngle) {
+	private IEnumerator RotateCoroutine (Node mainNode, List<Node> surroundingNodes, Func<float> getAngle) {
 		while (true) {
 			Rotate (mainNode, surroundingNodes, getAngle());
 			if (Mathf.Abs (offsetAngle - getAngle()) > 30f) {
@@ -254,7 +254,7 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	/// <param name="originAngle">made number of turns (not whole)</param>
 	public void PullToMap (Node mainNode, List<Node> surroundingNodes, int turns, float originAngle) {
 		StartCoroutine (IPullToMap(mainNode, surroundingNodes, turns, originAngle));
-		StartCoroutine (IRescale(mainNode, false));
+		StartCoroutine (RescaleCoroutine(mainNode, false));
 	}
 
 	IEnumerator IPullToMap (Node mainNode, List<Node> surroundingNodes, int turns ,float originAngle) {
@@ -316,10 +316,10 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 	public void DeleteGroup (List<Node> nodes) {
 		InGameUIManager.Instance.SetScore(HubblesManager.Instance.totalScore);
 		InGameUIManager.Instance.SetLevel(HubblesManager.Instance.level);
-		StartCoroutine (IDeleteGroup(nodes));
+		StartCoroutine (DeleteGroupCoroutine(nodes));
 	}
 
-	IEnumerator IDeleteGroup (List<Node> nodes) {
+	private IEnumerator DeleteGroupCoroutine (List<Node> nodes) {
 		isAnimating = true;
 		InGameUIManager.Instance.SetPopLives(HubblesManager.Instance.popLives);
 		InGameUIManager.Instance.SetRotLives(HubblesManager.Instance.rotLives);
@@ -339,10 +339,4 @@ public class AnimationManager : MonoSingleton <AnimationManager> {
 
 		offsetAngle = 0f;
 	}
-
-	private static string FormatNumber(int number)
-	{
-		var f = new NumberFormatInfo {NumberGroupSeparator = " "};
-		return number.ToString("#,0", f);
-	} 
 }
