@@ -60,7 +60,6 @@ public class MapGenerator : MonoSingleton <MapGenerator>
 
 	public void StartGame () {
 		AssembleConfig();
-
 		StartCoroutine(GenerateMap());
 		Coord.MapSize = new Coord (width, height);
 	}

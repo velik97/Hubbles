@@ -90,6 +90,10 @@
             <e p="Extensions.cs" t="Include" />
             <e p="HubblesAppearanceInfo.cs" t="Include" />
             <e p="Interfaces.cs" t="Include" />
+            <e p="Logger" t="Include">
+              <e p="Logger.cs" t="Include" />
+              <e p="LoggerDisplay.cs" t="Include" />
+            </e>
             <e p="MonoSingleton.cs" t="Include" />
             <e p="MyMath.cs" t="Include" />
             <e p="ParallelTaskManager.cs" t="Include" />

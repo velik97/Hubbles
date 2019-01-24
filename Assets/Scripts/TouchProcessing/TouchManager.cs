@@ -168,7 +168,6 @@ public class TouchManager : MonoSingleton <TouchManager>
 		}
 		if (currentRotateVector.sqrMagnitude < rotationDecreaseDistance * rotationDecreaseDistance)
 		{
-			print(0);
 			deltaAngle *= currentRotateVector.magnitude / rotationDecreaseDistance;
 		}
 		previousRotateVector = currentRotateVector;

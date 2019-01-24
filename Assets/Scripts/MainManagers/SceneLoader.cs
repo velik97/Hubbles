@@ -41,6 +41,7 @@ public class SceneLoader : AnimatedMenuPanel {
 		});
 		if (isOpened)
 		{
+			gameObject.SetActive(true);
 			StartCoroutine(LoadCoroutine());
 		}
 		else
@@ -48,6 +49,7 @@ public class SceneLoader : AnimatedMenuPanel {
 			onOpened.AddListener(() =>
 			{
 				isOpened = true;
+				gameObject.SetActive(true);
 				StartCoroutine(LoadCoroutine());	
 			});
 			OpenPanel();	
@@ -71,7 +73,7 @@ public class SceneLoader : AnimatedMenuPanel {
 		}
 
 		yield return null;
-
+		
 		onLoaded.Invoke();
 		if (endProgressPoint < 1f)
 			yield break;
